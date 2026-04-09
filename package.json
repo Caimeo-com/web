@@ -1,0 +1,10 @@
+{
+  "name": "caimeo-web",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "dev": "bun run src/dev.js",
+    "build": "bun run src/build.js",
+    "zip": "bun run src/zip.js"
+  }
+}

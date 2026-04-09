@@ -1,0 +1,585 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Caimeo Suite Architecture</title>
+  <style>
+    :root {
+      --bg: #07090f;
+      --panel: #0d1220;
+      --panel-strong: #12192a;
+      --border: rgba(255,255,255,0.08);
+      --border-strong: rgba(255,255,255,0.12);
+      --text: #f7f8fb;
+      --text-dim: #a5adc3;
+      --text-soft: #838aa1;
+      --forseti: #19d9ff;
+      --forseti-glow: rgba(25,217,255,0.16);
+      --tyche: #ae66ff;
+      --tyche-glow: rgba(174,102,255,0.17);
+      --valhalla: #ffc654;
+      --valhalla-glow: rgba(255,198,84,0.17);
+      --shadow: 0 28px 70px rgba(0,0,0,0.42);
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      display: grid;
+      place-items: center;
+      padding: 28px;
+      background:
+        radial-gradient(circle at top left, rgba(25,217,255,0.08), transparent 22%),
+        radial-gradient(circle at top right, rgba(174,102,255,0.07), transparent 28%),
+        linear-gradient(180deg, #06080d 0%, #07090f 100%);
+      color: var(--text);
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    }
+
+    .diagram-shell {
+      position: relative;
+      width: 1600px;
+      padding: 64px 66px 60px;
+      border-radius: 34px;
+      overflow: hidden;
+      background:
+        linear-gradient(180deg, rgba(255,255,255,0.03), rgba(255,255,255,0.01)),
+        linear-gradient(180deg, #0b1120 0%, #0a1020 100%);
+      border: 1px solid rgba(255,255,255,0.12);
+      box-shadow: var(--shadow);
+      isolation: isolate;
+    }
+
+    .diagram-shell::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background:
+        linear-gradient(rgba(255,255,255,0.08) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,0.08) 1px, transparent 1px);
+      background-size: 100% 184px, 300px 100%;
+      opacity: 0.16;
+      pointer-events: none;
+      z-index: -2;
+    }
+
+    .diagram-shell::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(circle at 12% 26%, rgba(25,217,255,0.11), transparent 24%),
+        radial-gradient(circle at 50% 44%, rgba(174,102,255,0.11), transparent 24%),
+        radial-gradient(circle at 88% 28%, rgba(255,198,84,0.11), transparent 22%);
+      pointer-events: none;
+      z-index: -1;
+    }
+
+    .hero {
+      display: grid;
+      gap: 18px;
+      margin-bottom: 34px;
+    }
+
+    .hero__eyebrow {
+      font-size: 22px;
+      font-weight: 800;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: #94a0c0;
+    }
+
+    .hero h1 {
+      margin: 0;
+      max-width: 1040px;
+      font-size: 72px;
+      line-height: 0.98;
+      letter-spacing: -0.05em;
+    }
+
+    .hero__lede {
+      max-width: 1200px;
+      font-size: 31px;
+      line-height: 1.28;
+      color: var(--text-dim);
+      letter-spacing: -0.03em;
+    }
+
+    .stage-rail {
+      display: grid;
+      grid-template-columns: 1fr 128px 1fr 128px 1fr;
+      align-items: center;
+      gap: 0;
+      margin-bottom: 28px;
+    }
+
+    .stage {
+      min-height: 92px;
+      padding: 18px 22px;
+      border-radius: 24px;
+      border: 1px solid var(--border);
+      background: rgba(8,12,22,0.78);
+      box-shadow: inset 0 1px 0 rgba(255,255,255,0.05);
+    }
+
+    .stage__label {
+      display: block;
+      margin-bottom: 10px;
+      font-size: 13px;
+      font-weight: 800;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--text-soft);
+    }
+
+    .stage__copy {
+      font-size: 23px;
+      line-height: 1.25;
+      letter-spacing: -0.03em;
+      color: var(--text);
+    }
+
+    .stage__arrow {
+      display: grid;
+      place-items: center;
+      color: rgba(255,255,255,0.36);
+      font-size: 40px;
+      font-weight: 300;
+    }
+
+    .lane-grid {
+      display: grid;
+      grid-template-columns: 1fr 128px 1fr 128px 1fr;
+      align-items: stretch;
+      gap: 0;
+    }
+
+    .product-card {
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      min-height: 712px;
+      padding: 30px 28px 28px;
+      border-radius: 32px;
+      border: 1px solid var(--border-strong);
+      background:
+        linear-gradient(145deg, rgba(255,255,255,0.05), rgba(255,255,255,0.02)),
+        linear-gradient(180deg, rgba(255,255,255,0.01), rgba(255,255,255,0));
+      box-shadow: var(--shadow);
+      overflow: hidden;
+    }
+
+    .product-card::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 24px;
+      right: 24px;
+      height: 8px;
+      border-radius: 999px;
+      opacity: 0.95;
+    }
+
+    .product-card--forseti {
+      background:
+        linear-gradient(145deg, rgba(19,217,255,0.08), rgba(12,18,34,0.84) 42%, rgba(12,18,34,0.96)),
+        linear-gradient(180deg, rgba(255,255,255,0.03), rgba(255,255,255,0.01));
+    }
+
+    .product-card--forseti::before {
+      background: linear-gradient(90deg, rgba(25,217,255,0.95), rgba(25,217,255,0.55));
+      box-shadow: 0 0 22px rgba(25,217,255,0.28);
+    }
+
+    .product-card--tyche {
+      background:
+        linear-gradient(145deg, rgba(174,102,255,0.11), rgba(17,13,34,0.84) 42%, rgba(17,13,34,0.96)),
+        linear-gradient(180deg, rgba(255,255,255,0.03), rgba(255,255,255,0.01));
+    }
+
+    .product-card--tyche::before {
+      background: linear-gradient(90deg, rgba(174,102,255,0.95), rgba(174,102,255,0.55));
+      box-shadow: 0 0 22px rgba(174,102,255,0.26);
+    }
+
+    .product-card--valhalla {
+      background:
+        linear-gradient(145deg, rgba(255,198,84,0.11), rgba(23,17,9,0.86) 42%, rgba(23,17,9,0.96)),
+        linear-gradient(180deg, rgba(255,255,255,0.03), rgba(255,255,255,0.01));
+    }
+
+    .product-card--valhalla::before {
+      background: linear-gradient(90deg, rgba(255,198,84,0.96), rgba(255,198,84,0.58));
+      box-shadow: 0 0 22px rgba(255,198,84,0.24);
+    }
+
+    .product-card__top {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 18px;
+      margin-bottom: 24px;
+    }
+
+    .product-card__badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      padding: 10px 16px;
+      border-radius: 999px;
+      font-size: 16px;
+      font-weight: 800;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      border: 1px solid currentColor;
+    }
+
+    .product-card__badge--forseti {
+      color: var(--forseti);
+      background: rgba(9,30,40,0.74);
+      box-shadow: 0 0 0 1px rgba(25,217,255,0.06) inset;
+    }
+
+    .product-card__badge--tyche {
+      color: var(--tyche);
+      background: rgba(28,15,44,0.74);
+      box-shadow: 0 0 0 1px rgba(174,102,255,0.06) inset;
+    }
+
+    .product-card__badge--valhalla {
+      color: var(--valhalla);
+      background: rgba(42,27,8,0.8);
+      box-shadow: 0 0 0 1px rgba(255,198,84,0.06) inset;
+    }
+
+    .product-card__icon {
+      width: 54px;
+      height: 54px;
+      display: grid;
+      place-items: center;
+      border-radius: 50%;
+      font-size: 26px;
+      font-weight: 900;
+      color: var(--text);
+      background: rgba(0,0,0,0.28);
+      border: 1px solid rgba(255,255,255,0.12);
+      box-shadow: inset 0 1px 0 rgba(255,255,255,0.06);
+    }
+
+    .product-card__icon--forseti { color: var(--forseti); box-shadow: 0 0 0 6px var(--forseti-glow); }
+    .product-card__icon--tyche { color: var(--tyche); box-shadow: 0 0 0 6px var(--tyche-glow); }
+    .product-card__icon--valhalla { color: var(--valhalla); box-shadow: 0 0 0 6px var(--valhalla-glow); }
+
+    .product-card h2 {
+      margin: 0 0 8px;
+      font-size: 50px;
+      line-height: 1;
+      letter-spacing: -0.05em;
+    }
+
+    .product-card__summary {
+      margin: 0 0 26px;
+      font-size: 22px;
+      line-height: 1.3;
+      color: var(--text-dim);
+      letter-spacing: -0.03em;
+    }
+
+    .flow-stack {
+      display: grid;
+      gap: 14px;
+      margin-top: auto;
+    }
+
+    .flow-step {
+      padding: 16px 18px 17px;
+      border-radius: 22px;
+      border: 1px solid rgba(255,255,255,0.1);
+      background: rgba(9,13,24,0.84);
+      box-shadow: inset 0 1px 0 rgba(255,255,255,0.04);
+    }
+
+    .flow-step__label {
+      display: block;
+      margin-bottom: 9px;
+      font-size: 13px;
+      font-weight: 800;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: #8f98b3;
+    }
+
+    .flow-step__title {
+      display: block;
+      margin-bottom: 6px;
+      font-size: 24px;
+      line-height: 1.1;
+      font-weight: 800;
+      letter-spacing: -0.04em;
+      color: var(--text);
+    }
+
+    .flow-step__copy {
+      display: block;
+      font-size: 16px;
+      line-height: 1.35;
+      letter-spacing: -0.02em;
+      color: var(--text-dim);
+    }
+
+    .flow-arrow {
+      display: grid;
+      place-items: center;
+      height: 18px;
+    }
+
+    .flow-arrow::before {
+      content: "";
+      width: 0;
+      height: 0;
+      border-left: 15px solid transparent;
+      border-right: 15px solid transparent;
+      border-top: 25px solid currentColor;
+      filter: drop-shadow(0 0 14px currentColor);
+      opacity: 0.95;
+    }
+
+    .flow-arrow--forseti { color: var(--forseti); }
+    .flow-arrow--tyche { color: var(--tyche); }
+    .flow-arrow--valhalla { color: var(--valhalla); }
+
+    .handoff {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 16px;
+      padding: 0 8px;
+    }
+
+    .handoff__rail {
+      width: 100%;
+      height: 2px;
+      border-radius: 999px;
+      background: linear-gradient(90deg, rgba(255,255,255,0.1), rgba(255,255,255,0.38), rgba(255,255,255,0.1));
+      position: relative;
+    }
+
+    .handoff__rail::after {
+      content: "";
+      position: absolute;
+      right: -1px;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 0;
+      height: 0;
+      border-top: 9px solid transparent;
+      border-bottom: 9px solid transparent;
+      border-left: 14px solid currentColor;
+    }
+
+    .handoff__pill {
+      padding: 11px 12px;
+      border-radius: 20px;
+      border: 1px solid currentColor;
+      font-size: 13px;
+      line-height: 1.25;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      letter-spacing: -0.01em;
+      text-align: center;
+      background: rgba(12,15,27,0.95);
+      box-shadow: 0 12px 24px rgba(0,0,0,0.24);
+    }
+
+    .handoff--tyche {
+      color: #74ebff;
+    }
+
+    .handoff--valhalla {
+      color: #d39cff;
+    }
+
+    .feedback {
+      display: flex;
+      justify-content: center;
+      margin-top: 26px;
+    }
+
+    .feedback__pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 12px;
+      max-width: 920px;
+      padding: 14px 20px;
+      border-radius: 999px;
+      border: 1px solid rgba(174,102,255,0.42);
+      background: rgba(30,14,46,0.86);
+      color: #f1ddff;
+      font-size: 18px;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      box-shadow: 0 16px 28px rgba(0,0,0,0.24);
+    }
+
+    .feedback__pill::before {
+      content: "↺";
+      font-size: 22px;
+      color: var(--tyche);
+    }
+  </style>
+</head>
+<body>
+  <main class="diagram-shell" role="img" aria-label="Caimeo suite architecture showing how Forseti governs live actions, Tyche validates them with deterministic replay, and Valhalla turns validated patterns into disciplined delivery.">
+    <header class="hero">
+      <span class="hero__eyebrow">Caimeo Suite</span>
+      <h1>From governed action to trusted delivery</h1>
+      <p class="hero__lede">
+        Forseti decides what live agents may do. Tyche turns real traces into replayable evidence.
+        Valhalla uses those validated patterns to deliver production work through a controlled room.
+      </p>
+    </header>
+
+    <section class="stage-rail" aria-hidden="true">
+      <div class="stage">
+        <span class="stage__label">Stage 1</span>
+        <div class="stage__copy">Govern live agent actions at the moment of intent.</div>
+      </div>
+      <div class="stage__arrow">→</div>
+      <div class="stage">
+        <span class="stage__label">Stage 2</span>
+        <div class="stage__copy">Replay identical conditions to compare strategies with evidence.</div>
+      </div>
+      <div class="stage__arrow">→</div>
+      <div class="stage">
+        <span class="stage__label">Stage 3</span>
+        <div class="stage__copy">Ship validated work through a disciplined delivery room.</div>
+      </div>
+    </section>
+
+    <section class="lane-grid">
+      <article class="product-card product-card--forseti">
+        <div class="product-card__top">
+          <span class="product-card__badge product-card__badge--forseti">01 Live</span>
+          <span class="product-card__icon product-card__icon--forseti">✦</span>
+        </div>
+        <h2>Forseti</h2>
+        <p class="product-card__summary">Control live actions.</p>
+
+        <div class="flow-stack">
+          <div class="flow-step">
+            <span class="flow-step__label">Input</span>
+            <span class="flow-step__title">Agent intent</span>
+            <span class="flow-step__copy">A typed request arrives with target, operation, and risk context.</span>
+          </div>
+          <div class="flow-arrow flow-arrow--forseti"></div>
+          <div class="flow-step">
+            <span class="flow-step__label">Decision</span>
+            <span class="flow-step__title">Policy engine</span>
+            <span class="flow-step__copy">Rules decide allow, deny, or whether human approval is required.</span>
+          </div>
+          <div class="flow-arrow flow-arrow--forseti"></div>
+          <div class="flow-step">
+            <span class="flow-step__label">Escalation</span>
+            <span class="flow-step__title">Approval routing</span>
+            <span class="flow-step__copy">High-risk work pauses until the right approvers sign off.</span>
+          </div>
+          <div class="flow-arrow flow-arrow--forseti"></div>
+          <div class="flow-step">
+            <span class="flow-step__label">Release</span>
+            <span class="flow-step__title">Approved action</span>
+            <span class="flow-step__copy">Execution proceeds with a durable audit trail and trace output.</span>
+          </div>
+        </div>
+      </article>
+
+      <div class="handoff handoff--tyche" aria-hidden="true">
+        <div class="handoff__rail"></div>
+        <div class="handoff__pill">Traces → seeded scenarios</div>
+      </div>
+
+      <article class="product-card product-card--tyche">
+        <div class="product-card__top">
+          <span class="product-card__badge product-card__badge--tyche">02 Live</span>
+          <span class="product-card__icon product-card__icon--tyche">◈</span>
+        </div>
+        <h2>Tyche</h2>
+        <p class="product-card__summary">Replay and compare.</p>
+
+        <div class="flow-stack">
+          <div class="flow-step">
+            <span class="flow-step__label">Intake</span>
+            <span class="flow-step__title">Scenario spec</span>
+            <span class="flow-step__copy">A trace, incident, or prompt set becomes a replayable scenario bundle.</span>
+          </div>
+          <div class="flow-arrow flow-arrow--tyche"></div>
+          <div class="flow-step">
+            <span class="flow-step__label">Execution</span>
+            <span class="flow-step__title">Seeded runners</span>
+            <span class="flow-step__copy">Strategies compete under fixed conditions so results stay comparable.</span>
+          </div>
+          <div class="flow-arrow flow-arrow--tyche"></div>
+          <div class="flow-step">
+            <span class="flow-step__label">Evidence</span>
+            <span class="flow-step__title">Replay bundle</span>
+            <span class="flow-step__copy">Outputs capture decisions, tool calls, state changes, and score signals.</span>
+          </div>
+          <div class="flow-arrow flow-arrow--tyche"></div>
+          <div class="flow-step">
+            <span class="flow-step__label">Output</span>
+            <span class="flow-step__title">Policy packs</span>
+            <span class="flow-step__copy">Winning playbooks become reusable policies and delivery-ready patterns.</span>
+          </div>
+        </div>
+      </article>
+
+      <div class="handoff handoff--valhalla" aria-hidden="true">
+        <div class="handoff__rail"></div>
+        <div class="handoff__pill">Validated patterns → delivery room</div>
+      </div>
+
+      <article class="product-card product-card--valhalla">
+        <div class="product-card__top">
+          <span class="product-card__badge product-card__badge--valhalla">03 Coming Soon</span>
+          <span class="product-card__icon product-card__icon--valhalla">∩</span>
+        </div>
+        <h2>Valhalla</h2>
+        <p class="product-card__summary">Structured delivery.</p>
+
+        <div class="flow-stack">
+          <div class="flow-step">
+            <span class="flow-step__label">Intake</span>
+            <span class="flow-step__title">Spec intake</span>
+            <span class="flow-step__copy">The room clarifies scope, risks, and completion criteria before work starts.</span>
+          </div>
+          <div class="flow-arrow flow-arrow--valhalla"></div>
+          <div class="flow-step">
+            <span class="flow-step__label">Execution</span>
+            <span class="flow-step__title">Role loop</span>
+            <span class="flow-step__copy">Named specialist roles plan, build, review, and refine against the brief.</span>
+          </div>
+          <div class="flow-arrow flow-arrow--valhalla"></div>
+          <div class="flow-step">
+            <span class="flow-step__label">Control</span>
+            <span class="flow-step__title">Human review</span>
+            <span class="flow-step__copy">Operators inspect convergence, evidence, and risk before release.</span>
+          </div>
+          <div class="flow-arrow flow-arrow--valhalla"></div>
+          <div class="flow-step">
+            <span class="flow-step__label">Outcome</span>
+            <span class="flow-step__title">Delivered change</span>
+            <span class="flow-step__copy">Validated work ships through a controlled room instead of an open-ended agent loop.</span>
+          </div>
+        </div>
+      </article>
+    </section>
+
+    <div class="feedback" aria-hidden="true">
+      <div class="feedback__pill">Tyche feeds replay-backed policy packs back into Forseti while also preparing Valhalla for disciplined delivery.</div>
+    </div>
+  </main>
+</body>
+</html>
