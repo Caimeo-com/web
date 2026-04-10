@@ -27,9 +27,9 @@ export function render() {
           environment where decisions, memory, and evaluator outcomes can be inspected and rerun.</p>
         </div>
 
-        <div class="img-placeholder fade-in" style="min-height:260px;max-width:900px;margin:0 auto;" role="img"
-          alt="Wide horizontal illustration on dark navy background, approximately 900x260px. LEFT SIDE: A chaotic cluster representing unstructured experimentation — 4-5 scattered chat bubble icons in different sizes with question marks inside, a dice icon suggesting randomness, a small 'demo' label with a thumbs-up that has a question mark overlay, and sparkle effects suggesting lucky outcomes. The word 'Experiments' appears below in muted gray. Scattered prompt text fragments float around in small monospace font: 'Try this prompt...', 'It worked once!', 'Cannot reproduce'. CENTER: A dramatic vertical gap/chasm with a subtle purple/violet warning glow at the edges. The label 'No rehearsal layer' floats in the void. A broken bridge icon suggests missing infrastructure. An arrow tries to cross labeled 'Straight to prod' with a danger symbol. RIGHT SIDE: Production system icons (server, database, API gateway) rendered with pulsing red warning rings, suggesting blind operation. Small labels: 'Running blind', 'No baseline', 'No replay capability', 'Incidents unexplainable'. BELOW THE GAP: A glowing violet/purple bridge labeled 'Tyche' with icons representing its capabilities: a seed icon (determinism), a branching comparison icon (sweeps), and a replay/rewind icon (replay bundles). The bridge is solid and structured, contrasting the chaos above. Style: premium vector illustration, subtle depth, not cartoonish. Muted gray for chaos, red for danger, violet/purple for the solution.">
-          The rehearsal gap — from experiments straight to production, with nothing in between
+        <div class="img-placeholder fade-in" style="min-height:320px;max-width:900px;margin:0 auto;" role="img"
+          alt="Target dimensions: 900x320px, rendered flat (no glow, no gradients, no sparkles, no dice). Two transcript cards side by side on the dark navy page background, each ~430px wide. Each card has a 1px hairline border, a small header strip with a title, and a monospace code body styled like a terminal transcript. LEFT CARD, titled 'Lucky demo — Mar 12' in muted gray: body contains a short agent trace, one log line per row in off-white monospace: 'seed: default', 'turn 1: agent.search(\"vendor X invoice\")', 'turn 2: agent.summarize(results) → \"total: $4,200, due Mar 30\"', 'turn 3: agent.schedule_payment(...) → ✓ scheduled', 'verdict: PASS'. Underneath, a small caption in dim gray: 'Nobody wrote down the seed. Nobody can rerun it.' RIGHT CARD, titled 'Same code, rerun Mar 14' in violet, with a 1px violet border accent on the title strip only: body is the SAME trace BUT with ONE changed line, highlighted with a subtle violet left-edge marker: 'turn 2: agent.summarize(results) → \"total: $42,000, due Mar 30\"'. The last line still reads 'verdict: PASS'. Underneath, a small caption in dim gray: 'Same code. Different run. Nobody noticed the extra zero.' Below both cards, centred, a single line of body copy in slightly larger dim gray: 'This is what Tyche fixes: seeds, replay manifests, reproducible verdicts.' No chasms, no bridges, no prisms, no icons. Just two terminal cards and the quiet horror of a missed zero.">
+          Same agent. Same code. Two runs. One bug nobody noticed.
         </div>
       </div>
     </section>
@@ -62,12 +62,12 @@ export function render() {
       </div>
     </section>
 
-    <!-- ===== DIAGRAM ===== -->
+    <!-- ===== REPLAY BUNDLE ARTEFACT ===== -->
     <section class="diagram-section">
       <div class="container fade-in">
-        <div class="img-placeholder" style="min-height:300px;max-width:900px;margin:0 auto;" role="img"
-          alt="Detailed horizontal technical architecture diagram on dark navy background, approximately 900x300px. Rendered as a left-to-right pipeline with branching paths, using violet/purple accent lines. STAGE 1 — 'Scenario Spec' (left edge): A document icon with a purple border containing a structured list in small monospace text: 'actors: [analyst, coder]', 'tools: [search, execute]', 'environment: sandbox-v2', 'start_state: {...}', 'evaluators: [accuracy, cost]', 'seed: 0xA3F1'. A version tag 'v1.4' sits in the corner. STAGE 2 — 'Deterministic Event Loop': A circular/loop icon with a seed crystal inside, labeled 'Seeded execution'. Arrows show turn-by-turn flow: actor picks action → tool executes → state updates → loop or stop. A counter shows 'Turn 4/12'. STAGE 3 — 'Runner Layer' (branching): The flow splits into 3-4 parallel paths, each representing a different strategy variant. Path labels: 'GPT-4o + aggressive prompt', 'Claude + conservative prompt', 'Local Llama + default prompt'. Each path shows a small adapter plug icon. The paths run in parallel horizontal lines. STAGE 4 — 'Memory & Tracing' (spans all parallel paths): A horizontal band across all paths showing memory types as stacked layers: 'Working memory (per-turn)', 'Episode memory (per-run)', 'Run memory (cross-run)'. Token budget gauges show fill levels. Tracing captures: 'transcript', 'state snapshots', 'tool call logs', 'token counts'. STAGE 5 — 'Evaluation': The parallel paths converge into a comparison table/grid showing scorecards. Columns for each strategy, rows for metrics: 'Accuracy: 0.87 / 0.92 / 0.71', 'Cost: $0.43 / $1.20 / $0.08', 'Steps: 8 / 12 / 6'. A winner highlight on the best row. STAGE 6 — 'Replay Bundle' (right edge): A package/archive icon with a download arrow, containing: 'run_manifest.json', 'transcripts/', 'state_snapshots/', 'scores.json', 'comparison.html'. A checkmark and timestamp indicate completeness. OVERALL: Purple/violet accent for all lines and active elements. Parallel paths are the visual centerpiece showing strategy comparison. Style is technical, data-rich but organized, suitable for enterprise AI platform teams.">
-          Tyche architecture — Scenario → Runners → Memory → Tracing → Evaluation → Replay
+        <div class="img-placeholder" style="min-height:420px;max-width:900px;margin:0 auto;" role="img"
+          alt="Target dimensions: 900x420px. A two-panel layout showing the literal deliverable of a Tyche pilot. No icons, no glows, no prisms, no seed crystals, no pipelines. TOP PANEL (~180px tall): a file-browser style tree view in monospace off-white on the dark navy page background, rendered as if copied from a 'tree' command output. Header line in dim gray: 'replay-bundles/invoice-review-v1.4/'. Body lines, using box-drawing characters (├── └──): 'manifest.json' with a dim-gray inline comment '(seed: 0xA3F1, scenario_v: 1.4)', 'transcripts/' as a sub-directory with three children indented once: 'run_01.jsonl', 'run_02.jsonl', 'run_03.jsonl', then 'state_snapshots/' as a sub-directory with indented children 'turn_00.json', 'turn_01.json … turn_12.json', then back at top level: 'scorecard.csv', 'comparison.html', 'README.md'. Thin 1px hairline border around the whole tree. A small violet label in the top-right corner of this panel reads 'the replay bundle, on disk'. BOTTOM PANEL (~220px tall): a compare-runs table with a 1px hairline border and a thin violet header row. The header row has four columns: 'strategy', 'accuracy', '$ cost', 'steps', 'failures'. Three body rows, one per strategy. Row 1: 'gpt-4o + aggressive', '0.87', '$0.43', '8', '1'. Row 2: 'claude + conservative', '0.92' (this cell has a tiny violet dot to the left marking the winner), '$1.20', '12', '0'. Row 3: 'llama-local + default', '0.71', '$0.08', '6', '3'. Table uses off-white monospace numbers and a slightly more humanist label font for the strategy column. Below the table, a small caption in dim gray, left-aligned: 'What teams get back from a Tyche pilot.' The two panels are separated by 24px of empty space. Violet is used ONLY on the two labels and the winning-row marker. Everything else is neutral. The whole image should look like two cropped screenshots from a real deliverable, not an architecture illustration.">
+          The replay bundle — file tree + compare-runs grid, exactly as delivered
         </div>
       </div>
     </section>
@@ -82,45 +82,45 @@ export function render() {
 
         <div class="proof-points fade-in">
           <div class="proof-point">
-            <div class="proof-point__icon" style="background:var(--tyche-glow);color:var(--tyche);">&#9830;</div>
+            <div class="proof-point__icon" style="background:var(--tyche-glow);color:var(--tyche);">&#9673;</div>
             <div>
               <h4>Deterministic seeds and loop controls</h4>
-              <p>Runs carry seeds, scenario versions, adapter versions, and replay manifests so results can be reproduced.</p>
+              <p>Runs carry seeds, scenario versions, adapter versions, and replay manifests so results can be reproduced — not just described.</p>
             </div>
           </div>
           <div class="proof-point">
-            <div class="proof-point__icon" style="background:var(--tyche-glow);color:var(--tyche);">&#9830;</div>
+            <div class="proof-point__icon" style="background:var(--tyche-glow);color:var(--tyche);">&#9635;</div>
             <div>
               <h4>Scenario packs and fixtures</h4>
-              <p>Versioned definitions of actors, tools, environment rules, start states, stop conditions, and evaluator criteria.</p>
+              <p>Versioned definitions of actors, tools, environment rules, start states, stop conditions, and evaluator criteria. Sharable, reviewable, diffable.</p>
             </div>
           </div>
           <div class="proof-point">
-            <div class="proof-point__icon" style="background:var(--tyche-glow);color:var(--tyche);">&#9830;</div>
+            <div class="proof-point__icon" style="background:var(--tyche-glow);color:var(--tyche);">&#8635;</div>
             <div>
               <h4>Replay bundles with evidence</h4>
-              <p>Run metadata, scoring, state snapshots, and enough context to explain the result and justify decisions.</p>
+              <p>Run metadata, scoring, state snapshots, and enough context to explain the result and justify the decision to widen autonomy.</p>
             </div>
           </div>
           <div class="proof-point">
-            <div class="proof-point__icon" style="background:var(--tyche-glow);color:var(--tyche);">&#9830;</div>
+            <div class="proof-point__icon" style="background:var(--tyche-glow);color:var(--tyche);">&#8721;</div>
             <div>
               <h4>Token and context accounting</h4>
-              <p>Memory budgets, context windows, and cost are visible per-run, not mystical. Know what each strategy costs.</p>
+              <p>Memory budgets, context windows, and cost are visible per-run, not mystical. Know what each strategy costs before production does.</p>
             </div>
           </div>
           <div class="proof-point">
-            <div class="proof-point__icon" style="background:var(--tyche-glow);color:var(--tyche);">&#9830;</div>
+            <div class="proof-point__icon" style="background:var(--tyche-glow);color:var(--tyche);">&#9654;</div>
             <div>
               <h4>Hardware-neutral runners</h4>
-              <p>API runners first, with local and self-hosted options as deployment choices, not the product definition.</p>
+              <p>API runners first, with local and self-hosted options as deployment choices, not the product definition. No hardware shopping list required.</p>
             </div>
           </div>
           <div class="proof-point">
-            <div class="proof-point__icon" style="background:var(--tyche-glow);color:var(--tyche);">&#9830;</div>
+            <div class="proof-point__icon" style="background:var(--tyche-glow);color:var(--tyche);">&#8596;</div>
             <div>
               <h4>Before and after production</h4>
-              <p>Use for pre-production rehearsal and post-incident reconstruction. One tool for both confidence and accountability.</p>
+              <p>Pre-production rehearsal and post-incident reconstruction use the same primitives. One tool for both confidence and accountability.</p>
             </div>
           </div>
         </div>
@@ -142,7 +142,7 @@ export function render() {
           </div>
           <div class="use-case">
             <h4>Post-incident replay</h4>
-            <p>Reconstruct what happened after a bad run so the team can fix policy, prompts, tools, or memory settings.</p>
+            <p>An approved agent sent the wrong vendor message on a Tuesday. The team grabs the trace, feeds its seed and scenario version into Tyche, reruns with alternate prompts, and within an afternoon has three candidate fixes, a scorecard comparing them, and a replay bundle the incident review can cite. The patched scenario becomes the next regression test.</p>
           </div>
           <div class="use-case">
             <h4>Strategy comparison</h4>
@@ -168,9 +168,9 @@ export function render() {
           into Forseti policy packs.</p>
         </div>
 
-        <div class="img-placeholder fade-in" style="min-height:200px;" role="img"
-          alt="Circular feedback loop diagram on dark navy background, approximately 900x200px. Four nodes arranged in a clockwise cycle, connected by curved arrows with gradient colors transitioning between purple and cyan. TOP-LEFT NODE (purple/violet): 'Tyche Simulates' — a prism icon with branching paths, label: 'Run scenario sweeps, discover optimal policies and thresholds. Test prompt variants, model choices, and tool configurations under controlled conditions.' Arrow flows clockwise toward top-right. TOP-RIGHT NODE (transitioning purple→cyan): 'Policies Graduate' — a diploma/graduation cap icon over an arrow pointing into a shield, label: 'Winning policies from simulation runs are exported as Forseti policy packs. Approval thresholds, allowlists, and risk rules move from theory to production.' Arrow flows to bottom-right. BOTTOM-RIGHT NODE (cyan): 'Forseti Governs' — a shield/gate icon with a checkmark, label: 'Production agent actions flow through graduated policies. Real-world execution is governed with deterministic allow/deny/approve decisions.' Arrow flows to bottom-left. BOTTOM-LEFT NODE (transitioning cyan→purple): 'Tyche Replays' — a rewind/replay icon, label: 'When incidents occur, Tyche reconstructs the scenario from audit traces. Root cause analysis feeds back into improved scenarios and tighter policies.' Arrow flows back to top-left, completing the cycle. CENTER of the cycle: A small infinity or loop icon with text 'Continuous governance improvement'. The gradient transition between purple (Tyche) and cyan (Forseti) sections creates a visual sense of the two products working as one system. Style: clean, minimal, the arrows are the visual focus.">
-          The Forseti + Tyche feedback loop — rehearse, govern, replay, improve
+        <div class="img-placeholder fade-in" style="min-height:240px;" role="img"
+          alt="Target dimensions: 900x240px. A LINEAR timeline (not a loop — loops are the single most overused B2B marketing diagram and we are deliberately not drawing one here). One horizontal time axis running the full width, rendered as a thin neutral-gray line with five equally spaced tick marks. Each tick mark has a date label below in small dim-gray monospace and a two-line checkpoint label above the line. The five checkpoints, left to right: TICK 1 — date 'Mar 02' — label 'Tyche: scenario authored / invoice-review v0.1'. This tick and label are coloured violet. TICK 2 — date 'Mar 05' — label 'Tyche: sweep complete / 24 runs, claude-conservative wins'. Violet. TICK 3 — date 'Mar 06' — label 'Forseti: policy extracted / amount ≤ $10k auto-allow; > $10k quorum 2/3'. This tick and label are coloured cyan (handoff point). TICK 4 — date 'Mar 12' — label 'Forseti: live in prod / first governed intent released'. Cyan. TICK 5 — date 'Mar 18' — label 'Tyche: incident replay / denied intent reconstructed, scenario patched'. Violet again (loops back to Tyche not via a circular arrow but via the next tick on the same linear axis). Between tick 3 and tick 4 the axis line is coloured cyan; between tick 4 and tick 5 the axis line transitions back to violet. Above the axis, small lane labels in dim gray: 'Tyche' on the left half, 'Forseti' on the right half, 'Tyche' again on the far right. Below the whole timeline, centred, a single caption in slightly larger off-white: 'One scenario. One seed. One policy. Across both products, on real dates.' No curved arrows, no circular motion, no infinity symbols. The diagram should read like a project timeline in a runbook.">
+          Two products, one timeline — how a policy actually travels from Tyche into Forseti and back
         </div>
       </div>
     </section>
@@ -193,7 +193,7 @@ export function render() {
           <div class="faq-item">
             <button class="faq-item__q">Is Tyche for model training?</button>
             <div class="faq-item__a"><div class="faq-item__a__inner">
-              No. The core job is rehearsal, replay, comparison, and evidence generation around agent behavior — not training new models.
+              No. The core job is rehearsal, replay, comparison, and evidence generation around agent behavior - not training new models.
             </div></div>
           </div>
           <div class="faq-item">
@@ -216,18 +216,18 @@ export function render() {
     <section class="cta-section" id="contact">
       <div class="container fade-in">
         <p class="section-label" style="color:var(--tyche);">Get Started</p>
-        <h2>Bring one workflow. Get a replay bundle.</h2>
-        <p>Bring one high-value workflow or incident scenario and we will turn it into a reproducible simulation and replay package.</p>
+        <h2>Bring one workflow or one incident. Leave with a replay bundle.</h2>
+        <p>A Tyche discovery sprint is 1&ndash;2 weeks. We take one high-value scenario or one real incident, turn it into a seeded, reproducible simulation, and hand back a replay bundle your team can open, rerun, and cite. If the problem actually belongs upstream, we&rsquo;ll say so.</p>
         <div class="hero__actions">
-          <a href="mailto:contact@bitfalls.com" class="btn btn--tyche">Contact about Tyche</a>
-          <a href="/" class="btn btn--ghost">Back to suite overview</a>
+          <a href="mailto:contact@bitfalls.com" class="btn btn--tyche">Scope a Tyche sprint</a>
+          <a href="/#products" class="btn btn--ghost">Compare the suite</a>
         </div>
       </div>
     </section>
   `;
 
   return layout({
-    title: 'Caimeo Tyche — Deterministic Simulation & Replay for AI Agents',
+    title: 'Caimeo Tyche - Deterministic Simulation & Replay for AI Agents',
     description: 'Rehearse agent behavior before production. Run deterministic scenario sweeps, compare strategies under fixed conditions, and export replay bundles you can trust.',
     path: '/tyche/',
     accent: 'tyche',

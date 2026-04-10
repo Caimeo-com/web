@@ -27,9 +27,9 @@ export function render() {
           without a control layer is a liability waiting to happen.</p>
         </div>
 
-        <div class="img-placeholder fade-in" style="min-height:260px;max-width:900px;margin:0 auto;" role="img"
-          alt="Wide horizontal illustration on dark navy background, approximately 900x260px. LEFT SIDE: A stylized AI agent icon (brain or neural network shape, rendered in cool white/gray) with 5-6 capability labels radiating outward as small pill-shaped tags: 'Deploy to production', 'Send customer emails', 'Process payments', 'Modify database', 'Call external APIs', 'Delete resources'. Each tag has a small lightning bolt icon indicating power. CENTER: A dramatic vertical gap or chasm rendered with a subtle red/orange warning glow at the edges, with the label 'No governance layer' floating in the void. Thin broken lines cross the gap representing uncontrolled actions. A caution/warning triangle icon sits at the top of the gap. RIGHT SIDE: Real-world system icons arranged vertically — a server rack, a dollar sign, an envelope, a database cylinder, a cloud API symbol — each with a subtle red pulse effect suggesting vulnerability. BELOW THE GAP: A glowing cyan bridge labeled 'Forseti' spans the chasm, with a shield checkpoint icon at its center, suggesting the solution. Style: clean vector illustration, premium B2B feel, not cartoonish. Muted colors except for the red warning tones and cyan solution accent.">
-          The governance gap — agents can act, but nothing governs whether they should
+        <div class="img-placeholder fade-in" style="min-height:320px;max-width:900px;margin:0 auto;" role="img"
+          alt="Target dimensions: 900x320px, rendered flat (no glow, no gradients). Two code cards side by side on the dark navy page background. Each card is ~430px wide, has a 1px subtle border, a dark panel background (slightly lighter than the page), a small header strip with a title, and a monospace code body. LEFT CARD, titled 'Before Forseti' in muted gray, body: a Python snippet calling slack.post_message() with channel='#payments' and text='Paid invoice 4821 for $12,400', followed immediately by stripe.charge(customer='cus_9f…', amount=1240000). Code is in a neutral off-white monospace, no syntax highlighting. Below the code, a one-line caption in small dim gray: 'No audit. No review. No verdict. The agent already moved money.' RIGHT CARD, titled 'With Forseti' in cyan, with a 1px cyan border accent on the title strip only (rest of the border is the same neutral hairline). Body: a Python snippet calling forseti.submit_intent() with a dict literal: action='payments.transfer', amount=12_400, currency='USD', recipient='cus_9f…', reason='Invoice 4821', risk='high'. Below the snippet, a comment line in cyan: '# verdict: REQUIRES_APPROVAL (finance quorum, 2-of-3)'. Below that, a one-line caption in small dim gray: 'Typed. Inspectable. Gated. Replayable.' The two cards are separated by 24px of empty space. No icons, no arrows, no bridges, no glows. The whole image should look like a cropped slide from an engineering README, not a marketing illustration.">
+          Before / After — what governed execution actually changes in the agent code
         </div>
       </div>
     </section>
@@ -62,12 +62,12 @@ export function render() {
       </div>
     </section>
 
-    <!-- ===== DIAGRAM ===== -->
+    <!-- ===== SEQUENCE DIAGRAM ===== -->
     <section class="diagram-section">
       <div class="container fade-in">
-        <div class="img-placeholder" style="min-height:300px;max-width:900px;margin:0 auto;" role="img"
-          alt="Detailed horizontal technical architecture diagram on dark navy background, approximately 900x300px. Rendered as a left-to-right pipeline with 6 stages connected by glowing cyan flow lines. STAGE 1 — 'Intent Envelope' (left edge): A rounded rectangle with a code/JSON bracket icon, showing a stylized typed request with fields like 'action: deploy', 'target: prod', 'risk: high'. A small agent avatar emits this envelope. STAGE 2 — 'Policy Engine': A hexagonal processing node with sub-items listed vertically in small monospace text: 'allowlists', 'domain checks', 'amount thresholds ≤ $10k', 'secret detection', 'action frequency limits'. Thin branching lines inside suggest evaluation logic. STAGE 3 — 'Decision': Three output paths emerge from the policy engine, each as a colored badge: 'ALLOW' (green pill), 'DENY' (red pill with reason text below), 'REQUIRES_APPROVAL' (amber pill). The DENY path terminates with a stop icon. STAGE 4 — 'Approval Flow' (only on the REQUIRES_APPROVAL path): A Slack-branded card mockup showing approve/deny buttons, with icons below representing three approval modes: single approver (one person icon), quorum (three people with '2 of 3' label), hierarchy (org chart mini-icon). Thin dotted lines show async callback arrows. STAGE 5 — 'Execution Gate': A glowing cyan gate/barrier icon that opens only when approval is terminal. Below it, small icons for n8n, CLI, webhook, and REST API represent the downstream action plane. STAGE 6 — 'Audit Trail' (right edge): A scroll/log icon with stacked horizontal lines representing trace entries, with labels: 'intent received', 'policy evaluated', 'approval requested', 'votes recorded', 'action released', 'callback confirmed'. Each line has a timestamp. OVERALL: Cyan accent color for all lines and active elements. Background is dark with subtle grid texture. Labels use a clean sans-serif for headings and monospace for technical details. Style is technical but polished, suitable for an enterprise B2B audience.">
-          Forseti architecture — Intent → Policy → Decision → Approval → Execution → Audit
+        <div class="img-placeholder" style="min-height:380px;max-width:900px;margin:0 auto;" role="img"
+          alt="Target dimensions: 900x380px. A UML-style sequence diagram on the dark navy page background, drawn as if on a whiteboard. No glows, no icons, no gradients. Four vertical lanes across the top, equally spaced, each with a small header label in neutral off-white: 'Agent', 'Forseti', 'Slack approvers', 'n8n action plane'. Each lane has a thin dashed vertical lifeline dropping down to the bottom of the image. Horizontal message arrows between lanes from top to bottom, each labelled in small monospace text. Message 1 (Agent to Forseti): solid arrow labelled 'submit_intent(payments.transfer, $12,400)'. Message 2 (Forseti self-call, small loop arrow on the Forseti lane): labelled 'policy_eval() → REQUIRES_APPROVAL (amount > $10k)'. Message 3 (Forseti to Slack approvers): solid arrow labelled 'approval_request(quorum=2/3)'. Message 4 (Slack approvers to Forseti): dashed return arrow labelled 'approve(alice)'. Message 5 (Slack approvers to Forseti): dashed return arrow labelled 'approve(bob)'. Message 6 (Forseti to n8n action plane): THICK solid arrow labelled 'release(intent_id)' — this is the visual centerpiece of the gate, slightly heavier stroke than the other arrows, and coloured cyan. Message 7 (n8n action plane to Forseti): dashed return arrow labelled 'execution_complete'. Message 8 (Forseti self-call, small loop arrow): labelled 'audit.write(trace_id=t_8f21…)'. Right-margin annotations in dim gray: next to Message 3, small label 'async'; next to Message 6, small label 'P50: 2m 14s'; at the very bottom, a small row 'audit hash: 0x4b7e…a1' in dim gray monospace. Colour: the cyan accent is used ONLY on the release arrow, the audit hash row, and the Forseti lane header. Everything else is off-white on navy. The visual language should be unmistakably 'engineer-drawn sequence diagram', not a marketing illustration.">
+          One real intent, end to end — sequence through Forseti
         </div>
       </div>
     </section>
@@ -82,45 +82,45 @@ export function render() {
 
         <div class="proof-points fade-in">
           <div class="proof-point">
-            <div class="proof-point__icon" style="background:var(--forseti-glow);color:var(--forseti);">&#9737;</div>
+            <div class="proof-point__icon" style="background:var(--forseti-glow);color:var(--forseti);">&#9993;</div>
             <div>
               <h4>Typed intent envelopes</h4>
-              <p>Agent actions become inspectable, validatable data structures instead of ad hoc tool calls.</p>
+              <p>Agent actions become inspectable, validatable data structures. Intents stay held until policy reaches a terminal verdict — no race conditions at the gate.</p>
             </div>
           </div>
           <div class="proof-point">
-            <div class="proof-point__icon" style="background:var(--forseti-glow);color:var(--forseti);">&#9737;</div>
+            <div class="proof-point__icon" style="background:var(--forseti-glow);color:var(--forseti);">&#9878;</div>
             <div>
               <h4>Deterministic policy engine</h4>
-              <p>Allowlists, domain checks, amount thresholds, action limits, secret detection, and high-risk handling with explicit reasons.</p>
+              <p>Allowlists, domain checks, amount thresholds, action limits, secret detection, and high-risk handling with explicit reasons attached to every verdict.</p>
             </div>
           </div>
           <div class="proof-point">
-            <div class="proof-point__icon" style="background:var(--forseti-glow);color:var(--forseti);">&#9737;</div>
+            <div class="proof-point__icon" style="background:var(--forseti-glow);color:var(--forseti);">&#10070;</div>
             <div>
               <h4>Flexible approval trees</h4>
-              <p>Single approver, multi-approver with quorum, any_of and all_of logic, and hierarchy-aware routing.</p>
+              <p>Single approver, multi-approver with quorum, any_of and all_of logic, and hierarchy-aware routing for organisations that already have one.</p>
             </div>
           </div>
           <div class="proof-point">
-            <div class="proof-point__icon" style="background:var(--forseti-glow);color:var(--forseti);">&#9737;</div>
+            <div class="proof-point__icon" style="background:var(--forseti-glow);color:var(--forseti);">&#9672;</div>
             <div>
               <h4>Slack-native approval flows</h4>
-              <p>Interactive approval cards, slash-command ingress, and async processing so the ACK path stays fast.</p>
+              <p>Interactive approval cards, slash-command ingress, and async processing so the ACK path stays fast even under quorum voting.</p>
             </div>
           </div>
           <div class="proof-point">
-            <div class="proof-point__icon" style="background:var(--forseti-glow);color:var(--forseti);">&#9737;</div>
+            <div class="proof-point__icon" style="background:var(--forseti-glow);color:var(--forseti);">&#8644;</div>
             <div>
-              <h4>Execution gating</h4>
-              <p>Downstream execution starts only after the latest required approval reaches a terminal state. No race conditions.</p>
+              <h4>Action plane integrations</h4>
+              <p>Once released, intents fan out into your existing orchestration: n8n, Temporal, webhooks, GitHub Actions, custom runners. Forseti stays above them all.</p>
             </div>
           </div>
           <div class="proof-point">
-            <div class="proof-point__icon" style="background:var(--forseti-glow);color:var(--forseti);">&#9737;</div>
+            <div class="proof-point__icon" style="background:var(--forseti-glow);color:var(--forseti);">&#8801;</div>
             <div>
               <h4>Full audit trail</h4>
-              <p>Trace-level event history, vote records, callback delivery tracking, and replayable approval context for every request.</p>
+              <p>Trace-level event history, vote records, callback delivery tracking, and replayable approval context for every request that ever reached policy.</p>
             </div>
           </div>
         </div>
@@ -138,7 +138,7 @@ export function render() {
         <div class="use-cases fade-in">
           <div class="use-case">
             <h4>Production deploy approvals</h4>
-            <p>Gate deploy, rollback, and destructive maintenance actions before they hit live environments.</p>
+            <p>A release agent proposes a Friday 17:00 deploy. Forseti routes it to the on-call SRE channel with quorum 2-of-3, holds the intent until two approvers ACK in Slack, then releases into the n8n deploy workflow. An automatic rollback intent is pre-armed if the post-deploy audit flag fires. Every step lands in the trace, including who approved and how long it took.</p>
           </div>
           <div class="use-case">
             <h4>Payments &amp; vendor operations</h4>
@@ -163,13 +163,13 @@ export function render() {
           <p class="section-label" style="color:var(--forseti);">Positioning</p>
           <h2>Not another workflow builder</h2>
           <p>Caimeo sits at the risk boundary. Forseti governs whether an action is allowed to reach
-          your execution systems — n8n, custom tools, CLI agents, and future runtimes all benefit
+          your execution systems - n8n, custom tools, CLI agents, and future runtimes all benefit
           from the same typed-intent boundary.</p>
         </div>
 
-        <div class="img-placeholder fade-in" style="min-height:200px;" role="img"
-          alt="Vertical stack diagram on dark navy background, approximately 900x200px. Five horizontal bars stacked vertically with subtle depth shadows, each representing a layer in the agent stack. TOP BAR (thin, muted gray): 'Model Layer' with small logos suggesting OpenAI, Anthropic, open-source models — label reads 'Any LLM'. SECOND BAR (thin, muted gray): 'Agent Framework' with icons for LangChain, CrewAI, custom agents — label reads 'Any framework'. THIRD BAR (prominent, double-height, glowing cyan border and background tint): 'FORSETI — Governance Boundary' in bold text, with a shield/gate icon on the left. This bar visually dominates the stack with a pulsing cyan glow effect and thicker borders to emphasize it as the critical checkpoint. A lock icon sits on each side. FOURTH BAR (thin, muted gray): 'Workflow Runner' with icons for n8n, Make, custom tools, webhooks — label reads 'Any orchestration'. BOTTOM BAR (thin, muted gray): 'Real World' with icons for servers, payment processors, email services, databases, external APIs. Thin vertical arrows connect each layer, but the arrow passing through Forseti is rendered as a checkpoint gate (the arrow breaks and resumes after passing through). Style: clean, layered, subtle 3D depth on each bar, enterprise-quality. The visual emphasis is clearly on Forseti as the critical governance insertion point.">
-          Forseti sits above the model vendor, above the agent framework, above the workflow runner
+        <div class="img-placeholder fade-in" style="min-height:260px;" role="img"
+          alt="Target dimensions: 900x260px. A clean five-row layered stack diagram, like a system architecture page in engineering documentation. No glows, no 3D, no pulses, no shields. Five equal-height horizontal rows, each row is a simple rectangle with a 1px hairline border on the dark navy page background. Each row has three columns of text: a LEFT label (layer name, bold off-white), a CENTRE label (one-line role, dim gray), and a RIGHT label (comma-separated list of real vendors in smaller monospace dim gray). Row 1 (top): 'Model layer' | 'Any LLM' | 'Anthropic, OpenAI, Mistral, Llama, local'. Row 2: 'Agent framework' | 'Any framework' | 'LangChain, CrewAI, Claude Agent SDK, custom'. Row 3 (middle, THIS IS THE FORSETI ROW): 'Forseti' | 'Governance boundary' | 'typed intents · deterministic policy · approvals · audit'. This row has ONE distinguishing feature only: a 1px CYAN border instead of the neutral hairline, and a very slightly darker background panel. No glow. No shield. No lock icons. The emphasis comes purely from the border colour change. Row 4: 'Workflow runner' | 'Any orchestration' | 'n8n, Temporal, Make, GitHub Actions, custom'. Row 5 (bottom): 'Real world' | 'Side-effects' | 'prod systems, money movement, external APIs, customer comms'. Between rows, thin vertical connector lines (1px, neutral gray) run down the centre of the stack from row 1 all the way to row 5. Where the connector enters row 3 from row 2, and where it exits row 3 into row 4, the line is cyan instead of gray. That is the only other cyan in the image. The whole thing should look like a page from a design doc, not from a pitch deck.">
+          The agent stack, labelled honestly — Forseti is one clean row, not a glowing centrepiece
         </div>
       </div>
     </section>
@@ -215,18 +215,18 @@ export function render() {
     <section class="cta-section" id="contact">
       <div class="container fade-in">
         <p class="section-label" style="color:var(--forseti);">Get Started</p>
-        <h2>Put one real workflow behind governed execution</h2>
-        <p>Design-partner pilot: one governed workflow, Slack approval path, policy pack, and auditable release flow.</p>
+        <h2>Bring one workflow. We&rsquo;ll tell you whether it belongs in Forseti.</h2>
+        <p>If it does, the design-partner pilot is 4&ndash;6 weeks: one governed workflow, a Slack approval path, a policy pack, and an auditable release flow. If it doesn&rsquo;t, we&rsquo;ll tell you whether Tyche or Valhalla fits better.</p>
         <div class="hero__actions">
-          <a href="mailto:contact@bitfalls.com" class="btn btn--forseti">Contact about Forseti</a>
-          <a href="/" class="btn btn--ghost">Back to suite overview</a>
+          <a href="mailto:contact@bitfalls.com" class="btn btn--forseti">Scope a Forseti pilot</a>
+          <a href="/#products" class="btn btn--ghost">Compare the suite</a>
         </div>
       </div>
     </section>
   `;
 
   return layout({
-    title: 'Caimeo Forseti — Governed Execution Gateway for AI Agents',
+    title: 'Caimeo Forseti - Governed Execution Gateway for AI Agents',
     description: 'Put every high-stakes agent action behind typed intent, deterministic policy, human approval when required, and a replayable audit trail.',
     path: '/forseti/',
     accent: 'forseti',

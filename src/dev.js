@@ -65,7 +65,7 @@ watch(srcDir, { recursive: true }, (eventType, filename) => {
   if (!filename || filename.includes('node_modules') || filename.startsWith('.')) return;
   if (debounce) clearTimeout(debounce);
   debounce = setTimeout(() => {
-    console.log(`Changed: ${filename} — rebuilding...`);
+    console.log(`Changed: ${filename} - rebuilding...`);
     try {
       execSync(`bun run ${join(ROOT, 'build.js')}`, { stdio: 'inherit', cwd: WEB });
       console.log('Rebuild complete.\n');

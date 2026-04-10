@@ -1,4 +1,4 @@
-// Caimeo — minimal client-side JS
+// Caimeo - minimal client-side JS
 (function () {
   'use strict';
 
@@ -57,6 +57,55 @@
     });
 
   }
+
+  // ---- Product hero carousels ----
+  // Note: on mobile (<=980px) the CSS stacks slides vertically and hides controls.
+  // JS still runs but its transform is ignored thanks to `transform: none !important`.
+  document.querySelectorAll('[data-product-carousel]').forEach((carousel) => {
+    const track = carousel.querySelector('[data-carousel-track]');
+    const slides = Array.from(carousel.querySelectorAll('[data-slide]'));
+    const dots = Array.from(carousel.querySelectorAll('[data-slide-to]'));
+    const prev = carousel.querySelector('[data-carousel-prev]');
+    const next = carousel.querySelector('[data-carousel-next]');
+    if (!track || slides.length === 0) return;
+
+    let index = 0;
+
+    const render = () => {
+      track.style.transform = `translateX(-${index * 100}%)`;
+      slides.forEach((slide, i) => slide.classList.toggle('is-active', i === index));
+      dots.forEach((dot, i) => {
+        dot.classList.toggle('is-active', i === index);
+        dot.setAttribute('aria-selected', i === index ? 'true' : 'false');
+      });
+      if (prev) prev.disabled = index === 0;
+      if (next) next.disabled = index === slides.length - 1;
+    };
+
+    const goTo = (i) => {
+      index = Math.max(0, Math.min(slides.length - 1, i));
+      render();
+    };
+
+    if (prev) prev.addEventListener('click', (e) => { e.stopPropagation(); goTo(index - 1); });
+    if (next) next.addEventListener('click', (e) => { e.stopPropagation(); goTo(index + 1); });
+    dots.forEach((dot, i) => {
+      dot.addEventListener('click', (e) => { e.stopPropagation(); goTo(i); });
+    });
+
+    // Keep pane-level arrow-key navigation intact: only swallow arrows when focus
+    // is inside the carousel controls, not on the pane itself.
+    carousel.addEventListener('keydown', (event) => {
+      if (!['ArrowLeft', 'ArrowRight'].includes(event.key)) return;
+      const target = event.target;
+      if (!target.closest('[data-carousel-prev], [data-carousel-next], [data-slide-to]')) return;
+      event.preventDefault();
+      event.stopPropagation();
+      goTo(index + (event.key === 'ArrowRight' ? 1 : -1));
+    });
+
+    render();
+  });
 
   // ---- FAQ accordions ----
   document.querySelectorAll('.faq-item__q').forEach(btn => {
