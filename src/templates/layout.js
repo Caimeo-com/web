@@ -15,6 +15,10 @@ export function layout({ title, description, path, accent, body, css, canonicalB
   const normalizedPath = path === '/' ? '/' : path.endsWith('/') ? path : `${path}/`;
   const canonicalUrl = `${canonicalBase}${normalizedPath}`;
   const contactEmail = 'contact@bitfalls.com';
+  const logoUrl = `${canonicalBase}/icon-512.png`;
+  const ogImageUrl = `${canonicalBase}/og-image.png`;
+  const ogImageSquareUrl = `${canonicalBase}/og-image-square.png`;
+  const socialImageAlt = 'Caimeo crest logo and wordmark on a dark background.';
   const navLinks = [
     { href: '/', label: 'Home' },
     { href: '/forseti/', label: 'Forseti' },
@@ -34,6 +38,8 @@ export function layout({ title, description, path, accent, body, css, canonicalB
         name: 'Caimeo',
         url: canonicalBase,
         description: 'Governed agent infrastructure for teams that ship real outcomes.',
+        logo: logoUrl,
+        image: [ogImageUrl, ogImageSquareUrl],
       },
       {
         '@type': 'WebSite',
@@ -42,6 +48,7 @@ export function layout({ title, description, path, accent, body, css, canonicalB
         url: canonicalBase,
         description: 'Governed agent infrastructure for teams that ship real outcomes.',
         publisher: { '@id': organizationId },
+        image: ogImageUrl,
       },
       ...(normalizedPath === '/'
         ? []
@@ -54,6 +61,7 @@ export function layout({ title, description, path, accent, body, css, canonicalB
               description,
               isPartOf: { '@id': websiteId },
               about: { '@id': organizationId },
+              primaryImageOfPage: ogImageUrl,
             },
           ]),
     ],
@@ -79,8 +87,13 @@ export function layout({ title, description, path, accent, body, css, canonicalB
   <title>${title}</title>
   <meta name="description" content="${description}">
   <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1">
+  <meta name="theme-color" content="#0a0b0f">
   <link rel="canonical" href="${canonicalUrl}">
-  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+  <link rel="icon" href="/favicon.ico" sizes="any">
+  <link rel="icon" href="/favicon-32x32.png" sizes="32x32" type="image/png">
+  <link rel="icon" href="/favicon-16x16.png" sizes="16x16" type="image/png">
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png" sizes="180x180">
+  <link rel="manifest" href="/site.webmanifest">
 
   <!-- Open Graph -->
   <meta property="og:site_name" content="Caimeo">
@@ -89,11 +102,18 @@ export function layout({ title, description, path, accent, body, css, canonicalB
   <meta property="og:description" content="${description}">
   <meta property="og:type" content="website">
   <meta property="og:url" content="${canonicalUrl}">
+  <meta property="og:image" content="${ogImageUrl}">
+  <meta property="og:image:secure_url" content="${ogImageUrl}">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="${socialImageAlt}">
 
   <!-- Twitter -->
-  <meta name="twitter:card" content="summary">
+  <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:title" content="${title}">
   <meta name="twitter:description" content="${description}">
+  <meta name="twitter:image" content="${ogImageUrl}">
+  <meta name="twitter:image:alt" content="${socialImageAlt}">
 
   <!-- Preload critical font -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -118,8 +138,16 @@ export function layout({ title, description, path, accent, body, css, canonicalB
   <header class="site-header">
     <div class="site-header__inner">
       <a href="/" class="site-logo" aria-label="Caimeo home">
-        <span class="site-logo__mark" aria-hidden="true"></span>
-        CAIMEO
+        <img
+          class="site-logo__image"
+          src="/logo-mark.png"
+          alt=""
+          width="40"
+          height="40"
+          fetchpriority="high"
+          decoding="async"
+        >
+        <span class="site-logo__text">CAIMEO</span>
       </a>
 
       <button class="nav-toggle" aria-label="Toggle navigation">
@@ -142,8 +170,15 @@ export function layout({ title, description, path, accent, body, css, canonicalB
       <div class="site-footer__inner">
         <div class="site-footer__brand">
           <div class="site-logo">
-            <span class="site-logo__mark" aria-hidden="true"></span>
-            CAIMEO
+            <img
+              class="site-logo__image"
+              src="/logo-mark.png"
+              alt=""
+              width="40"
+              height="40"
+              decoding="async"
+            >
+            <span class="site-logo__text">CAIMEO</span>
           </div>
           <p>Governed agent infrastructure for teams that ship real outcomes.</p>
         </div>

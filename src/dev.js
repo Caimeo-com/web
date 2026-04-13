@@ -36,6 +36,7 @@ const server = Bun.serve({
         json: 'application/json',
         xml: 'application/xml',
         txt: 'text/plain',
+        webmanifest: 'application/manifest+json',
         svg: 'image/svg+xml',
         png: 'image/png',
         jpg: 'image/jpeg',
