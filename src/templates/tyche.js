@@ -27,10 +27,27 @@ export function render() {
           environment where decisions, memory, and evaluator outcomes can be inspected and rerun.</p>
         </div>
 
-        <div class="img-placeholder fade-in" style="min-height:320px;max-width:900px;margin:0 auto;" role="img"
-          alt="Target dimensions: 900x320px, rendered flat (no glow, no gradients, no sparkles, no dice). Two transcript cards side by side on the dark navy page background, each ~430px wide. Each card has a 1px hairline border, a small header strip with a title, and a monospace code body styled like a terminal transcript. LEFT CARD, titled 'Lucky demo — Mar 12' in muted gray: body contains a short agent trace, one log line per row in off-white monospace: 'seed: default', 'turn 1: agent.search(\"vendor X invoice\")', 'turn 2: agent.summarize(results) → \"total: $4,200, due Mar 30\"', 'turn 3: agent.schedule_payment(...) → ✓ scheduled', 'verdict: PASS'. Underneath, a small caption in dim gray: 'Nobody wrote down the seed. Nobody can rerun it.' RIGHT CARD, titled 'Same code, rerun Mar 14' in violet, with a 1px violet border accent on the title strip only: body is the SAME trace BUT with ONE changed line, highlighted with a subtle violet left-edge marker: 'turn 2: agent.summarize(results) → \"total: $42,000, due Mar 30\"'. The last line still reads 'verdict: PASS'. Underneath, a small caption in dim gray: 'Same code. Different run. Nobody noticed the extra zero.' Below both cards, centred, a single line of body copy in slightly larger dim gray: 'This is what Tyche fixes: seeds, replay manifests, reproducible verdicts.' No chasms, no bridges, no prisms, no icons. Just two terminal cards and the quiet horror of a missed zero.">
-          Same agent. Same code. Two runs. One bug nobody noticed.
-        </div>
+        <figure class="product-visual fade-in">
+          <picture>
+            <source
+              srcset="/product/tyche-transcripts-mobile.webp"
+              media="(max-width: 640px)"
+              width="760"
+              height="1240"
+            >
+            <img
+              src="/product/tyche-transcripts.webp"
+              alt="Two transcript cards comparing a lucky Tyche demo run with a rerun where the invoice amount changes from 4,200 to 42,000."
+              aria-describedby="tyche-transcripts-desc"
+              width="1800"
+              height="640"
+              loading="lazy"
+              decoding="async"
+            >
+          </picture>
+          <p id="tyche-transcripts-desc" class="sr-only">The left transcript is titled Lucky demo, March 12. It uses seed default, searches vendor X invoice, summarizes total 4,200 dollars due March 30, schedules payment, and reports verdict PASS. The right transcript is titled Same code, rerun March 14. It has the same seed and steps, but the summary line changes to total 42,000 dollars due March 30 while the verdict still says PASS. The message below says Tyche fixes this with seeds, replay manifests, and reproducible verdicts.</p>
+          <figcaption>Same agent. Same code. Two runs. One bug nobody noticed.</figcaption>
+        </figure>
       </div>
     </section>
 
@@ -65,10 +82,27 @@ export function render() {
     <!-- ===== REPLAY BUNDLE ARTEFACT ===== -->
     <section class="diagram-section">
       <div class="container fade-in">
-        <div class="img-placeholder" style="min-height:420px;max-width:900px;margin:0 auto;" role="img"
-          alt="Target dimensions: 900x420px. A two-panel layout showing the literal deliverable of a Tyche pilot. No icons, no glows, no prisms, no seed crystals, no pipelines. TOP PANEL (~180px tall): a file-browser style tree view in monospace off-white on the dark navy page background, rendered as if copied from a 'tree' command output. Header line in dim gray: 'replay-bundles/invoice-review-v1.4/'. Body lines, using box-drawing characters (├── └──): 'manifest.json' with a dim-gray inline comment '(seed: 0xA3F1, scenario_v: 1.4)', 'transcripts/' as a sub-directory with three children indented once: 'run_01.jsonl', 'run_02.jsonl', 'run_03.jsonl', then 'state_snapshots/' as a sub-directory with indented children 'turn_00.json', 'turn_01.json … turn_12.json', then back at top level: 'scorecard.csv', 'comparison.html', 'README.md'. Thin 1px hairline border around the whole tree. A small violet label in the top-right corner of this panel reads 'the replay bundle, on disk'. BOTTOM PANEL (~220px tall): a compare-runs table with a 1px hairline border and a thin violet header row. The header row has four columns: 'strategy', 'accuracy', '$ cost', 'steps', 'failures'. Three body rows, one per strategy. Row 1: 'gpt-4o + aggressive', '0.87', '$0.43', '8', '1'. Row 2: 'claude + conservative', '0.92' (this cell has a tiny violet dot to the left marking the winner), '$1.20', '12', '0'. Row 3: 'llama-local + default', '0.71', '$0.08', '6', '3'. Table uses off-white monospace numbers and a slightly more humanist label font for the strategy column. Below the table, a small caption in dim gray, left-aligned: 'What teams get back from a Tyche pilot.' The two panels are separated by 24px of empty space. Violet is used ONLY on the two labels and the winning-row marker. Everything else is neutral. The whole image should look like two cropped screenshots from a real deliverable, not an architecture illustration.">
-          The replay bundle — file tree + compare-runs grid, exactly as delivered
-        </div>
+        <figure class="product-visual">
+          <picture>
+            <source
+              srcset="/product/tyche-replay-bundle-mobile.webp"
+              media="(max-width: 640px)"
+              width="760"
+              height="1380"
+            >
+            <img
+              src="/product/tyche-replay-bundle.webp"
+              alt="Tyche replay bundle image showing a file tree and compare-runs table with strategy, accuracy, cost, steps, and failures."
+              aria-describedby="tyche-replay-desc"
+              width="1800"
+              height="840"
+              loading="lazy"
+              decoding="async"
+            >
+          </picture>
+          <p id="tyche-replay-desc" class="sr-only">Replay bundle file tree: manifest.json with seed 0xA3F1 and scenario version 1.4, transcripts run_01 through run_03, state snapshots turn_00 and turn_01 through turn_12, scorecard.csv, comparison.html, and README.md. Compare-runs table columns are strategy, accuracy, cost, steps, and failures. gpt-4o plus aggressive scores 0.87, costs 0.43 dollars, 8 steps, 1 failure. claude plus conservative scores 0.92, costs 1.20 dollars, 12 steps, 0 failures and is marked as winner. llama-local plus default scores 0.71, costs 0.08 dollars, 6 steps, 3 failures.</p>
+          <figcaption>The replay bundle — file tree + compare-runs grid, exactly as delivered</figcaption>
+        </figure>
       </div>
     </section>
 
@@ -168,10 +202,27 @@ export function render() {
           into Forseti policy packs.</p>
         </div>
 
-        <div class="img-placeholder fade-in" style="min-height:240px;" role="img"
-          alt="Target dimensions: 900x240px. A LINEAR timeline (not a loop — loops are the single most overused B2B marketing diagram and we are deliberately not drawing one here). One horizontal time axis running the full width, rendered as a thin neutral-gray line with five equally spaced tick marks. Each tick mark has a date label below in small dim-gray monospace and a two-line checkpoint label above the line. The five checkpoints, left to right: TICK 1 — date 'Mar 02' — label 'Tyche: scenario authored / invoice-review v0.1'. This tick and label are coloured violet. TICK 2 — date 'Mar 05' — label 'Tyche: sweep complete / 24 runs, claude-conservative wins'. Violet. TICK 3 — date 'Mar 06' — label 'Forseti: policy extracted / amount ≤ $10k auto-allow; > $10k quorum 2/3'. This tick and label are coloured cyan (handoff point). TICK 4 — date 'Mar 12' — label 'Forseti: live in prod / first governed intent released'. Cyan. TICK 5 — date 'Mar 18' — label 'Tyche: incident replay / denied intent reconstructed, scenario patched'. Violet again (loops back to Tyche not via a circular arrow but via the next tick on the same linear axis). Between tick 3 and tick 4 the axis line is coloured cyan; between tick 4 and tick 5 the axis line transitions back to violet. Above the axis, small lane labels in dim gray: 'Tyche' on the left half, 'Forseti' on the right half, 'Tyche' again on the far right. Below the whole timeline, centred, a single caption in slightly larger off-white: 'One scenario. One seed. One policy. Across both products, on real dates.' No curved arrows, no circular motion, no infinity symbols. The diagram should read like a project timeline in a runbook.">
-          Two products, one timeline — how a policy actually travels from Tyche into Forseti and back
-        </div>
+        <figure class="product-visual fade-in">
+          <picture>
+            <source
+              srcset="/product/tyche-timeline-mobile.webp"
+              media="(max-width: 640px)"
+              width="760"
+              height="1400"
+            >
+            <img
+              src="/product/tyche-timeline.webp"
+              alt="Linear Tyche and Forseti timeline showing scenario authoring, sweep completion, policy extraction, production release, and incident replay."
+              aria-describedby="tyche-timeline-desc"
+              width="1800"
+              height="600"
+              loading="lazy"
+              decoding="async"
+            >
+          </picture>
+          <p id="tyche-timeline-desc" class="sr-only">Timeline: March 2, Tyche scenario authored for invoice-review version 0.1. March 5, Tyche sweep complete with 24 runs and claude-conservative winning. March 6, Forseti policy extracted: pay requires approval and payments of 5,000 dollars or more need 2 C-level approvals or 10 member approvals. March 12, Forseti live in production and first governed intent released. March 18, Tyche incident replay reconstructs a denied intent and patches the scenario.</p>
+          <figcaption>Two products, one timeline — how a policy actually travels from Tyche into Forseti and back</figcaption>
+        </figure>
       </div>
     </section>
 

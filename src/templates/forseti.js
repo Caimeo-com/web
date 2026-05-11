@@ -27,10 +27,27 @@ export function render() {
           without a control layer is a liability waiting to happen.</p>
         </div>
 
-        <div class="img-placeholder fade-in" style="min-height:320px;max-width:900px;margin:0 auto;" role="img"
-          alt="Target dimensions: 900x320px, rendered flat (no glow, no gradients). Two code cards side by side on the dark navy page background. Each card is ~430px wide, has a 1px subtle border, a dark panel background (slightly lighter than the page), a small header strip with a title, and a monospace code body. LEFT CARD, titled 'Before Forseti' in muted gray, body: a Python snippet calling slack.post_message() with channel='#payments' and text='Paid invoice 4821 for $12,400', followed immediately by stripe.charge(customer='cus_9f…', amount=1240000). Code is in a neutral off-white monospace, no syntax highlighting. Below the code, a one-line caption in small dim gray: 'No audit. No review. No verdict. The agent already moved money.' RIGHT CARD, titled 'With Forseti' in cyan, with a 1px cyan border accent on the title strip only (rest of the border is the same neutral hairline). Body: a Python snippet calling forseti.submit_intent() with a dict literal: action='payments.transfer', amount=12_400, currency='USD', recipient='cus_9f…', reason='Invoice 4821', risk='high'. Below the snippet, a comment line in cyan: '# verdict: REQUIRES_APPROVAL (finance quorum, 2-of-3)'. Below that, a one-line caption in small dim gray: 'Typed. Inspectable. Gated. Replayable.' The two cards are separated by 24px of empty space. No icons, no arrows, no bridges, no glows. The whole image should look like a cropped slide from an engineering README, not a marketing illustration.">
-          Before / After — what governed execution actually changes in the agent code
-        </div>
+        <figure class="product-visual fade-in">
+          <picture>
+            <source
+              srcset="/product/forseti-before-after-mobile.webp"
+              media="(max-width: 640px)"
+              width="760"
+              height="1400"
+            >
+            <img
+              src="/product/forseti-before-after.webp"
+              alt="Before and after code comparison showing direct Slack and Stripe transfer calls replaced by a Forseti typed pay intent with an approval verdict."
+              aria-describedby="forseti-before-after-desc"
+              width="1800"
+              height="640"
+              loading="lazy"
+              decoding="async"
+            >
+          </picture>
+          <p id="forseti-before-after-desc" class="sr-only">Before Forseti, the agent posts to the payments Slack channel and calls stripe.transfer for invoice 4821 without review. With Forseti, the agent submits schema version 0.1, intent Pay invoice 4821, action type pay, risk high, recipient Microsoft, amount_usd 7500, and currency USD. Forseti returns REQUIRES_APPROVAL with 2 c_level or 10 member approvals.</p>
+          <figcaption>Before / After — what governed execution actually changes in the agent code</figcaption>
+        </figure>
       </div>
     </section>
 
@@ -65,10 +82,27 @@ export function render() {
     <!-- ===== SEQUENCE DIAGRAM ===== -->
     <section class="diagram-section">
       <div class="container fade-in">
-        <div class="img-placeholder" style="min-height:380px;max-width:900px;margin:0 auto;" role="img"
-          alt="Target dimensions: 900x380px. A UML-style sequence diagram on the dark navy page background, drawn as if on a whiteboard. No glows, no icons, no gradients. Four vertical lanes across the top, equally spaced, each with a small header label in neutral off-white: 'Agent', 'Forseti', 'Slack approvers', 'n8n action plane'. Each lane has a thin dashed vertical lifeline dropping down to the bottom of the image. Horizontal message arrows between lanes from top to bottom, each labelled in small monospace text. Message 1 (Agent to Forseti): solid arrow labelled 'submit_intent(payments.transfer, $12,400)'. Message 2 (Forseti self-call, small loop arrow on the Forseti lane): labelled 'policy_eval() → REQUIRES_APPROVAL (amount > $10k)'. Message 3 (Forseti to Slack approvers): solid arrow labelled 'approval_request(quorum=2/3)'. Message 4 (Slack approvers to Forseti): dashed return arrow labelled 'approve(alice)'. Message 5 (Slack approvers to Forseti): dashed return arrow labelled 'approve(bob)'. Message 6 (Forseti to n8n action plane): THICK solid arrow labelled 'release(intent_id)' — this is the visual centerpiece of the gate, slightly heavier stroke than the other arrows, and coloured cyan. Message 7 (n8n action plane to Forseti): dashed return arrow labelled 'execution_complete'. Message 8 (Forseti self-call, small loop arrow): labelled 'audit.write(trace_id=t_8f21…)'. Right-margin annotations in dim gray: next to Message 3, small label 'async'; next to Message 6, small label 'P50: 2m 14s'; at the very bottom, a small row 'audit hash: 0x4b7e…a1' in dim gray monospace. Colour: the cyan accent is used ONLY on the release arrow, the audit hash row, and the Forseti lane header. Everything else is off-white on navy. The visual language should be unmistakably 'engineer-drawn sequence diagram', not a marketing illustration.">
-          One real intent, end to end — sequence through Forseti
-        </div>
+        <figure class="product-visual">
+          <picture>
+            <source
+              srcset="/product/forseti-sequence-mobile.webp"
+              media="(max-width: 640px)"
+              width="760"
+              height="1580"
+            >
+            <img
+              src="/product/forseti-sequence.webp"
+              alt="Sequence diagram showing an agent submitting a pay intent to Forseti, approval in Slack, release to n8n, and audit writing."
+              aria-describedby="forseti-sequence-desc"
+              width="1800"
+              height="760"
+              loading="lazy"
+              decoding="async"
+            >
+          </picture>
+          <p id="forseti-sequence-desc" class="sr-only">Sequence: Agent submits pay intent amount_usd 7500 to Forseti. Forseti evaluates policy and returns REQUIRES_APPROVAL because pay requires approval and the amount is above the 1000 dollar policy limit. Forseti sends an approval request requiring either 2 c_level approvals or 10 member approvals. The CFO and COO approve. Forseti releases the intent to the n8n action plane, records execution_complete, and writes audit trace t_8f21 with hash 0x4b7e...a1.</p>
+          <figcaption>One real intent, end to end — sequence through Forseti</figcaption>
+        </figure>
       </div>
     </section>
 
@@ -167,10 +201,27 @@ export function render() {
           from the same typed-intent boundary.</p>
         </div>
 
-        <div class="img-placeholder fade-in" style="min-height:260px;" role="img"
-          alt="Target dimensions: 900x260px. A clean five-row layered stack diagram, like a system architecture page in engineering documentation. No glows, no 3D, no pulses, no shields. Five equal-height horizontal rows, each row is a simple rectangle with a 1px hairline border on the dark navy page background. Each row has three columns of text: a LEFT label (layer name, bold off-white), a CENTRE label (one-line role, dim gray), and a RIGHT label (comma-separated list of real vendors in smaller monospace dim gray). Row 1 (top): 'Model layer' | 'Any LLM' | 'Anthropic, OpenAI, Mistral, Llama, local'. Row 2: 'Agent framework' | 'Any framework' | 'LangChain, CrewAI, Claude Agent SDK, custom'. Row 3 (middle, THIS IS THE FORSETI ROW): 'Forseti' | 'Governance boundary' | 'typed intents · deterministic policy · approvals · audit'. This row has ONE distinguishing feature only: a 1px CYAN border instead of the neutral hairline, and a very slightly darker background panel. No glow. No shield. No lock icons. The emphasis comes purely from the border colour change. Row 4: 'Workflow runner' | 'Any orchestration' | 'n8n, Temporal, Make, GitHub Actions, custom'. Row 5 (bottom): 'Real world' | 'Side-effects' | 'prod systems, money movement, external APIs, customer comms'. Between rows, thin vertical connector lines (1px, neutral gray) run down the centre of the stack from row 1 all the way to row 5. Where the connector enters row 3 from row 2, and where it exits row 3 into row 4, the line is cyan instead of gray. That is the only other cyan in the image. The whole thing should look like a page from a design doc, not from a pitch deck.">
-          The agent stack, labelled honestly — Forseti is one clean row, not a glowing centrepiece
-        </div>
+        <figure class="product-visual fade-in">
+          <picture>
+            <source
+              srcset="/product/forseti-stack-mobile.webp"
+              media="(max-width: 640px)"
+              width="760"
+              height="1040"
+            >
+            <img
+              src="/product/forseti-stack.webp"
+              alt="Five-row agent stack diagram showing Forseti as the governance boundary between agent frameworks and workflow runners."
+              aria-describedby="forseti-stack-desc"
+              width="1800"
+              height="520"
+              loading="lazy"
+              decoding="async"
+            >
+          </picture>
+          <p id="forseti-stack-desc" class="sr-only">Stack rows from top to bottom: Model layer, any LLM, Anthropic, OpenAI, Mistral, Llama, local. Agent framework, any framework, LangChain, CrewAI, Claude Agent SDK, custom. Forseti, governance boundary, typed intents, deterministic policy, approvals, audit. Workflow runner, any orchestration, n8n, Temporal, Make, GitHub Actions, custom. Real world, side effects, production systems, money movement, external APIs, customer communications.</p>
+          <figcaption>The agent stack, labelled honestly — Forseti is one clean row, not a glowing centrepiece</figcaption>
+        </figure>
       </div>
     </section>
 

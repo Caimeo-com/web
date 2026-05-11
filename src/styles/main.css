@@ -1144,6 +1144,31 @@ body > .site-nav {
   background: linear-gradient(135deg, rgba(255,255,255,0.02), transparent);
 }
 
+.product-visual {
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+.product-visual picture {
+  display: block;
+}
+
+.product-visual img {
+  width: 100%;
+  height: auto;
+  border: 1px solid rgba(255,255,255,0.08);
+  border-radius: 12px;
+  background: var(--bg);
+}
+
+.product-visual figcaption {
+  margin-top: 0.85rem;
+  color: var(--text-dim);
+  font-size: 0.85rem;
+  line-height: 1.5;
+  text-align: center;
+}
+
 /* ===== TRUST BAR ===== */
 .trust-bar {
   display: flex;
@@ -1220,5 +1245,15 @@ body > .site-nav {
   .hero { padding: 8rem 1.5rem 4rem; }
   .section { padding: 4rem 0; }
   .container { padding: 0 1.5rem; }
+  .product-visual {
+    padding-bottom: 0;
+  }
+  .product-visual img {
+    width: 100%;
+    max-width: 100%;
+  }
+  .product-visual figcaption {
+    text-align: left;
+  }
   .product-pane__proof-grid { grid-template-columns: 1fr; }
 }
