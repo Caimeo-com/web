@@ -23,6 +23,7 @@ export function layout({ title, description, path, accent, body, css, canonicalB
     { href: '/', label: 'Home' },
     { href: '/forseti/', label: 'Forseti' },
     { href: '/tyche/', label: 'Tyche' },
+    { href: '/brainstack/', label: 'Brainstack' },
     { label: 'Valhalla', badge: 'Coming soon', disabled: true },
   ];
 
@@ -128,9 +129,9 @@ export function layout({ title, description, path, accent, body, css, canonicalB
 </head>
 <body>
 
-  <div class="nav-overlay"></div>
+  <div class="nav-overlay" id="nav-overlay"></div>
 
-  <nav class="site-nav" role="navigation" aria-label="Main navigation">
+  <nav class="site-nav" id="mobile-nav" role="navigation" aria-label="Main navigation" aria-hidden="true" inert>
     ${navLinks.map(renderNavLink).join('\n    ')}
     <a href="mailto:${contactEmail}" class="btn btn--primary">Contact</a>
   </nav>
@@ -150,7 +151,7 @@ export function layout({ title, description, path, accent, body, css, canonicalB
         <span class="site-logo__text">CAIMEO</span>
       </a>
 
-      <button class="nav-toggle" aria-label="Toggle navigation">
+      <button class="nav-toggle" aria-label="Toggle navigation" aria-controls="mobile-nav" aria-expanded="false">
         <span></span><span></span><span></span>
       </button>
 

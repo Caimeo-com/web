@@ -8,17 +8,76 @@
   const nav = document.querySelector('body > .site-nav');
   const overlay = document.querySelector('.nav-overlay');
 
-  if (toggle) {
-    toggle.addEventListener('click', () => {
-      nav.classList.toggle('is-open');
-      overlay.classList.toggle('is-open');
-    });
-    if (overlay) {
-      overlay.addEventListener('click', () => {
-        nav.classList.remove('is-open');
-        overlay.classList.remove('is-open');
+  if (toggle && nav) {
+    const getNavControls = () => Array.from(
+      nav.querySelectorAll('a[href], button:not([disabled]), [tabindex]')
+    );
+    const setNavControlsTabbable = (isTabbable) => {
+      getNavControls().forEach((control) => {
+        if (isTabbable) {
+          const previous = control.dataset.navTabindex;
+          if (previous === 'none') control.removeAttribute('tabindex');
+          else if (previous) control.setAttribute('tabindex', previous);
+          delete control.dataset.navTabindex;
+          return;
+        }
+
+        if (!control.dataset.navTabindex) {
+          control.dataset.navTabindex = control.hasAttribute('tabindex')
+            ? control.getAttribute('tabindex')
+            : 'none';
+        }
+        control.setAttribute('tabindex', '-1');
       });
-    }
+    };
+    const getFocusableNavItems = () => getNavControls().filter(control => control.tabIndex >= 0);
+
+    const closeNav = () => {
+      const restoreFocusToToggle = nav.contains(document.activeElement);
+      nav.classList.remove('is-open');
+      nav.setAttribute('aria-hidden', 'true');
+      nav.setAttribute('inert', '');
+      setNavControlsTabbable(false);
+      toggle.setAttribute('aria-expanded', 'false');
+      if (overlay) overlay.classList.remove('is-open');
+      if (restoreFocusToToggle) toggle.focus();
+    };
+    const openNav = () => {
+      nav.classList.add('is-open');
+      nav.setAttribute('aria-hidden', 'false');
+      nav.removeAttribute('inert');
+      setNavControlsTabbable(true);
+      toggle.setAttribute('aria-expanded', 'true');
+      if (overlay) overlay.classList.add('is-open');
+      const firstItem = getFocusableNavItems()[0];
+      if (firstItem) firstItem.focus();
+    };
+
+    setNavControlsTabbable(nav.classList.contains('is-open'));
+
+    toggle.addEventListener('click', () => {
+      if (nav.classList.contains('is-open')) closeNav();
+      else openNav();
+    });
+    if (overlay) overlay.addEventListener('click', closeNav);
+    nav.querySelectorAll('a').forEach(link => link.addEventListener('click', closeNav));
+    document.addEventListener('keydown', (event) => {
+      if (event.key === 'Escape') closeNav();
+      if (event.key !== 'Tab' || !nav.classList.contains('is-open')) return;
+
+      const focusable = getFocusableNavItems();
+      if (focusable.length === 0) return;
+      const first = focusable[0];
+      const last = focusable[focusable.length - 1];
+
+      if (event.shiftKey && document.activeElement === first) {
+        event.preventDefault();
+        last.focus();
+      } else if (!event.shiftKey && document.activeElement === last) {
+        event.preventDefault();
+        first.focus();
+      }
+    });
   }
 
   // ---- Product accordion ----
@@ -108,13 +167,33 @@
   });
 
   // ---- FAQ accordions ----
-  document.querySelectorAll('.faq-item__q').forEach(btn => {
+  document.querySelectorAll('.faq-item__q').forEach((btn, index) => {
+    const item = btn.closest('.faq-item');
+    const panel = item ? item.querySelector('.faq-item__a') : null;
+    if (!item || !panel) return;
+
+    const panelId = panel.id || `faq-panel-${index + 1}`;
+    panel.id = panelId;
+    btn.setAttribute('aria-controls', panelId);
+
+    const setOpen = (nextItem, isOpen) => {
+      const nextBtn = nextItem.querySelector('.faq-item__q');
+      const nextPanel = nextItem.querySelector('.faq-item__a');
+      nextItem.classList.toggle('is-open', isOpen);
+      if (nextBtn) nextBtn.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+      if (nextPanel) {
+        nextPanel.hidden = !isOpen;
+        nextPanel.setAttribute('aria-hidden', isOpen ? 'false' : 'true');
+      }
+    };
+
+    setOpen(item, item.classList.contains('is-open'));
+
     btn.addEventListener('click', () => {
-      const item = btn.closest('.faq-item');
       const wasOpen = item.classList.contains('is-open');
       // Close all in same group
-      item.parentElement.querySelectorAll('.faq-item').forEach(el => el.classList.remove('is-open'));
-      if (!wasOpen) item.classList.add('is-open');
+      item.parentElement.querySelectorAll('.faq-item').forEach(el => setOpen(el, false));
+      if (!wasOpen) setOpen(item, true);
     });
   });
 

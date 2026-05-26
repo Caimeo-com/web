@@ -30,6 +30,7 @@ const pages = [
   { module: './templates/index.js', out: 'index.html' },
   { module: './templates/forseti.js', out: 'forseti/index.html' },
   { module: './templates/tyche.js', out: 'tyche/index.html' },
+  { module: './templates/brainstack.js', out: 'brainstack/index.html' },
 ];
 
 for (const page of pages) {
@@ -43,7 +44,7 @@ for (const page of pages) {
 
 // Generate sitemap.xml
 const baseUrl = 'https://caimeo.com';
-const urls = ['/', '/forseti/', '/tyche/'];
+const urls = ['/', '/forseti/', '/tyche/', '/brainstack/'];
 const sitemap = `<?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 ${urls.map(u => `  <url><loc>${baseUrl}${u}</loc></url>`).join('\n')}
