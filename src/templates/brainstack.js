@@ -7,17 +7,18 @@ export function render() {
       <span class="hero__label">Caimeo Brainstack</span>
       <h1>Brainstack</h1>
       <p class="hero__sub">
-        Share context between AI coding tools, keep the source of truth in git,
-        and run Codex or Claude on private machines without losing track of what happened.
+        Shared memory and operational context for AI agents running on your own machines.
+        Brainstack turns a git-backed brain into searchable, reusable context for Codex,
+        Claude, Cursor, scripts, Telegram, and private workers.
       </p>
       <div class="hero__actions">
-        <a href="#how-it-works" class="btn btn--brainstack">See the workflow</a>
-        <a href="#install" class="btn btn--ghost">Review single-node path</a>
+        <a href="#how-it-works" class="btn btn--brainstack">See how it works</a>
+        <a href="#install" class="btn btn--ghost">Deploy Brainstack</a>
       </div>
       <ul class="brainstack-hero-points" aria-label="Brainstack outcomes">
-        <li>One git-backed memory for agent tools</li>
-        <li>One CLI for install, health, backup, and recovery</li>
-        <li>Optional Telegram control, private by default</li>
+        <li>One shared brain that grows as work happens</li>
+        <li>Same context for Codex, Claude, Cursor, and scripts</li>
+        <li>Private control across Linux, Mac, Telegram, and tailnet workers</li>
       </ul>
     </section>
 
@@ -42,6 +43,7 @@ export function render() {
               decoding="async"
             >
           </picture>
+          <figcaption><span class="simulation-label">Simulated product view</span> Brainstack operator view with doctor output, shared-brain search, worker status, and private tailnet state.</figcaption>
           <p id="brainstack-hero-desc" class="sr-only">Brainstack product view with an operator panel, a shared-brain repo and search service, optional telemux, three tailnet workers, doctor output, search results for runbooks, and worker status rows.</p>
         </figure>
       </div>
@@ -52,8 +54,8 @@ export function render() {
       <div class="container">
         <div class="section__header fade-in">
           <p class="section-label" style="color:var(--brainstack);">What it is</p>
-          <h2>Shared memory without giving up local control</h2>
-          <p>Brainstack gives agent tools a durable place to remember what happened and find it again. The source of truth is a git repo with markdown, skills, transcripts, and artifacts. Brainstack adds fast local search, install tooling, health checks, and optional worker routing.</p>
+          <h2>A private shared brain for tools and machines</h2>
+          <p>Brainstack gives agent tools a durable place to remember what happened, save useful context, and find it again. The source of truth is a git repo with markdown, skills, transcripts, and artifacts. Brainstack adds local search, write paths, health checks, client bootstrap, optional Telegram control, file relay, and worker routing.</p>
         </div>
 
         <div class="brainstack-split fade-in">
@@ -63,9 +65,9 @@ export function render() {
           </div>
           <ul class="brainstack-facts" aria-label="Brainstack facts">
             <li><strong>braind</strong><span>Local service that lets tools search and read the shared brain.</span></li>
-            <li><strong>brainctl</strong><span>CLI for install, upgrades, health checks, backup, and recovery.</span></li>
-            <li><strong>client bootstrap</strong><span>Codex, Claude, and Cursor get the same shared-brain instructions.</span></li>
-            <li><strong>telemux</strong><span>Optional Telegram topics mapped to durable Codex or Claude contexts.</span></li>
+            <li><strong>brainctl</strong><span>CLI for provisioning, enrollment, health checks, backups, recovery, and file relay.</span></li>
+            <li><strong>client bootstrap</strong><span>Mac and Linux machines can give Codex, Claude, and Cursor the same shared-brain guidance.</span></li>
+            <li><strong>telemux</strong><span>Optional Telegram topics mapped to durable work contexts and file delivery.</span></li>
           </ul>
         </div>
       </div>
@@ -103,19 +105,34 @@ export function render() {
     <section class="section" id="install">
       <div class="container">
         <div class="section__header fade-in">
-          <p class="section-label" style="color:var(--brainstack);">Install</p>
-          <h2>Linux single-node path</h2>
-          <p>This is the Linux/systemd control-host path. Clone the open-source Brainstack repo to <code>~/brainstack</code>, generate a config, smoke-test it, review it, and only then install services.</p>
+          <p class="section-label" style="color:var(--brainstack);">Deploy</p>
+          <h2>Start with the shared brain, then add machines</h2>
+          <p>The core Brainstack path is a private control host running <code>braind</code> over a shared-brain repo. After that, <code>brainctl</code> can enroll Mac or Linux clients, bootstrap harness instructions, check workers, and optionally connect Telegram through telemux.</p>
+        </div>
+
+        <div class="brainstack-role-split fade-in" aria-label="Choose your Brainstack install path">
+          <a href="#control-host-install">
+            <strong>1. Stand up Brainstack</strong>
+            <span>Install <code>braind</code> on a private control host tied to the shared-brain repo.</span>
+          </a>
+          <a href="#client-install">
+            <strong>2. Enroll clients</strong>
+            <span>Add Mac or Linux machines; the Mac binary path avoids Bun and source checkout.</span>
+          </a>
+          <a href="#telegram-file-send">
+            <strong>3. Add control surfaces</strong>
+            <span>Enable Telegram topics, file relay, and workers only when they are useful.</span>
+          </a>
         </div>
 
         <div class="brainstack-prereqs fade-in">
-          <strong>Before these commands:</strong>
-          <span>Read the <a href="https://github.com/Caimeo-com/brainstack/blob/main/docs/fresh-machine-install.md">fresh-machine install guide</a> first. Install Bun, Git, OpenSSH, Tailscale, <code>sshd</code>, and the selected harness CLI. The single-node/control provision path requires passwordless sudo and runs the harness sudo proof by default. macOS clients should use the <code>client-macos</code> bootstrap path instead of <code>systemctl</code>.</span>
+          <strong>Before you start:</strong>
+          <span>The control host needs Bun, Git, OpenSSH, Tailscale, a selected harness, and the shared-brain repo. Client machines need Git, SSH, Tailscale, and the harness they will run. macOS clients can use the compiled <code>brainctl</code> installer without Bun or a Brainstack source checkout. Read the <a href="https://github.com/Caimeo-com/brainstack/blob/main/docs/fresh-machine-install.md">fresh-machine guide</a> and the <a href="https://github.com/Caimeo-com/brainstack/blob/main/docs/quickstart-client-macos.md">Mac client quickstart</a> for the full flow.</span>
         </div>
 
-        <div class="brainstack-install fade-in">
+        <div class="brainstack-install fade-in" id="control-host-install">
           <div class="code-card">
-            <h3>1. Generate config</h3>
+            <h3>1. Generate control-host config</h3>
             <pre><code>git clone https://github.com/Caimeo-com/brainstack ~/brainstack
 cd ~/brainstack
 bun install --frozen-lockfile
@@ -125,52 +142,95 @@ bun run packages/brainctl/src/main.ts provision \\
   --harness codex</code></pre>
           </div>
           <div class="code-card">
-            <h3>2. Smoke-test in /tmp</h3>
-            <pre><code>cd ~/brainstack
-bun run packages/brainctl/src/main.ts smoke \\
+            <h3>2. Smoke-test, install, verify</h3>
+            <pre><code>bun run packages/brainctl/src/main.ts smoke \\
   --profile single-node \\
-  --config ~/.config/brainstack/brainstack.yaml</code></pre>
-          </div>
-          <div class="code-card">
-            <h3>3. Review, then install</h3>
-            <pre><code>cd ~/brainstack
+  --config ~/.config/brainstack/brainstack.yaml
+
 less ~/.config/brainstack/brainstack.yaml
 bun run packages/brainctl/src/main.ts init \\
   --profile single-node \\
   --config ~/.config/brainstack/brainstack.yaml
 systemctl --user daemon-reload
 systemctl --user enable --now braind.service
-loginctl enable-linger "$USER"</code></pre>
-          </div>
-          <div class="code-card">
-            <h3>4. Verify and upgrade later</h3>
-            <pre><code>cd ~/brainstack
-bun run packages/brainctl/src/main.ts doctor \\
-  --config ~/.config/brainstack/brainstack.yaml
-curl -fsS http://127.0.0.1:8080/healthz
-curl -fsS http://127.0.0.1:8080/readyz
+loginctl enable-linger "$USER"
 
-# Later product updates:
-bun run packages/brainctl/src/main.ts upgrade \\
-  --profile single-node \\
-  --config ~/.config/brainstack/brainstack.yaml
-systemctl --user daemon-reload
-systemctl --user restart braind.service</code></pre>
+bun run packages/brainctl/src/main.ts doctor \\
+  --config ~/.config/brainstack/brainstack.yaml</code></pre>
           </div>
+        </div>
+
+        <div class="brainstack-note fade-in">
+          <strong>What this gives you:</strong>
+          <span>A private shared-brain service, a versioned CLI, deterministic runtime files, and a doctor baseline before clients, Telegram topics, or remote workers are added.</span>
         </div>
 
         <figure class="product-visual product-visual--wide product-visual--simulated brainstack-install-shot fade-in">
           <img
             src="/product/brainstack-install.webp"
-            alt="Brainstack install workflow screen with four panels: generate config, smoke-test config, review and install, verify and activate."
+            alt="Brainstack control-host install workflow screen with four panels: generate config, smoke-test config, review and install, verify and activate."
             aria-describedby="brainstack-install-desc"
             width="1672"
             height="941"
             loading="lazy"
             decoding="async"
           >
-          <p id="brainstack-install-desc" class="sr-only">Install screen showing the same high-level flow as the commands above: generate config, smoke-test the generated config, review and install user services, verify health, and activate later runtime updates.</p>
+          <figcaption><span class="simulation-label">Simulated product view</span> Control-host setup flow for Brainstack admins building <code>braind</code> and runtime services.</figcaption>
+          <p id="brainstack-install-desc" class="sr-only">Control-host install screen showing the high-level service setup flow: generate config, smoke-test the generated config, review and install user services, verify health, and activate later runtime updates.</p>
         </figure>
+
+        <details class="brainstack-secondary-install fade-in" id="client-install">
+          <summary><h3>Enroll Mac and Linux client machines</h3></summary>
+          <p>Create a private invite on the control host, then hand the <code>bs1_...</code> value to the client operator over a private channel. The invite can carry shared-brain config, an optional import token, pinned SSH host keys, and control-host details for file relay. macOS gets the lowest-friction binary path; Linux clients can use the same config model or a source-run profile.</p>
+          <div class="brainstack-install">
+            <div class="code-card">
+              <h3>Create the invite</h3>
+              <pre><code>brainctl invite create \\
+  --config ~/.config/brainstack/brainstack.yaml \\
+  --import-token-file ~/brain-import-token.txt \\
+  --ssh-known-hosts-file ~/.config/brainstack/ssh_known_hosts \\
+  --control-ssh operator@brain-control \\
+  --control-repo ~/brainstack</code></pre>
+            </div>
+            <div class="code-card">
+              <h3>On macOS, install brainctl and enroll</h3>
+              <pre><code># After your operator picks or publishes a Brainstack release:
+BASE=https://github.com/Caimeo-com/brainstack
+RELEASE_TAG=v0.0.0-preview
+REL="releases/download/$RELEASE_TAG/install.sh"
+curl -fsSL "$BASE/$REL" | sh
+
+# Paste the bs1_... invite your operator gave you.</code></pre>
+            </div>
+            <div class="code-card">
+              <h3>Verify any enrolled client</h3>
+              <pre><code>brainctl doctor --config ~/.config/brainstack/brainstack.yaml</code></pre>
+            </div>
+          </div>
+        </details>
+
+        <details class="brainstack-secondary-install fade-in" id="telegram-file-send">
+          <summary><h3>Optional: Telegram control and file relay</h3></summary>
+          <p>When telemux is enabled on the control host and a Telegram control chat or context exists, enrolled machines can stream files to telemux and receive them in Telegram without storing Telegram bot secrets locally. Telegram is a control surface on top of Brainstack, not a requirement for the shared brain.</p>
+          <div class="brainstack-install">
+            <div class="code-card">
+              <h3>Enable telemux on the control host</h3>
+# After enabling telemux in brainstack.yaml:
+bun run packages/brainctl/src/main.ts apply-runtime \\
+  --config ~/.config/brainstack/brainstack.yaml
+vi ~/.config/brainstack/telemux.secrets.env
+systemctl --user enable --now telemux.service</code></pre>
+            </div>
+            <div class="code-card">
+              <h3>Send a file from an enrolled machine</h3>
+              <pre><code>brainctl telegram send-file \\
+  --config ~/.config/brainstack/brainstack.yaml \\
+  --file ~/Downloads/report.pdf \\
+  --caption "Report from my machine"</code></pre>
+            </div>
+          </div>
+        </details>
+
       </div>
     </section>
 
@@ -200,6 +260,10 @@ systemctl --user restart braind.service</code></pre>
             <strong>Keep workers on the tailnet</strong>
             <span>Use normal OpenSSH over Tailscale, pinned host keys, and <code>doctor --workers</code> before dispatching jobs.</span>
           </div>
+          <div class="brainstack-trust-card">
+            <strong>Keep bot secrets on control</strong>
+            <span>Client file send uses SSH to reach telemux. Telegram provider credentials stay on the control host, not on every enrolled machine.</span>
+          </div>
         </div>
       </div>
     </section>
@@ -209,8 +273,8 @@ systemctl --user restart braind.service</code></pre>
       <div class="container">
         <div class="section__header fade-in">
           <p class="section-label" style="color:var(--brainstack);">Telegram control</p>
-          <h2>A topic becomes a durable work context</h2>
-          <p>Bind a Telegram topic to a host, scratch space, or repo. After that, messages from the allowed user can resume the stored Codex or Claude session for that context.</p>
+          <h2>A topic becomes a durable work context and file drop</h2>
+          <p>Bind a Telegram topic to a host, scratch space, or repo. After that, messages from the allowed user can resume the stored Codex or Claude session, and enrolled machines can send files back to your phone through the control host.</p>
         </div>
 
         <figure class="product-visual product-visual--wide product-visual--simulated fade-in">
@@ -231,25 +295,36 @@ systemctl --user restart braind.service</code></pre>
               decoding="async"
             >
           </picture>
+          <figcaption><span class="simulation-label">Simulated product view</span> Telegram topic control for a private Brainstack context.</figcaption>
           <p id="brainstack-telegram-desc" class="sr-only">Telegram-style interface with an ops-worker topic. The operator checks workers and runs a disk-pressure check on build-ubuntu. Brainstack replies with worker health, Codex working state, and a final disk-pressure summary.</p>
         </figure>
 
-        <div class="brainstack-command-grid fade-in">
-          <div class="brainstack-command">
-            <code>/newctx ops-worker control host</code>
-            <span>Create or bind a reusable topic to a machine context.</span>
+        <div class="brainstack-command-panel fade-in">
+          <h3>From Telegram</h3>
+          <div class="brainstack-command-grid">
+            <div class="brainstack-command">
+              <code>/newctx ops-worker control host</code>
+              <span>Create or bind a reusable topic to a machine context.</span>
+            </div>
+            <div class="brainstack-command">
+              <code>/workers</code>
+              <span>Check worker reachability, outbox state, and harness readiness.</span>
+            </div>
+            <div class="brainstack-command">
+              <code>/run check the deploy logs</code>
+              <span>Send one job into the stored harness session for that topic.</span>
+            </div>
+            <div class="brainstack-command">
+              <code>/crons</code>
+              <span>List scheduled reminders or proactive Codex jobs owned by telemux.</span>
+            </div>
           </div>
-          <div class="brainstack-command">
-            <code>/workers</code>
-            <span>Check worker reachability, outbox state, and harness readiness.</span>
-          </div>
-          <div class="brainstack-command">
-            <code>/run check the deploy logs</code>
-            <span>Send one job into the stored harness session for that topic.</span>
-          </div>
-          <div class="brainstack-command">
-            <code>/crons</code>
-            <span>List scheduled reminders or proactive Codex jobs owned by telemux.</span>
+          <h3>From an enrolled machine</h3>
+          <div class="brainstack-command-grid brainstack-command-grid--single">
+            <div class="brainstack-command">
+              <code>brainctl telegram send-file --config ~/.config/brainstack/brainstack.yaml --file ~/Downloads/report.pdf</code>
+              <span>Stream a local file over SSH to telemux so Telegram receives it without client-side bot secrets.</span>
+            </div>
           </div>
         </div>
       </div>
@@ -281,8 +356,8 @@ systemctl --user restart braind.service</code></pre>
           <div class="proof-point">
             <div class="proof-point__icon" style="background:var(--brainstack-glow);color:var(--brainstack);">&#9635;</div>
             <div>
-              <h4>Offline outbox</h4>
-              <p>If the local Brainstack service is temporarily unavailable, client tools can queue saved items and flush them later.</p>
+              <h4>Machine-to-Telegram file relay</h4>
+              <p>Send yourself a PDF, log, image, or build artifact from an enrolled machine; the file streams through the control host's telemux path.</p>
             </div>
           </div>
           <div class="proof-point">
@@ -323,6 +398,7 @@ systemctl --user restart braind.service</code></pre>
             loading="lazy"
             decoding="async"
           >
+          <figcaption><span class="simulation-label">Simulated architecture view</span> Private shared-brain architecture with optional Telegram control and tailnet workers.</figcaption>
           <p id="brainstack-architecture-desc" class="sr-only">Architecture diagram with agent tools on the left, brainctl and braind in the middle, the shared-brain git repository as the memory source, optional Telegram control, and private workers on the tailnet.</p>
         </figure>
       </div>
@@ -350,9 +426,21 @@ systemctl --user restart braind.service</code></pre>
             </div></div>
           </div>
           <div class="faq-item">
+            <button class="faq-item__q">Do client machines need Bun?</button>
+            <div class="faq-item__a"><div class="faq-item__a__inner">
+              Ordinary Mac clients can use a compiled <code>brainctl</code> binary with the client bootstrap assets embedded, so they do not need Bun or a Brainstack source checkout. Control hosts and source-run workers still need Bun because they run Brainstack services from source.
+            </div></div>
+          </div>
+          <div class="faq-item">
             <button class="faq-item__q">Do we need Telegram?</button>
             <div class="faq-item__a"><div class="faq-item__a__inner">
               No. The core shared-brain service and brainctl CLI work without telemux. Telegram is for operators who want phone-friendly control topics and scheduled routines.
+            </div></div>
+          </div>
+          <div class="faq-item">
+            <button class="faq-item__q">Can BrainCTL send a file to Telegram?</button>
+            <div class="faq-item__a"><div class="faq-item__a__inner">
+              Yes, when telemux is enabled and the invite includes the control-host SSH config. <code>brainctl telegram send-file</code> streams the file over SSH to the control host and lets telemux deliver it. The command rejects symlinks, oversized files, and sensitive-looking filenames unless you explicitly override the guard.
             </div></div>
           </div>
           <div class="faq-item">
@@ -370,7 +458,7 @@ systemctl --user restart braind.service</code></pre>
       <div class="container fade-in">
         <p class="section-label" style="color:var(--brainstack);">Get started</p>
         <h2>Bring one private machine and one shared-brain repo.</h2>
-        <p>That is enough for the first pass: install Brainstack, prove doctor is clean, connect one harness, then decide whether Telegram and remote workers are worth adding.</p>
+        <p>That is enough for the first pass: bring up one control host, connect the shared-brain repo, prove doctor is clean, then decide which Mac, Linux, Telegram, and worker surfaces are worth adding.</p>
         <div class="hero__actions">
           <a href="mailto:contact@bitfalls.com" class="btn btn--brainstack">Talk about Brainstack</a>
           <a href="/#products" class="btn btn--ghost">Compare the suite</a>
@@ -380,8 +468,8 @@ systemctl --user restart braind.service</code></pre>
   `;
 
   return layout({
-    title: 'Caimeo Brainstack - Shared Brain and Telegram Control Plane',
-    description: 'Brainstack is a private shared-brain service, brainctl installer, and optional Telegram control plane for Codex, Claude, Cursor, and tailnet workers.',
+    title: 'Caimeo Brainstack - Shared Brain and Agent Context Engine',
+    description: 'Brainstack is a private shared-brain service and context engine with local search, brainctl operations, optional Telegram control, file relay, and tailnet workers for Codex, Claude, and Cursor.',
     path: '/brainstack/',
     accent: 'brainstack',
     body,

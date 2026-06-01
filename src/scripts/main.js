@@ -197,6 +197,22 @@
     });
   });
 
+  // ---- Deep-linked details panels ----
+  const openHashDetails = () => {
+    if (!window.location.hash) return;
+    const id = window.location.hash.slice(1);
+    let target;
+    try {
+      target = document.getElementById(decodeURIComponent(id));
+    } catch (_) {
+      target = document.getElementById(id);
+    }
+    const details = target ? target.closest('details') : null;
+    if (details) details.open = true;
+  };
+  openHashDetails();
+  window.addEventListener('hashchange', openHashDetails);
+
   // ---- Scroll-triggered fade-in ----
   const observer = new IntersectionObserver(
     (entries) => {
