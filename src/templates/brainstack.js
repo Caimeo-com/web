@@ -66,7 +66,7 @@ export function render() {
           <ul class="brainstack-facts" aria-label="Brainstack facts">
             <li><strong>braind</strong><span>Local service that lets tools search and read the shared brain.</span></li>
             <li><strong>brainctl</strong><span>CLI for provisioning, enrollment, health checks, backups, recovery, and file relay.</span></li>
-            <li><strong>client bootstrap</strong><span>Mac and Linux machines can give Codex, Claude, and Cursor the same shared-brain guidance.</span></li>
+            <li><strong>client bootstrap</strong><span>Codex gets installable Brainstack skills; Claude and Cursor get checked-in shared-brain guidance.</span></li>
             <li><strong>telemux</strong><span>Optional Telegram topics mapped to durable work contexts and file delivery.</span></li>
           </ul>
         </div>
@@ -117,7 +117,7 @@ export function render() {
           </a>
           <a href="#client-install">
             <strong>2. Enroll clients</strong>
-            <span>Add Mac or Linux machines; the Mac binary path avoids Bun and source checkout.</span>
+            <span>Add client machines; the Mac binary path avoids Bun and source checkout.</span>
           </a>
           <a href="#telegram-file-send">
             <strong>3. Add control surfaces</strong>
@@ -127,7 +127,7 @@ export function render() {
 
         <div class="brainstack-prereqs fade-in">
           <strong>Before you start:</strong>
-          <span>The control host needs Bun, Git, OpenSSH, Tailscale, a selected harness, and the shared-brain repo. Client machines need Git, SSH, Tailscale, and the harness they will run. macOS clients can use the compiled <code>brainctl</code> installer without Bun or a Brainstack source checkout. Read the <a href="https://github.com/Caimeo-com/brainstack/blob/main/docs/fresh-machine-install.md">fresh-machine guide</a> and the <a href="https://github.com/Caimeo-com/brainstack/blob/main/docs/quickstart-client-macos.md">Mac client quickstart</a> for the full flow.</span>
+          <span>The control host needs Bun, Git, OpenSSH, Tailscale, a selected harness, and the shared-brain repo. Client machines need Git, SSH, Tailscale, and the harness they will run. macOS clients can use the compiled <code>brainctl</code> installer without Bun or a Brainstack source checkout; Linux clients follow the fresh-machine/source-run path for now. Read the <a href="https://github.com/Caimeo-com/brainstack/blob/main/docs/fresh-machine-install.md">fresh-machine guide</a> and the <a href="https://github.com/Caimeo-com/brainstack/blob/main/docs/quickstart-client-macos.md">Mac client quickstart</a> for the full flow.</span>
         </div>
 
         <div class="brainstack-install fade-in" id="control-host-install">
@@ -180,23 +180,23 @@ bun run packages/brainctl/src/main.ts doctor \\
         </figure>
 
         <details class="brainstack-secondary-install fade-in" id="client-install">
-          <summary><h3>Enroll Mac and Linux client machines</h3></summary>
-          <p>Create a private invite on the control host, then hand the <code>bs1_...</code> value to the client operator over a private channel. The invite can carry shared-brain config, an optional import token, pinned SSH host keys, and control-host details for file relay. macOS gets the lowest-friction binary path; Linux clients can use the same config model or a source-run profile.</p>
+          <summary><h3>Enroll client machines</h3></summary>
+          <p>Create a private invite on the control host, then hand the <code>bs1_...</code> value to the client operator over a private channel. The invite can carry shared-brain config, an optional import token, pinned SSH host keys, and control-host details for file relay. macOS gets the lowest-friction binary path; Linux clients can use the same config model through the fresh-machine/source-run path.</p>
           <div class="brainstack-install">
             <div class="code-card">
               <h3>Create the invite</h3>
               <pre><code>brainctl invite create \\
   --config ~/.config/brainstack/brainstack.yaml \\
   --import-token-file ~/brain-import-token.txt \\
-  --ssh-known-hosts-file ~/.config/brainstack/ssh_known_hosts \\
   --control-ssh operator@brain-control \\
+  --ssh-known-hosts-file ~/.config/brainstack/control_ssh_known_hosts \\
   --control-repo ~/brainstack</code></pre>
             </div>
             <div class="code-card">
               <h3>On macOS, install brainctl and enroll</h3>
-              <pre><code># After your operator picks or publishes a Brainstack release:
+              <pre><code># After your operator publishes a Brainstack release:
 BASE=https://github.com/Caimeo-com/brainstack
-RELEASE_TAG=v0.0.0-preview
+RELEASE_TAG=vX.Y.Z
 REL="releases/download/$RELEASE_TAG/install.sh"
 curl -fsSL "$BASE/$REL" | sh
 
@@ -205,6 +205,10 @@ curl -fsSL "$BASE/$REL" | sh
             <div class="code-card">
               <h3>Verify any enrolled client</h3>
               <pre><code>brainctl doctor --config ~/.config/brainstack/brainstack.yaml</code></pre>
+            </div>
+            <div class="code-card">
+              <h3>Optional Codex skills</h3>
+              <pre><code>brainctl skills install --target codex --profile client</code></pre>
             </div>
           </div>
         </details>
@@ -215,7 +219,7 @@ curl -fsSL "$BASE/$REL" | sh
           <div class="brainstack-install">
             <div class="code-card">
               <h3>Enable telemux on the control host</h3>
-# After enabling telemux in brainstack.yaml:
+              <pre><code># After enabling telemux in brainstack.yaml:
 bun run packages/brainctl/src/main.ts apply-runtime \\
   --config ~/.config/brainstack/brainstack.yaml
 vi ~/.config/brainstack/telemux.secrets.env
@@ -370,8 +374,8 @@ systemctl --user enable --now telemux.service</code></pre>
           <div class="proof-point">
             <div class="proof-point__icon" style="background:var(--brainstack-glow);color:var(--brainstack);">&#128187;</div>
             <div>
-              <h4>Harness bootstrap</h4>
-              <p>Codex, Claude, and Cursor get concrete shared-brain guidance from checked-in templates, not vague onboarding prose.</p>
+              <h4>Agent-ready runbooks</h4>
+              <p>Codex gets installable Brainstack skills, while Claude and Cursor get concrete shared-brain guidance from checked-in templates.</p>
             </div>
           </div>
           <div class="proof-point">
@@ -428,7 +432,13 @@ systemctl --user enable --now telemux.service</code></pre>
           <div class="faq-item">
             <button class="faq-item__q">Do client machines need Bun?</button>
             <div class="faq-item__a"><div class="faq-item__a__inner">
-              Ordinary Mac clients can use a compiled <code>brainctl</code> binary with the client bootstrap assets embedded, so they do not need Bun or a Brainstack source checkout. Control hosts and source-run workers still need Bun because they run Brainstack services from source.
+              Ordinary Mac clients can use a compiled <code>brainctl</code> binary with client bootstrap assets and public skills embedded, so they do not need Bun or a Brainstack source checkout. Control hosts and source-run workers still need Bun because they run Brainstack services from source.
+            </div></div>
+          </div>
+          <div class="faq-item">
+            <button class="faq-item__q">Are Brainstack skills private?</button>
+            <div class="faq-item__a"><div class="faq-item__a__inner">
+              The packaged skills are generic product runbooks: shared-brain usage, client discipline, operator checks, curation, worker ops, and file relay. Exact hostnames, Telegram routing, local paths, and personal topology belong in a private overlay skill.
             </div></div>
           </div>
           <div class="faq-item">
