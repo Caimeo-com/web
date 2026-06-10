@@ -22,6 +22,34 @@ export function render() {
       </ul>
     </section>
 
+    <!-- ===== PITCH VIDEO ===== -->
+    <section class="pitch-section" aria-label="Brainstack pitch video">
+      <div class="container">
+        <figure class="pitch-video fade-in">
+          <div class="pitch-video__frame" data-pitch-video>
+            <video
+              class="pitch-video__media"
+              playsinline
+              preload="none"
+              poster="/product/brainstack-pitch-poster.webp"
+              width="1920"
+              height="1080"
+              aria-label="Brainstack pitch: why shared memory makes your AI agents compound."
+            >
+              <source src="/product/brainstack-pitch.mp4" type="video/mp4">
+              Your browser does not support embedded video. <a href="/product/brainstack-pitch.mp4">Download the pitch video</a>.
+            </video>
+            <button type="button" class="pitch-video__play" data-pitch-play aria-label="Play the Brainstack pitch video">
+              <span class="pitch-video__play-icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24" width="34" height="34" fill="currentColor"><path d="M8 5.14v13.72c0 .79.87 1.27 1.54.84l10.79-6.86a1 1 0 0 0 0-1.68L9.54 4.3A1 1 0 0 0 8 5.14Z"/></svg>
+              </span>
+              <span class="pitch-video__play-label">Watch the 36-second pitch</span>
+            </button>
+          </div>
+        </figure>
+      </div>
+    </section>
+
     <!-- ===== HERO VISUAL ===== -->
     <section class="diagram-section brainstack-hero-shot">
       <div class="container">

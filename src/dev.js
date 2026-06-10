@@ -42,11 +42,47 @@ const server = Bun.serve({
         jpg: 'image/jpeg',
         jpeg: 'image/jpeg',
         ico: 'image/x-icon',
+        webp: 'image/webp',
+        mp4: 'video/mp4',
+        webm: 'video/webm',
         woff2: 'font/woff2',
         woff: 'font/woff',
       };
+      const contentType = types[ext] || 'application/octet-stream';
+
+      // Honor Range requests so media seeking works like a real static host.
+      const range = req.headers.get('range');
+      const total = file.size;
+      const match = range && /^bytes=(\d*)-(\d*)$/.exec(range.trim());
+      if (match && total) {
+        let start = match[1] === '' ? null : parseInt(match[1], 10);
+        let end = match[2] === '' ? null : parseInt(match[2], 10);
+        if (start === null) {
+          // Suffix range: last N bytes.
+          start = Math.max(0, total - (end ?? 0));
+          end = total - 1;
+        } else if (end === null || end >= total) {
+          end = total - 1;
+        }
+        if (start > end || start >= total) {
+          return new Response('Range Not Satisfiable', {
+            status: 416,
+            headers: { 'Content-Range': `bytes */${total}` },
+          });
+        }
+        return new Response(file.slice(start, end + 1), {
+          status: 206,
+          headers: {
+            'Content-Type': contentType,
+            'Accept-Ranges': 'bytes',
+            'Content-Range': `bytes ${start}-${end}/${total}`,
+            'Content-Length': String(end - start + 1),
+          },
+        });
+      }
+
       return new Response(file, {
-        headers: { 'Content-Type': types[ext] || 'application/octet-stream' },
+        headers: { 'Content-Type': contentType, 'Accept-Ranges': 'bytes' },
       });
     }
 

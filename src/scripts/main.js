@@ -213,6 +213,37 @@
   openHashDetails();
   window.addEventListener('hashchange', openHashDetails);
 
+  // ---- Pitch video custom play overlay ----
+  document.querySelectorAll('[data-pitch-video]').forEach((frame) => {
+    const video = frame.querySelector('video');
+    const playBtn = frame.querySelector('[data-pitch-play]');
+    if (!video || !playBtn) return;
+
+    const showControls = () => {
+      frame.classList.add('is-playing');
+      video.setAttribute('controls', '');
+    };
+
+    playBtn.addEventListener('click', () => {
+      showControls();
+      const started = video.play();
+      if (started && typeof started.catch === 'function') {
+        started.catch(() => {
+          // Autoplay/playback blocked: keep native controls visible so the
+          // user can start it manually.
+          frame.classList.add('is-playing');
+        });
+      }
+    });
+
+    video.addEventListener('play', showControls);
+    video.addEventListener('ended', () => {
+      frame.classList.remove('is-playing');
+      video.removeAttribute('controls');
+      video.currentTime = 0;
+    });
+  });
+
   // ---- Scroll-triggered fade-in ----
   const observer = new IntersectionObserver(
     (entries) => {

@@ -1250,6 +1250,114 @@ section[id] {
 .brainstack-hero-shot {
   padding-top: 0;
 }
+
+/* ===== BRAINSTACK PITCH VIDEO ===== */
+.pitch-section {
+  padding: 0.5rem 0 1rem;
+}
+.pitch-video {
+  max-width: 1080px;
+  margin: 0 auto;
+}
+.pitch-video__frame {
+  position: relative;
+  border-radius: 18px;
+  overflow: hidden;
+  background: #0b1020;
+  border: 1px solid rgba(20,241,149,0.22);
+  box-shadow:
+    0 0 0 1px rgba(20,241,149,0.06),
+    0 24px 70px rgba(0,0,0,0.45),
+    0 0 70px -28px var(--brainstack);
+  aspect-ratio: 16 / 9;
+}
+.pitch-video__frame::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  border-radius: inherit;
+  box-shadow: inset 0 0 0 1px rgba(255,255,255,0.05);
+}
+.pitch-video__media {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  background: #0b1020;
+}
+.pitch-video__play {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  width: 100%;
+  height: 100%;
+  padding: 0;
+  border: 0;
+  cursor: pointer;
+  color: #fff;
+  background:
+    radial-gradient(circle at center, rgba(7,61,43,0.18), rgba(5,8,14,0.45) 70%);
+  transition: background 0.3s var(--ease), opacity 0.35s var(--ease);
+}
+.pitch-video__play:hover {
+  background:
+    radial-gradient(circle at center, rgba(7,61,43,0.28), rgba(5,8,14,0.55) 70%);
+}
+.pitch-video__play-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 84px;
+  height: 84px;
+  border-radius: 999px;
+  color: #03130c;
+  background: var(--brainstack);
+  box-shadow: 0 12px 40px -8px var(--brainstack), 0 0 0 10px rgba(20,241,149,0.12);
+  transform: translateZ(0);
+  transition: transform 0.25s var(--ease), box-shadow 0.25s var(--ease);
+}
+.pitch-video__play:hover .pitch-video__play-icon {
+  transform: scale(1.06);
+  box-shadow: 0 16px 48px -6px var(--brainstack), 0 0 0 14px rgba(20,241,149,0.16);
+}
+.pitch-video__play:focus-visible {
+  outline: 2px solid var(--brainstack);
+  outline-offset: -4px;
+}
+.pitch-video__play-icon svg {
+  margin-left: 4px;
+}
+.pitch-video__play-label {
+  font-size: 0.95rem;
+  font-weight: 600;
+  letter-spacing: 0.01em;
+  color: #fff;
+  text-shadow: 0 2px 12px rgba(0,0,0,0.6);
+}
+.pitch-video__frame.is-playing .pitch-video__play {
+  opacity: 0;
+  pointer-events: none;
+}
+@media (max-width: 640px) {
+  .pitch-video__play-icon {
+    width: 64px;
+    height: 64px;
+  }
+  .pitch-video__play-icon svg {
+    width: 28px;
+    height: 28px;
+  }
+  .pitch-video__play-label {
+    font-size: 0.85rem;
+    padding: 0 1.5rem;
+    text-align: center;
+  }
+}
 .product-visual--wide {
   max-width: 1080px;
 }
