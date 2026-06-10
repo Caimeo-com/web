@@ -119,6 +119,10 @@ export function render() {
             <strong>2. Enroll clients</strong>
             <span>Add client machines; the Mac binary path avoids Bun and source checkout.</span>
           </a>
+          <a href="#agent-install">
+            <strong>Agent-assisted install</strong>
+            <span>Give Codex or another harness this page and a private invite; it should ask for the missing role and prerequisites.</span>
+          </a>
           <a href="#telegram-file-send">
             <strong>3. Add control surfaces</strong>
             <span>Enable Telegram topics, file relay, and workers only when they are useful.</span>
@@ -127,7 +131,7 @@ export function render() {
 
         <div class="brainstack-prereqs fade-in">
           <strong>Before you start:</strong>
-          <span>The control host needs Bun, Git, OpenSSH, Tailscale, a selected harness, and the shared-brain repo. Client machines need Git, SSH, Tailscale, and the harness they will run. macOS clients can use the compiled <code>brainctl</code> installer without Bun or a Brainstack source checkout; Linux clients follow the fresh-machine/source-run path for now. Read the <a href="https://github.com/Caimeo-com/brainstack/blob/main/docs/fresh-machine-install.md">fresh-machine guide</a> and the <a href="https://github.com/Caimeo-com/brainstack/blob/main/docs/quickstart-client-macos.md">Mac client quickstart</a> for the full flow.</span>
+          <span>The control host needs Bun, Git, OpenSSH, Tailscale, a selected harness, and the shared-brain repo. Client machines need Git, SSH, Tailscale, and the harness they will run. macOS clients can use the compiled <code>brainctl</code> installer without Bun or a Brainstack source checkout; Linux clients follow the fresh-machine/source-run path for now. If an AI harness is doing the install, it should ask whether this machine is joining an existing Brainstack or creating a new one, then ask for the role and a private invite when needed. Read the <a href="https://github.com/Caimeo-com/brainstack/blob/main/docs/fresh-machine-install.md">fresh-machine guide</a> and the <a href="https://github.com/Caimeo-com/brainstack/blob/main/docs/quickstart-client-macos.md">Mac client quickstart</a> for the full flow.</span>
         </div>
 
         <div class="brainstack-install fade-in" id="control-host-install">
@@ -164,6 +168,56 @@ bun run packages/brainctl/src/main.ts doctor \\
           <strong>What this gives you:</strong>
           <span>A private shared-brain service, a versioned CLI, deterministic runtime files, and a doctor baseline before clients, Telegram topics, or remote workers are added.</span>
         </div>
+
+        <details class="brainstack-secondary-install fade-in" id="agent-install" open>
+          <summary><h3>Ask an AI harness to install Brainstack</h3></summary>
+          <p>A fresh Codex, Claude, or other coding harness can help with setup, but it cannot invent private enrollment material. Point it at this page and the Brainstack docs, then expect it to ask for the missing role, invite, and prerequisites instead of guessing tokens, hostnames, or tailnet state.</p>
+          <div class="brainstack-install">
+            <div class="code-card">
+              <h3>Good first prompt on a new MacBook</h3>
+              <pre><code>Install Brainstack on this machine.
+Use https://caimeo.com/brainstack/ and the GitHub docs.
+This machine is joining an existing Brainstack.
+Ask me for the private invite when you need it.
+Default to client unless I say operator.</code></pre>
+            </div>
+            <div class="code-card">
+              <h3>The harness should ask</h3>
+              <pre><code>1. Existing Brainstack or new control host?
+2. Role: client, operator, control, or worker?
+3. Which harness should Brainstack bootstrap: Codex, Claude, or Cursor?
+4. Do you have a private bs1_... invite file or paste?
+5. Are Git, SSH, Tailscale, and the selected harness installed and logged in?</code></pre>
+            </div>
+            <div class="code-card">
+              <h3>Private invite path</h3>
+              <pre><code># The agent should avoid raw invite values in shell history.
+chmod 600 ~/brainstack-invite.txt
+RELEASE_TAG=vX.Y.Z
+INSTALL_URL="https://github.com/Caimeo-com/brainstack/releases/download/$RELEASE_TAG/install.sh"
+curl -fsSL "$INSTALL_URL" | sh -s -- \\
+  --invite-file ~/brainstack-invite.txt \\
+  --skills-profile client
+
+brainctl doctor --config ~/.config/brainstack/brainstack.yaml</code></pre>
+            </div>
+            <div class="code-card">
+              <h3>Stop when prerequisites are missing</h3>
+              <pre><code>If Tailscale is missing or not logged in:
+  tell the user exactly that
+  wait for install/login
+  rerun doctor after the user confirms
+
+If there is no private invite:
+  ask the control-host operator to create one
+  do not fabricate tokens, remotes, or host pins</code></pre>
+            </div>
+          </div>
+          <div class="brainstack-note">
+            <strong>Role defaults:</strong>
+            <span>Use <code>client</code> for ordinary machines, <code>operator</code> for an admin daily driver that should receive every public Brainstack skill, <code>control</code> for the private host running <code>braind</code>, and <code>worker</code> for a machine that mainly runs delegated jobs. Run <code>doctor --write-smoke</code> only when the user explicitly wants to prove mutating pushback.</span>
+          </div>
+        </details>
 
         <figure class="product-visual product-visual--wide product-visual--simulated brainstack-install-shot fade-in">
           <img
@@ -278,7 +332,7 @@ systemctl --user enable --now telemux.service</code></pre>
         <div class="section__header fade-in">
           <p class="section-label" style="color:var(--brainstack);">Telegram control</p>
           <h2>A topic becomes a durable work context and file drop</h2>
-          <p>Bind a Telegram topic to a host, scratch space, or repo. After that, messages from the allowed user can resume the stored Codex or Claude session, and enrolled machines can send files back to your phone through the control host.</p>
+          <p>Bind a Telegram topic to a host, scratch space, or repo. After that, messages from the allowed user are routed before the harness starts: simple liveness and usage checks are answered locally, lightweight context questions stay cheap, and real work resumes the stored Codex or Claude session. Enrolled machines can also send files back to your phone through the control host.</p>
         </div>
 
         <figure class="product-visual product-visual--wide product-visual--simulated fade-in">
@@ -313,6 +367,10 @@ systemctl --user enable --now telemux.service</code></pre>
             <div class="brainstack-command">
               <code>/workers</code>
               <span>Check worker reachability, outbox state, and harness readiness.</span>
+            </div>
+            <div class="brainstack-command">
+              <code>You up?</code>
+              <span>Get a local control-plane answer without waking a full harness session.</span>
             </div>
             <div class="brainstack-command">
               <code>/run check the deploy logs</code>
@@ -355,6 +413,13 @@ systemctl --user enable --now telemux.service</code></pre>
             <div>
               <h4>Agent-friendly save path</h4>
               <p>Agents can save transcripts, notes, artifacts, and draft changes without pushing directly to the shared-brain repo.</p>
+            </div>
+          </div>
+          <div class="proof-point">
+            <div class="proof-point__icon" style="background:var(--brainstack-glow);color:var(--brainstack);">&#9635;</div>
+            <div>
+              <h4>Quiet Telegram control plane</h4>
+              <p>Short status, liveness, usage, and recap messages avoid accidental full-session resumes; file, machine, scheduling, and code work still take the durable path.</p>
             </div>
           </div>
           <div class="proof-point">
@@ -433,6 +498,12 @@ systemctl --user enable --now telemux.service</code></pre>
             <button class="faq-item__q">Do client machines need Bun?</button>
             <div class="faq-item__a"><div class="faq-item__a__inner">
               Ordinary Mac clients can use a compiled <code>brainctl</code> binary with client bootstrap assets and public skills embedded, so they do not need Bun or a Brainstack source checkout. Control hosts and source-run workers still need Bun because they run Brainstack services from source.
+            </div></div>
+          </div>
+          <div class="faq-item">
+            <button class="faq-item__q">Can I just ask Codex to install Brainstack?</button>
+            <div class="faq-item__a"><div class="faq-item__a__inner">
+              Yes, if Codex has local machine permissions and you can provide the private invite for an existing Brainstack. It should ask whether the machine is a <code>client</code>, <code>operator</code>, <code>control</code>, or <code>worker</code>; check Git, SSH, Tailscale, and the selected harness; stop for missing Tailscale login or other prerequisites; enroll with <code>--invite-file</code>; then run <code>brainctl doctor</code>. It should not invent tokens, hostnames, or SSH pins.
             </div></div>
           </div>
           <div class="faq-item">
