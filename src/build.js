@@ -1,4 +1,4 @@
-import { mkdirSync, cpSync, writeFileSync, existsSync, rmSync } from 'fs';
+import { mkdirSync, cpSync, writeFileSync, existsSync, rmSync, readdirSync, readFileSync, statSync } from 'fs';
 import { join } from 'path';
 import { buildDocsPages } from './templates/docs.js';
 
@@ -50,6 +50,8 @@ for (const page of docsPages) {
   console.log(`  ✓ ${page.out}`);
 }
 
+validateGeneratedAssetReferences();
+
 // Generate sitemap.xml
 const baseUrl = 'https://caimeo.com';
 const urls = ['/', '/forseti/', '/tyche/', '/brainstack/', ...docsPages.map(page => page.url)];
@@ -71,3 +73,64 @@ writeFileSync(join(DIST, 'robots.txt'), `User-agent: *\nAllow: /\nSitemap: ${bas
 console.log('  ✓ robots.txt');
 
 console.log('\nBuild complete → dist/');
+
+function validateGeneratedAssetReferences() {
+  const htmlFiles = collectFiles(DIST).filter(file => file.endsWith('.html'));
+  const missing = [];
+  const assetPattern = /\b(?:src|href|poster)=["'](\/[^"'?#]+\.(?:css|gif|ico|jpeg|jpg|js|json|mp4|png|svg|txt|webmanifest|webm|webp|woff|woff2|xml))[^"']*["']/gi;
+  const srcsetPattern = /\bsrcset=["']([^"']+)["']/gi;
+
+  for (const file of htmlFiles) {
+    const html = readFileSync(file, 'utf8');
+    collectMatches(html, assetPattern, 1, ref => {
+      if (!existsSync(join(DIST, decodeAssetPath(ref)))) missing.push({ file, ref });
+    });
+    collectMatches(html, srcsetPattern, 1, value => {
+      for (const ref of parseSrcsetRefs(value)) {
+        if (ref.startsWith('/') && !existsSync(join(DIST, decodeAssetPath(ref)))) {
+          missing.push({ file, ref });
+        }
+      }
+    });
+  }
+
+  if (missing.length) {
+    const details = missing
+      .map(item => `  - ${item.ref} referenced by ${item.file.replace(`${DIST}/`, '')}`)
+      .join('\n');
+    throw new Error(`Generated HTML references missing local assets:\n${details}`);
+  }
+}
+
+function collectFiles(dir) {
+  const files = [];
+  for (const entry of readdirSync(dir)) {
+    const full = join(dir, entry);
+    const stats = statSync(full);
+    if (stats.isDirectory()) {
+      files.push(...collectFiles(full));
+    } else {
+      files.push(full);
+    }
+  }
+  return files;
+}
+
+function collectMatches(source, pattern, group, callback) {
+  pattern.lastIndex = 0;
+  let match;
+  while ((match = pattern.exec(source)) !== null) {
+    callback(match[group]);
+  }
+}
+
+function decodeAssetPath(ref) {
+  return decodeURIComponent(ref.replace(/^\//, ''));
+}
+
+function parseSrcsetRefs(value) {
+  return value
+    .split(',')
+    .map(part => part.trim().split(/\s+/)[0])
+    .filter(Boolean);
+}
