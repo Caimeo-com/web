@@ -1548,10 +1548,12 @@ section[id] {
   background: var(--brainstack);
   box-shadow: 0 0 18px rgba(20,241,149,0.45);
 }
-.product-visual--menu {
-  max-width: 360px;
+.brainstack-menu-section .product-visual.product-visual--menu {
+  width: min(100%, 320px);
+  max-width: 320px;
+  justify-self: end;
 }
-.product-visual--menu img {
+.brainstack-menu-section .product-visual--menu img {
   border-color: rgba(20,241,149,0.2);
   border-radius: 18px;
   box-shadow:
@@ -2019,8 +2021,11 @@ section[id] {
     margin-right: auto;
     text-align: left;
   }
-  .product-visual--menu {
-    max-width: 340px;
+  .brainstack-menu-section .product-visual.product-visual--menu {
+    width: min(68vw, 280px);
+    max-width: 280px;
+    justify-self: center;
+    margin-top: 1.75rem;
   }
   .brainstack-facts {
     grid-template-columns: repeat(2, minmax(0, 1fr));

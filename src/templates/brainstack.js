@@ -130,7 +130,7 @@ export function render() {
     </section>
 
     <!-- ===== MAC MENU APP ===== -->
-    <section class="section brainstack-menu-section">
+    <section class="section brainstack-menu-section" id="menu-app">
       <div class="container">
         <div class="brainstack-menu-showcase fade-in">
           <div class="brainstack-menu-copy">
