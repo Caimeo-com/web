@@ -1,0 +1,31 @@
+---
+title: Brainstack Overview
+description: Brainstack is Caimeo's shared-brain layer for agent memory, skills, local capabilities, and private machine control.
+project: brainstack
+order: 1
+---
+
+## What Brainstack is
+
+Brainstack gives agent harnesses a shared place to read context and write useful evidence without turning every note into trusted memory immediately. The source of truth is a git-backed shared brain. `braind` serves search and proposal APIs, while `brainctl` handles install, enrollment, diagnostics, local capabilities, hooks, skills, and fleet operations.
+
+Brainstack is not another chat harness. Codex, Claude, Cursor, Telegram, scripts, and workers can all use it from their existing surfaces.
+
+## The basic loop
+
+1. A harness asks Brainstack for local project context.
+2. The harness does work in the normal tool or machine.
+3. Hooks, commands, or operators post raw evidence back to Brainstack.
+4. The curator turns evidence into proposed wiki or memory edits.
+5. An operator accepts useful proposals and rejects stale or vague ones.
+
+## Good first paths
+
+- New Mac client: start with [Install Brainstack](/docs/brainstack/install/).
+- Existing operator: review [Proposals and curation](/docs/brainstack/proposals/).
+- Local power-up: install [Capabilities](/docs/brainstack/capabilities/).
+- Harness setup: check [Skills and harness context](/docs/brainstack/skills/).
+
+## Trust model in one paragraph
+
+Brainstack is designed for trusted private networks. In the default tailnet posture, network reachability is the read boundary, so Tailscale ACLs, firewall policy, and SSH host pinning matter. Do not expose `braind` directly to the public internet. Clients should write imports and proposals, not direct wiki edits. Admin tokens and Telegram bot secrets belong on the control host or operator machines, not on every client.

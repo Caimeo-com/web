@@ -1,0 +1,36 @@
+---
+title: Forseti Overview
+description: Forseti is Caimeo's evidence plane for governed AI action workflows.
+project: forseti
+order: 1
+---
+
+## What Forseti is
+
+Forseti sits at the action boundary. An agent submits a typed intent instead of touching a privileged tool directly. Forseti evaluates policy, asks humans when needed, releases approved execution, and preserves evidence about the decision.
+
+## Core objects
+
+- Intent envelope: the structured request the agent submits.
+- Policy decision: allow, deny, or requires approval.
+- Approval route: single approver, quorum, hierarchy, or other configured tree.
+- Evidence bundle: trace, votes, callbacks, model/tool context, and replayable records.
+
+## Good first pilot
+
+Pick one workflow where an agent wants to touch production, money, customer communication, or a privileged system. The pilot should prove that the organization can answer: what did the agent intend, what did policy decide, who approved it, what executed, and what evidence remains afterward?
+
+## Current status
+
+Forseti is best introduced as a narrow evidence-plane pilot, not a replacement for every internal approval workflow. Start with one action type, one policy, one approval route, and one execution callback. Expand only after the evidence bundle is useful during review.
+
+## Trust boundary
+
+Forseti should sit between agents and privileged systems. Agents ask for a typed action; they should not receive direct production credentials just because the action might be approved. Policy and approval decisions must be recorded before execution release.
+
+## How it fits Caimeo
+
+- Brainstack remembers what happened and turns useful evidence into proposals.
+- Forseti decides whether a proposed action is allowed, denied, or needs approval.
+- Tyche can replay or simulate action workflows before they reach production.
+- Valhalla can use Forseti as the governed execution boundary for delivery rooms.

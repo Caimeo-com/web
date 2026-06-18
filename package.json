@@ -6,5 +6,8 @@
     "dev": "bun run src/dev.js",
     "build": "bun run src/build.js",
     "zip": "bun run src/zip.js"
+  },
+  "dependencies": {
+    "marked": "^18.0.5"
   }
 }

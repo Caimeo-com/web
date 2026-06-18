@@ -1,0 +1,56 @@
+---
+title: Proposals and Curation
+description: Brainstack treats raw memories and thread logs as evidence, then turns them into reviewable proposals.
+project: brainstack
+order: 5
+---
+
+## Evidence is not memory yet
+
+Brainstack does not treat every raw `remember` call as canonical memory. Raw logs, imports, transcripts, and notes are evidence. The curator turns evidence into proposals with enough scope and context for future harnesses.
+
+A good memory proposal should say:
+
+- project or domain
+- scope
+- memory kind
+- summary
+- applicability
+- non-applicability
+- source refs or evidence
+- confidence or review timing when relevant
+
+## Review flow
+
+```bash
+brainctl proposals list --status open
+brainctl proposals show PROPOSAL_ID
+brainctl proposals apply PROPOSAL_ID
+brainctl proposals reject PROPOSAL_ID --reason "not durable"
+```
+
+In the Mac Operator Console, Accept maps to the concrete apply path. There is no separate user-facing approve/apply split.
+
+## Needs-context proposals
+
+`needs-context` means the raw lesson may be useful but is not intelligible enough for future agents. Enrich it before accepting:
+
+```bash
+brainctl proposals enrich PROPOSAL_ID \
+  --project brainstack \
+  --domain curation \
+  --scope repo \
+  --memory-kind project_lesson \
+  --applicability "Use when changing proposal review behavior." \
+  --evidence repo:/path/to/source
+```
+
+For batches, start with a dry run:
+
+```bash
+brainctl proposals reprocess --status needs-human --limit 5
+```
+
+## Avoid proposal inbox debt
+
+Filter by project, status, and quality. Merge related proposals when several machines repeat the same lesson. Reject stale or context-poor items quickly rather than letting the queue become another unmanaged inbox.

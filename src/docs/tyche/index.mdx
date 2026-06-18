@@ -1,0 +1,37 @@
+---
+title: Tyche Overview
+description: Tyche gives teams deterministic agent simulations, comparisons, and replay bundles.
+project: tyche
+order: 1
+---
+
+## What Tyche is
+
+Tyche is for rehearsing and comparing agent behavior before production and reconstructing behavior after incidents. It runs scenario packs under controlled conditions and emits replayable evidence rather than vague impressions.
+
+## Core objects
+
+- Scenario pack: starting state, actors, tools, memory, stop rules, and scoring.
+- Sweep: repeated runs across prompts, models, policies, or toolchains.
+- Scorecard: deterministic measures that make alternatives comparable.
+- Replay bundle: snapshots, decisions, traces, and outcome records.
+
+## Good first pilot
+
+Choose one agent workflow with a known success criterion and a small set of realistic failure modes. Build one scenario family, one scoring rubric, and one replay bundle that an operator can inspect without trusting the model's explanation.
+
+## Current status
+
+Tyche should be treated as a design and pilot surface until a specific scenario pack exists. The first public docs should stay concrete: one scenario pack, one comparison run, one scorecard, and one replay bundle. Avoid broad claims about model quality without repeatable evidence.
+
+## What belongs in a scenario pack
+
+- Initial state: repo, task, files, memory, permissions, and external fixtures.
+- Actors: harness, model, tools, policies, and any human role.
+- Stop rules: success, failure, timeout, escalation, or budget ceiling.
+- Scoring: deterministic checks first, reviewer rubrics second.
+- Replay bundle: enough artifacts to inspect what happened without rerunning the model.
+
+## How it fits Caimeo
+
+Use Tyche before or after production work. Before production, it compares candidate prompts, policies, and tools. After an incident, it reconstructs behavior and tests whether a fix would have changed the outcome. Forseti supplies action-boundary evidence; Brainstack supplies shared memory and lessons.

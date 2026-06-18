@@ -1,5 +1,6 @@
-import { mkdirSync, cpSync, writeFileSync, existsSync } from 'fs';
+import { mkdirSync, cpSync, writeFileSync, existsSync, rmSync } from 'fs';
 import { join } from 'path';
+import { buildDocsPages } from './templates/docs.js';
 
 const ROOT = import.meta.dir;
 const WEB  = join(ROOT, '..');
@@ -7,8 +8,7 @@ const DIST = join(WEB, 'dist');
 
 // Clean & create dist
 if (existsSync(DIST)) {
-  const { execSync } = await import('child_process');
-  execSync(`rm -rf ${DIST}`);
+  rmSync(DIST, { recursive: true, force: true });
 }
 mkdirSync(DIST, { recursive: true });
 
@@ -32,6 +32,7 @@ const pages = [
   { module: './templates/tyche.js', out: 'tyche/index.html' },
   { module: './templates/brainstack.js', out: 'brainstack/index.html' },
 ];
+const docsPages = buildDocsPages();
 
 for (const page of pages) {
   const mod = await import(page.module);
@@ -42,12 +43,25 @@ for (const page of pages) {
   console.log(`  ✓ ${page.out}`);
 }
 
+for (const page of docsPages) {
+  const outPath = join(DIST, page.out);
+  mkdirSync(join(outPath, '..'), { recursive: true });
+  writeFileSync(outPath, page.html, 'utf-8');
+  console.log(`  ✓ ${page.out}`);
+}
+
 // Generate sitemap.xml
 const baseUrl = 'https://caimeo.com';
-const urls = ['/', '/forseti/', '/tyche/', '/brainstack/'];
+const urls = ['/', '/forseti/', '/tyche/', '/brainstack/', ...docsPages.map(page => page.url)];
+const escapeXml = value => String(value)
+  .replace(/&/g, '&amp;')
+  .replace(/</g, '&lt;')
+  .replace(/>/g, '&gt;')
+  .replace(/"/g, '&quot;')
+  .replace(/'/g, '&apos;');
 const sitemap = `<?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-${urls.map(u => `  <url><loc>${baseUrl}${u}</loc></url>`).join('\n')}
+${urls.map(u => `  <url><loc>${escapeXml(`${baseUrl}${u}`)}</loc></url>`).join('\n')}
 </urlset>`;
 writeFileSync(join(DIST, 'sitemap.xml'), sitemap, 'utf-8');
 console.log('  ✓ sitemap.xml');

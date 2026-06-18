@@ -1,0 +1,42 @@
+---
+title: Valhalla Overview
+description: Valhalla is Caimeo's planned governed multi-agent delivery room.
+project: valhalla
+order: 1
+---
+
+## What Valhalla is
+
+Valhalla is the planned delivery-room layer for turning a spec into clarified questions, plans, implementation, audits, and convergence. It is not a swarm. It is a governed room with roles, budgets, stop criteria, and evidence.
+
+## Core objects
+
+- Room roster: lead, planner, builders, auditors, specialists, and budget.
+- Question register: ambiguity surfaced before and during implementation.
+- Build loop: scoped implementation passes with explicit ownership.
+- Audit loop: security, DX, UX, performance, and product review before stopping.
+- Convergence record: why the room believes it is done.
+
+## Current status
+
+Valhalla is not the first public adoption path. The docs should stay high-level until the product is ready for external operators.
+
+## Expected workflow
+
+1. Intake a spec, repo, or product goal.
+2. Ask clarifying questions before work expands.
+3. Split ownership across builders and reviewers.
+4. Run implementation, audit, and repair passes.
+5. Stop only when the convergence record explains what changed, what was tested, and what remains risky.
+
+## Guardrails
+
+- Every room needs a budget and stop condition.
+- Roles must have clear ownership; overlapping edits should be intentional.
+- Audits should run against actual diffs and artifacts, not summaries alone.
+- Memory and lessons should go through Brainstack proposals rather than becoming unreviewed global truth.
+- Privileged actions should cross Forseti-style approval boundaries.
+
+## How it fits Caimeo
+
+Valhalla is the orchestration layer above the rest of the suite. Brainstack provides shared context and durable lessons. Tyche tests and compares behavior. Forseti gates privileged actions and preserves execution evidence.

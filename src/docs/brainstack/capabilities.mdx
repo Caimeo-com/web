@@ -1,0 +1,52 @@
+---
+title: Capabilities
+description: Brainstack capabilities install useful local or worker-backed powers such as voice transcription without changing the harness surface.
+project: brainstack
+order: 3
+---
+
+## What a capability is
+
+A capability is an installable Brainstack-managed power that can run on a selected machine and be used from existing surfaces. The current reference capability is local voice transcription for Telegram voice notes.
+
+The important part is the lifecycle:
+
+1. Discover the capability from CLI, Telegram, or the Mac app.
+2. Install it on the right machine.
+3. Verify it with a deterministic test.
+4. Use it without switching harnesses.
+5. Uninstall Brainstack-owned artifacts when you no longer want it.
+
+## Voice transcription
+
+Voice lets a Telegram voice note become normal text in the same topic. The processing machine can be the control host, the Mac client, or a stronger worker.
+
+Replace `WORKER_NAME` with the Brainstack machine that should run transcription.
+
+```bash
+brainctl capabilities install voice \
+  --target WORKER_NAME \
+  --config ~/.config/brainstack/brainstack.yaml
+
+brainctl capabilities doctor voice \
+  --target WORKER_NAME \
+  --config ~/.config/brainstack/brainstack.yaml
+
+brainctl capabilities test voice \
+  --target WORKER_NAME \
+  --config ~/.config/brainstack/brainstack.yaml
+```
+
+The Telegram control surface can also understand natural requests such as `install voice on WORKER_NAME` when the operator path is configured.
+
+## Safety expectations
+
+- A capability should say what it installs and where.
+- A capability should report progress for long downloads or builds.
+- A capability should test itself before claiming success.
+- Uninstall should remove Brainstack-owned artifacts and config, not unrelated system packages.
+- Docs should say whether processing is local, worker-backed, or API-backed.
+
+## Next candidates
+
+The next high-value bundled capabilities are likely OCR/document intake and first-run knowledge import. Both fit the same pattern: pick a machine, install dependencies, verify with a sample, then feed normal text or proposal evidence into Brainstack.

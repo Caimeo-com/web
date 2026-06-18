@@ -4,11 +4,11 @@ export function render() {
   const body = `
     <!-- ===== HERO ===== -->
     <section class="hero hero--product hero--forseti">
-      <span class="hero__label">Caimeo Forseti</span>
-      <h1>Governed execution<br>for AI agents</h1>
+      <span class="hero__label">Caimeo Forseti Evidence Plane</span>
+      <h1>Audit-ready AI action governance</h1>
       <p class="hero__sub">
         Put every high-stakes agent action behind typed intent, deterministic policy,
-        human approval when required, and a replayable audit trail.
+        human approval when required, and exportable evidence for regulated workflows.
       </p>
       <div class="hero__actions">
         <a href="mailto:contact@bitfalls.com" class="btn btn--forseti">Book a Forseti pilot</a>
@@ -21,10 +21,10 @@ export function render() {
       <div class="container">
         <div class="section__header fade-in">
           <p class="section-label" style="color:var(--forseti);">The Problem</p>
-          <h2>Agents are useful enough to act.<br>But should they?</h2>
+          <h2>Agents are useful enough to act.<br>Can you prove how they acted?</h2>
           <p>Most teams already have agents that can draft, plan, and suggest real work.
           But deploying them against production, payments, or outbound communications
-          without a control layer is a liability waiting to happen.</p>
+          without an evidence-producing control layer leaves security, compliance, and platform teams guessing after the fact.</p>
         </div>
 
         <figure class="product-visual fade-in">
@@ -56,7 +56,7 @@ export function render() {
       <div class="container">
         <div class="section__header fade-in">
           <p class="section-label" style="color:var(--forseti);">How It Works</p>
-          <h2>Three steps to governed execution</h2>
+          <h2>Three steps to audit-ready execution</h2>
         </div>
 
         <div class="flow-steps flow-steps--forseti fade-in">
@@ -73,7 +73,7 @@ export function render() {
           <div class="flow-step">
             <div class="flow-step__number">3</div>
             <h4>Execution</h4>
-            <p>Only approved requests reach the deterministic action plane. Every step is recorded to a trace the team can replay later.</p>
+            <p>Only approved requests reach the deterministic action plane. Forseti writes a hash-chained trace, evidence bundle, and incident pack when needed.</p>
           </div>
         </div>
       </div>
@@ -153,8 +153,15 @@ export function render() {
           <div class="proof-point">
             <div class="proof-point__icon" style="background:var(--forseti-glow);color:var(--forseti);">&#8801;</div>
             <div>
-              <h4>Full audit trail</h4>
-              <p>Trace-level event history, vote records, callback delivery tracking, and replayable approval context for every request that ever reached policy.</p>
+              <h4>Evidence bundle export</h4>
+              <p>Hash-chained traces, vote records, callback delivery, signed JSON bundles, CSV timelines, and incident reconstruction packs for auditor review.</p>
+            </div>
+          </div>
+          <div class="proof-point">
+            <div class="proof-point__icon" style="background:var(--forseti-glow);color:var(--forseti);">&#9638;</div>
+            <div>
+              <h4>Model, tool, and vendor registry</h4>
+              <p>Attach model versions, prompt hashes, data classifications, owners, APIs, vendors, and workflow context to each governed action.</p>
             </div>
           </div>
         </div>
@@ -186,6 +193,10 @@ export function render() {
             <h4>Privileged tool access</h4>
             <p>Keep shells, workflow invocations, tickets, and external APIs behind policy instead of implicit trust.</p>
           </div>
+          <div class="use-case">
+            <h4>Regulated workflow evidence</h4>
+            <p>Support NIS2/ZKS, DORA, and AI Act readiness with concrete records of what the agent intended, what policy decided, who approved, and what executed.</p>
+          </div>
         </div>
       </div>
     </section>
@@ -195,10 +206,10 @@ export function render() {
       <div class="container container--narrow">
         <div class="section__header fade-in">
           <p class="section-label" style="color:var(--forseti);">Positioning</p>
-          <h2>Not another workflow builder</h2>
+          <h2>Not a generic compliance platform</h2>
           <p>Caimeo sits at the risk boundary. Forseti governs whether an action is allowed to reach
-          your execution systems - n8n, custom tools, CLI agents, and future runtimes all benefit
-          from the same typed-intent boundary.</p>
+          your execution systems and records the evidence around that decision. It supports regulated
+          workflow readiness without pretending to replace legal counsel, your SIEM, or your GRC stack.</p>
         </div>
 
         <figure class="product-visual fade-in">
@@ -253,9 +264,9 @@ export function render() {
             </div></div>
           </div>
           <div class="faq-item">
-            <button class="faq-item__q">How does Forseti work with Tyche and Valhalla?</button>
+            <button class="faq-item__q">Does Forseti make us NIS2, DORA, or AI Act compliant?</button>
             <div class="faq-item__a"><div class="faq-item__a__inner">
-              Forseti provides the execution governance for Tyche's simulation-to-production pipeline and for the upcoming Valhalla delivery rooms. Winning policies discovered in Tyche can graduate into Forseti policy packs.
+              No. Forseti gives regulated teams execution controls, human-approval trails, model/tool context, and exportable evidence bundles that support readiness work. It does not classify legal obligations or certify compliance.
             </div></div>
           </div>
         </div>
@@ -266,8 +277,8 @@ export function render() {
     <section class="cta-section" id="contact">
       <div class="container fade-in">
         <p class="section-label" style="color:var(--forseti);">Get Started</p>
-        <h2>Bring one workflow. We&rsquo;ll tell you whether it belongs in Forseti.</h2>
-        <p>If it does, the design-partner pilot is 4&ndash;6 weeks: one governed workflow, a Slack approval path, a policy pack, and an auditable release flow. If it doesn&rsquo;t, we&rsquo;ll tell you whether Tyche or Valhalla fits better.</p>
+        <h2>Bring one regulated workflow. We&rsquo;ll turn it into an evidence pilot.</h2>
+        <p>The design-partner pilot is 4&ndash;6 weeks: one governed workflow, a Slack approval path, one readiness-oriented control pack, an evidence dashboard, and an exportable audit bundle.</p>
         <div class="hero__actions">
           <a href="mailto:contact@bitfalls.com" class="btn btn--forseti">Scope a Forseti pilot</a>
           <a href="/#products" class="btn btn--ghost">Compare the suite</a>
@@ -277,8 +288,8 @@ export function render() {
   `;
 
   return layout({
-    title: 'Caimeo Forseti - Governed Execution Gateway for AI Agents',
-    description: 'Put every high-stakes agent action behind typed intent, deterministic policy, human approval when required, and a replayable audit trail.',
+    title: 'Caimeo Forseti - Evidence Plane for AI Agent Workflows',
+    description: 'Audit-ready AI action governance with typed intents, deterministic policy, human approval, and exportable evidence for regulated workflows.',
     path: '/forseti/',
     accent: 'forseti',
     body,

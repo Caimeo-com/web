@@ -1,0 +1,49 @@
+---
+title: Skills and Harness Context
+description: How Brainstack gives Codex, Claude, Cursor, and other harnesses shared instructions without becoming a second harness.
+project: brainstack
+order: 4
+---
+
+## Two kinds of skills
+
+Brainstack has public product skills and shared-brain imported skills.
+
+Public product skills ship with Brainstack. They explain how to use, debug, operate, curate, and repair Brainstack itself. These are generic and should not contain private topology.
+
+Shared imported skills come from your machine, repo, or URL. Brainstack packages them as shared-brain imports so other connected harnesses can refresh them locally.
+
+## Install public Brainstack skills
+
+```bash
+brainctl skills install --target codex --profile client
+brainctl skills install --target codex --profile operator
+```
+
+Use `client` for normal machines and `operator` for machines that run control-host, curation, worker, and recovery tasks.
+
+## Import shared skills
+
+```bash
+brainctl import skill ~/.codex/skills/brainstack/SKILL.md \
+  --config ~/.config/brainstack/brainstack.yaml
+
+brainctl import skill https://github.com/example/skill-repo \
+  --config ~/.config/brainstack/brainstack.yaml
+
+brainctl import skills \
+  --config ~/.config/brainstack/brainstack.yaml
+```
+
+`brainctl import skills` scans current and default harness skill locations, prints a deterministic plan, and only writes when you add `--apply`.
+
+## Hooks and daemon
+
+Hooks are fail-open convenience. They should never block a prompt just because Brainstack is offline.
+
+```bash
+brainctl hooks install --target all --config ~/.config/brainstack/brainstack.yaml
+brainctl daemon install --config ~/.config/brainstack/brainstack.yaml --start
+```
+
+The daemon keeps the local shared-brain clone and shared skills fresh in the background, so hooks do not need to pull git before every prompt.

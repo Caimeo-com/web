@@ -1,0 +1,90 @@
+---
+title: Install Brainstack
+description: The shortest safe Brainstack install paths for control hosts, Mac clients, and AI-assisted setup.
+project: brainstack
+order: 2
+---
+
+## Choose the role first
+
+Brainstack setup starts with the machine role:
+
+- `control`: runs `braind`, optional `telemux`, and the shared-brain repo.
+- `client`: reads the shared brain, refreshes skills, and writes imports/proposals.
+- `operator`: a client with admin/operator affordances.
+- `worker`: runs delegated jobs over normal OpenSSH on the tailnet.
+
+If an AI harness is installing Brainstack for you, it should ask for the role before touching config.
+
+## Existing Brainstack: enroll a Mac client
+
+The operator creates a private invite on the control host. Replace `CONTROL_HOST` with the private SSH name of your Brainstack control machine:
+
+```bash
+brainctl invite create \
+  --config ~/.config/brainstack/brainstack.yaml \
+  --import-token-file ~/brain-import-token.txt \
+  --control-ssh operator@CONTROL_HOST \
+  --ssh-known-hosts-file ~/.config/brainstack/control_ssh_known_hosts \
+  --skills-profile client
+```
+
+On the Mac client, install from the published release and provide the invite through an interactive prompt or a private file. Do not paste invite values into shared shell history.
+
+```bash
+curl -fsSL 'https://github.com/Caimeo-com/brainstack/releases/latest/download/install.sh' | sh
+brainctl doctor --config ~/.config/brainstack/brainstack.yaml
+```
+
+For a non-interactive local file path:
+
+```bash
+chmod 600 ~/brainstack-invite.txt
+curl -fsSL 'https://github.com/Caimeo-com/brainstack/releases/latest/download/install.sh' | sh -s -- \
+  --invite-file ~/brainstack-invite.txt \
+  --skills-profile client
+
+brainctl doctor --config ~/.config/brainstack/brainstack.yaml
+```
+
+The installer downloads `brainctl`. Enrollment, config rendering, token installation, skills, hooks, and doctor checks live in the versioned CLI.
+
+## New Brainstack: create a control host
+
+```bash
+git clone https://github.com/Caimeo-com/brainstack ~/brainstack
+cd ~/brainstack
+bun install --frozen-lockfile
+bun run packages/brainctl/src/main.ts provision \
+  --profile single-node \
+  --out ~/.config/brainstack/brainstack.yaml \
+  --harness codex
+```
+
+Then inspect the generated config, run smoke tests, initialize, enable services, and run doctor:
+
+```bash
+bun run packages/brainctl/src/main.ts smoke \
+  --profile single-node \
+  --config ~/.config/brainstack/brainstack.yaml
+
+bun run packages/brainctl/src/main.ts init \
+  --profile single-node \
+  --config ~/.config/brainstack/brainstack.yaml
+
+systemctl --user daemon-reload
+systemctl --user enable --now braind.service
+brainctl doctor --config ~/.config/brainstack/brainstack.yaml
+```
+
+## Good AI-assisted install prompt
+
+```text
+Install Brainstack on this machine.
+This machine is joining an existing Brainstack.
+Ask me for the private invite when you need it.
+Default to client unless I say operator.
+Stop and tell me if Git, SSH, Tailscale, or the selected harness is missing.
+```
+
+The harness should not invent tokens, hostnames, SSH pins, or tailnet state.

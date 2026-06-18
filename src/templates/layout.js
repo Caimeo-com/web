@@ -10,6 +10,15 @@ if (window.location.hostname === 'caimeo.com' || window.location.hostname.endsWi
 }
 </script>`;
 
+function escapeHtml(value) {
+  return String(value)
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&#39;');
+}
+
 // Shared HTML shell for all pages
 export function layout({ title, description, path, accent, body, css, canonicalBase = 'https://caimeo.com' }) {
   const normalizedPath = path === '/' ? '/' : path.endsWith('/') ? path : `${path}/`;
@@ -19,11 +28,17 @@ export function layout({ title, description, path, accent, body, css, canonicalB
   const ogImageUrl = `${canonicalBase}/og-image.png`;
   const ogImageSquareUrl = `${canonicalBase}/og-image-square.png`;
   const socialImageAlt = 'Caimeo crest logo and wordmark on a dark background.';
+  const safeTitle = escapeHtml(title);
+  const safeDescription = escapeHtml(description);
+  const safeCanonicalUrl = escapeHtml(canonicalUrl);
+  const safeOgImageUrl = escapeHtml(ogImageUrl);
+  const safeSocialImageAlt = escapeHtml(socialImageAlt);
   const navLinks = [
     { href: '/', label: 'Home' },
     { href: '/forseti/', label: 'Forseti' },
     { href: '/tyche/', label: 'Tyche' },
     { href: '/brainstack/', label: 'Brainstack' },
+    { href: '/docs/', label: 'Docs' },
     { label: 'Valhalla', badge: 'Coming soon', disabled: true },
   ];
 
@@ -69,15 +84,19 @@ export function layout({ title, description, path, accent, body, css, canonicalB
   }).replace(/</g, '\\u003c');
   const renderNavLink = (link) => {
     if (link.disabled) {
-      return `<span class="site-nav__disabled" aria-disabled="true">${link.label}<span class="site-nav__badge">${link.badge}</span></span>`;
+      return `<span class="site-nav__disabled" aria-disabled="true">${escapeHtml(link.label)}<span class="site-nav__badge">${escapeHtml(link.badge)}</span></span>`;
     }
-    return `<a href="${link.href}">${link.label}</a>`;
+    const isCurrent = normalizedPath === link.href || (link.href !== '/' && normalizedPath.startsWith(link.href));
+    const currentAttrs = isCurrent
+      ? ` class="active"${normalizedPath === link.href ? ' aria-current="page"' : ''}`
+      : '';
+    return `<a href="${escapeHtml(link.href)}"${currentAttrs}>${escapeHtml(link.label)}</a>`;
   };
   const renderFooterLink = (link) => {
     if (link.disabled) {
-      return `<span class="site-footer__disabled" aria-disabled="true">${link.label}<span class="site-nav__badge">${link.badge}</span></span>`;
+      return `<span class="site-footer__disabled" aria-disabled="true">${escapeHtml(link.label)}<span class="site-nav__badge">${escapeHtml(link.badge)}</span></span>`;
     }
-    return `<a href="${link.href}">${link.label}</a>`;
+    return `<a href="${escapeHtml(link.href)}">${escapeHtml(link.label)}</a>`;
   };
 
   return `<!DOCTYPE html>
@@ -85,11 +104,11 @@ export function layout({ title, description, path, accent, body, css, canonicalB
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>${title}</title>
-  <meta name="description" content="${description}">
+  <title>${safeTitle}</title>
+  <meta name="description" content="${safeDescription}">
   <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1">
   <meta name="theme-color" content="#0a0b0f">
-  <link rel="canonical" href="${canonicalUrl}">
+  <link rel="canonical" href="${safeCanonicalUrl}">
   <link rel="icon" href="/favicon.ico" sizes="any">
   <link rel="icon" href="/favicon-32x32.png" sizes="32x32" type="image/png">
   <link rel="icon" href="/favicon-16x16.png" sizes="16x16" type="image/png">
@@ -99,22 +118,22 @@ export function layout({ title, description, path, accent, body, css, canonicalB
   <!-- Open Graph -->
   <meta property="og:site_name" content="Caimeo">
   <meta property="og:locale" content="en_US">
-  <meta property="og:title" content="${title}">
-  <meta property="og:description" content="${description}">
+  <meta property="og:title" content="${safeTitle}">
+  <meta property="og:description" content="${safeDescription}">
   <meta property="og:type" content="website">
-  <meta property="og:url" content="${canonicalUrl}">
-  <meta property="og:image" content="${ogImageUrl}">
-  <meta property="og:image:secure_url" content="${ogImageUrl}">
+  <meta property="og:url" content="${safeCanonicalUrl}">
+  <meta property="og:image" content="${safeOgImageUrl}">
+  <meta property="og:image:secure_url" content="${safeOgImageUrl}">
   <meta property="og:image:width" content="1200">
   <meta property="og:image:height" content="630">
-  <meta property="og:image:alt" content="${socialImageAlt}">
+  <meta property="og:image:alt" content="${safeSocialImageAlt}">
 
   <!-- Twitter -->
   <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="${title}">
-  <meta name="twitter:description" content="${description}">
-  <meta name="twitter:image" content="${ogImageUrl}">
-  <meta name="twitter:image:alt" content="${socialImageAlt}">
+  <meta name="twitter:title" content="${safeTitle}">
+  <meta name="twitter:description" content="${safeDescription}">
+  <meta name="twitter:image" content="${safeOgImageUrl}">
+  <meta name="twitter:image:alt" content="${safeSocialImageAlt}">
 
   <!-- Preload critical font -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
