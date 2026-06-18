@@ -1,0 +1,41 @@
+---
+title: Brainstack Local Proof
+description: Try Brainstack's core shared-brain loop locally before enrolling a real machine, worker, Telegram bot, or daemon.
+project: brainstack
+order: 2
+---
+
+## What this proves
+
+Use this path when you want to see the core shape before you wire a real Brainstack. It creates a disposable shared-brain repo under `/tmp`, renders runtime files, runs doctor, and builds the local search index.
+
+This is not the final polished no-source demo path. It is the current honest local proof for developers evaluating the product.
+
+## Run the smoke
+
+```bash
+git clone https://github.com/Caimeo-com/brainstack ~/brainstack
+cd ~/brainstack
+bun install --frozen-lockfile
+bun run packages/brainctl/src/main.ts smoke \
+  --profile single-node \
+  --config examples/single-node.yaml
+```
+
+The smoke should not require Telegram, a worker, Tailscale Serve, or a long-lived daemon. It uses disposable paths and leaves your real shared brain alone.
+
+## What to look for
+
+- generated config and runtime files
+- a disposable bare/staging/serve shared-brain shape
+- a passing doctor check
+- local search-index rebuild
+- clear errors for missing local prerequisites
+
+## After the proof
+
+If the smoke passes and you want Brainstack on a real machine, use [Install Brainstack](/docs/brainstack/install/). For a Mac daily-driver path, install from the published release, enroll with a private invite, run doctor, and use the [Brainstack Menu app](/docs/brainstack/menu-app/) for status.
+
+## Product gap
+
+The highest-ROI next step is a true release-built local demo: install `brainctl`, initialize a sample local brain, run `context`, `search`, and `remember`, and show the created proposal artifact without requiring a source checkout.

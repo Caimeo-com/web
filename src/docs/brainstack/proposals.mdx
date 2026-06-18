@@ -2,7 +2,7 @@
 title: Brainstack Proposals and Curation
 description: Brainstack treats raw memories and thread logs as evidence, then turns them into reviewable proposals.
 project: brainstack
-order: 6
+order: 7
 ---
 
 ## Evidence is not memory yet
@@ -54,3 +54,13 @@ brainctl proposals reprocess --status needs-human --limit 5
 ## Avoid proposal inbox debt
 
 Filter by project, status, and quality. Merge related proposals when several machines repeat the same lesson. Reject stale or context-poor items quickly rather than letting the queue become another unmanaged inbox.
+
+From Telegram, a proposal-review topic can use filtered lists such as:
+
+```text
+/proposals pending
+/proposals needs-human needs-context
+/proposals open project:brainstack limit=10
+```
+
+Accept and reject shortcuts should be scoped to the list that was just loaded.

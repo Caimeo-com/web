@@ -2,7 +2,7 @@
 title: Brainstack Skills and Harness Context
 description: How Brainstack gives Codex, Claude, Cursor, and other harnesses shared instructions without becoming a second harness.
 project: brainstack
-order: 4
+order: 5
 ---
 
 ## Two kinds of skills
@@ -24,14 +24,28 @@ Use `client` for normal machines and `operator` for machines that run control-ho
 
 ## Import shared skills
 
+Start with a dry run when importing a whole machine's skills:
+
+```bash
+brainctl import skills \
+  --config ~/.config/brainstack/brainstack.yaml
+```
+
+Apply only after reviewing the plan:
+
+```bash
+brainctl import skills \
+  --config ~/.config/brainstack/brainstack.yaml \
+  --apply
+```
+
+Import one skill from a local path or URL:
+
 ```bash
 brainctl import skill ~/.codex/skills/brainstack/SKILL.md \
   --config ~/.config/brainstack/brainstack.yaml
 
 brainctl import skill https://github.com/example/skill-repo \
-  --config ~/.config/brainstack/brainstack.yaml
-
-brainctl import skills \
   --config ~/.config/brainstack/brainstack.yaml
 ```
 

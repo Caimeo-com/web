@@ -5,20 +5,21 @@ export function render() {
     <!-- ===== HERO ===== -->
     <section class="hero hero--product hero--brainstack">
       <span class="hero__label">Caimeo Brainstack</span>
-      <h1>Brainstack</h1>
+      <h1>Git-backed shared memory</h1>
       <p class="hero__sub">
-        Shared memory and operational context for AI agents running on your own machines.
-        Brainstack turns a git-backed brain into searchable, reusable context for Codex,
-        Claude, Cursor, scripts, Telegram, and private workers.
+        Brainstack lets the AI tools you already use share context without moving your
+        brain into a hosted assistant. Codex, Claude, Cursor, scripts, and private workers
+        read the same repo-backed memory, while Brainstack adds search, proposals, skills,
+        hooks, and local capabilities around it.
       </p>
       <div class="hero__actions">
-        <a href="#how-it-works" class="btn btn--brainstack">See how it works</a>
-        <a href="/docs/brainstack/" class="btn btn--ghost">Read the docs</a>
+        <a href="#local-proof" class="btn btn--brainstack">Try the local proof</a>
+        <a href="/docs/brainstack/install/" class="btn btn--ghost">Install Brainstack</a>
       </div>
       <ul class="brainstack-hero-points" aria-label="Brainstack outcomes">
-        <li>One shared brain that grows as work happens</li>
-        <li>Same context for Codex, Claude, Cursor, and scripts</li>
-        <li>Private control across Linux, Mac, Telegram, and tailnet workers</li>
+        <li>Start local, add the fleet later</li>
+        <li>Raw logs become reviewed proposals, not blind memory</li>
+        <li>Optional Mac and Telegram control surfaces</li>
       </ul>
     </section>
 
@@ -50,30 +51,31 @@ export function render() {
       </div>
     </section>
 
-    <!-- ===== HERO VISUAL ===== -->
-    <section class="diagram-section brainstack-hero-shot">
+    <!-- ===== LOCAL PROOF ===== -->
+    <section class="section" id="local-proof">
       <div class="container">
-        <figure class="product-visual product-visual--wide product-visual--simulated">
-          <picture>
-            <source
-              srcset="/product/brainstack-hero-mobile.webp"
-              media="(max-width: 640px)"
-              width="941"
-              height="1672"
-            >
-            <img
-              src="/product/brainstack-hero.webp"
-              alt="Brainstack product view showing brainctl doctor output, shared-brain search results, worker status, and a private tailnet status line."
-              aria-describedby="brainstack-hero-desc"
-              width="1672"
-              height="941"
-              fetchpriority="high"
-              decoding="async"
-            >
-          </picture>
-          <figcaption><span class="simulation-label">Simulated product view</span> Brainstack operator view with doctor output, shared-brain search, worker status, and private tailnet state.</figcaption>
-          <p id="brainstack-hero-desc" class="sr-only">Brainstack product view with an operator panel, a shared-brain repo and search service, optional telemux, three tailnet workers, doctor output, search results for runbooks, and worker status rows.</p>
-        </figure>
+        <div class="section__header fade-in">
+          <p class="section-label" style="color:var(--brainstack);">Smallest proof</p>
+          <h2>Try the core loop before wiring a fleet</h2>
+          <p>The cleanest first touch is a disposable local smoke: clone Brainstack, let the CLI create a temporary shared-brain repo under <code>/tmp</code>, run doctor, and build the local search index. No Telegram bot, worker, or Tailscale exposure is needed for this proof.</p>
+        </div>
+
+        <div class="brainstack-install fade-in" aria-label="Brainstack local proof command">
+          <div class="code-card">
+            <h3>Local product smoke</h3>
+            <pre><code>git clone https://github.com/Caimeo-com/brainstack ~/brainstack
+cd ~/brainstack
+bun install --frozen-lockfile
+bun run packages/brainctl/src/main.ts smoke \
+  --profile single-node \
+  --config examples/single-node.yaml</code></pre>
+          </div>
+        </div>
+
+        <div class="brainstack-note fade-in">
+          <strong>Why this first?</strong>
+          <span>It proves the shared-brain shape, search index, generated runtime files, and doctor path without asking you to trust a permanent service. The release installer and Mac app are the normal paths once you are ready to enroll a real machine.</span>
+        </div>
       </div>
     </section>
 
@@ -97,6 +99,41 @@ export function render() {
             <li><strong>client bootstrap</strong><span>Codex gets installable Brainstack skills; Claude and Cursor get checked-in shared-brain guidance.</span></li>
             <li><strong>telemux</strong><span>Optional Telegram topics mapped to durable work contexts and file delivery.</span></li>
           </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== MEMORY LOOP ===== -->
+    <section class="section">
+      <div class="container">
+        <div class="section__header fade-in">
+          <p class="section-label" style="color:var(--brainstack);">Curated memory</p>
+          <h2>Evidence becomes proposals before it becomes memory</h2>
+          <p>Most tools call any saved note "memory." Brainstack keeps the raw evidence, then asks the curator to turn it into scoped, reviewable changes that future agents can understand without the original chat.</p>
+        </div>
+
+        <div class="brainstack-trust-grid fade-in" aria-label="Brainstack proposal memory loop">
+          <div class="brainstack-trust-card">
+            <strong>1. Work happens</strong>
+            <span>A harness writes a checkpoint, transcript summary, artifact, or explicit remember candidate.</span>
+          </div>
+          <div class="brainstack-trust-card">
+            <strong>2. Evidence is stored</strong>
+            <span>Brainstack keeps provenance: repo, machine, harness, source refs, and the raw material behind the claim.</span>
+          </div>
+          <div class="brainstack-trust-card">
+            <strong>3. Curator proposes</strong>
+            <span>Useful lessons become scoped proposals with applicability, non-applicability, confidence, and review metadata.</span>
+          </div>
+          <div class="brainstack-trust-card">
+            <strong>4. Operators accept or reject</strong>
+            <span>Accepted proposals update the wiki or memory cards. Vague, stale, or risky items stay out of future context.</span>
+          </div>
+        </div>
+
+        <div class="brainstack-note fade-in">
+          <strong>Trust win:</strong>
+          <span>This is why Brainstack can compound without appending every chat ending to the prompt. Raw material is evidence; reviewed proposals are durable memory.</span>
         </div>
       </div>
     </section>
@@ -125,6 +162,40 @@ export function render() {
             <h4>Your machines do the work</h4>
             <p>Run jobs on your own Mac, Linux box, or private tailnet workers. Telegram is optional; it is just a phone-friendly control surface.</p>
           </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== ROLE PATHS ===== -->
+    <section class="section section--alt">
+      <div class="container">
+        <div class="section__header fade-in">
+          <p class="section-label" style="color:var(--brainstack);">Pick your first win</p>
+          <h2>Different users should not start in the same runbook</h2>
+          <p>Brainstack can become a fleet control layer, but the first outcome should be smaller: stop re-explaining work, prove safer memory, or get a Mac client enrolled cleanly.</p>
+        </div>
+
+        <div class="brainstack-role-split fade-in" aria-label="Brainstack persona paths">
+          <a href="/docs/brainstack/local-proof/">
+            <strong>Solo developer</strong>
+            <span>Run a local proof, then let Codex reuse project context instead of starting cold every thread.</span>
+          </a>
+          <a href="/docs/brainstack/install/">
+            <strong>Mac + Codex user</strong>
+            <span>Install once, paste an invite, refresh skills and hooks, then watch status from the menu bar.</span>
+          </a>
+          <a href="/docs/brainstack/proposals/">
+            <strong>SRE or incident lead</strong>
+            <span>Turn incident notes, traces, and fixes into reviewed runbook proposals instead of scattered chat lore.</span>
+          </a>
+          <a href="/docs/brainstack/trust/">
+            <strong>Team lead</strong>
+            <span>Check the read/write boundary, tokens, fail-open hooks, and private-network assumptions before a pilot.</span>
+          </a>
+          <a href="/docs/brainstack/skills/">
+            <strong>Self-hoster</strong>
+            <span>Own the repo, import existing skills and rules, and keep shared context portable across harnesses.</span>
+          </a>
         </div>
       </div>
     </section>
@@ -173,6 +244,10 @@ export function render() {
             <strong>Install and enroll</strong>
             <span>Choose a role, set up a control host, enroll a Mac client, or ask a harness to install Brainstack safely.</span>
           </a>
+          <a href="/docs/brainstack/local-proof/">
+            <strong>Local proof</strong>
+            <span>Run the disposable single-node smoke before committing to a daemon, Telegram bot, or tailnet setup.</span>
+          </a>
           <a href="/docs/brainstack/capabilities/">
             <strong>Capabilities</strong>
             <span>Install local or worker-backed powers such as voice transcription without changing the harness surface.</span>
@@ -189,11 +264,48 @@ export function render() {
             <strong>Proposals</strong>
             <span>Turn raw evidence into scoped, reviewable memory and wiki proposals instead of unmanaged notes.</span>
           </a>
+          <a href="/docs/brainstack/trust/">
+            <strong>Trust model</strong>
+            <span>See what can read, what can write, where tokens live, and how Brainstack behaves when offline.</span>
+          </a>
         </div>
 
         <div class="brainstack-note fade-in">
           <strong>Fastest proof:</strong>
           <span>Install Brainstack on one private control host, enroll one Mac client, run <code>brainctl doctor</code>, then try one concrete capability such as local voice transcription. The docs walk through that path without crowding this page.</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== IMPORT / GROWTH LOOP ===== -->
+    <section class="section section--alt">
+      <div class="container">
+        <div class="section__header fade-in">
+          <p class="section-label" style="color:var(--brainstack);">Bring existing context</p>
+          <h2>Brainstack should start with what you already taught your tools</h2>
+          <p>Cold-start memory is a product smell. Brainstack can plan imports from Codex skills, Claude and Cursor guidance, local markdown, and repo docs, then turn selected items into shared-brain imports or proposal-ready evidence.</p>
+        </div>
+
+        <div class="brainstack-command-panel fade-in">
+          <div class="brainstack-command-grid">
+            <div class="brainstack-command">
+              <code>brainctl import skills</code>
+              <span>Scans current and default harness skill locations, prints a deterministic plan, and writes only when you add <code>--apply</code>.</span>
+            </div>
+            <div class="brainstack-command">
+              <code>brainctl import skill URL_OR_PATH</code>
+              <span>Imports one skill from a local folder/file or source URL so connected harnesses can refresh it locally.</span>
+            </div>
+            <div class="brainstack-command">
+              <code>brainctl status --json</code>
+              <span>Gives the Mac app and automation a bounded status surface for daemon, hooks, skills, proposals, and fleet freshness.</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="brainstack-note fade-in">
+          <strong>Next obvious product loop:</strong>
+          <span>A redacted shareable readiness report should package status, versions, hooks, capabilities, and proposal health for support or public setup wins without leaking tokens or private topology.</span>
         </div>
       </div>
     </section>
@@ -260,6 +372,41 @@ export function render() {
       </div>
     </section>
 
+    <!-- ===== TRUST SUMMARY ===== -->
+    <section class="section section--alt">
+      <div class="container">
+        <div class="section__header fade-in">
+          <p class="section-label" style="color:var(--brainstack);">Trust boundary</p>
+          <h2>Private by default, explicit when it writes</h2>
+          <p>The default Brainstack posture is one private network, one shared-brain repo, and clients that propose instead of mutating canon directly. The full trust model is in docs, but the pilot boundary should be clear before anyone installs it.</p>
+        </div>
+
+        <div class="brainstack-trust-grid fade-in" aria-label="Brainstack trust summary">
+          <div class="brainstack-trust-card">
+            <strong>Read boundary</strong>
+            <span>Local clones and tailnet reachability define the normal read path. Do not expose <code>braind</code> to the public internet.</span>
+          </div>
+          <div class="brainstack-trust-card">
+            <strong>Write boundary</strong>
+            <span>Clients write imports and proposals. Admin tokens and direct wiki mutation stay with the control host or operator.</span>
+          </div>
+          <div class="brainstack-trust-card">
+            <strong>Hooks fail open</strong>
+            <span>If Brainstack is unavailable, harness hooks should return success and let Codex, Claude, Cursor, or the terminal continue.</span>
+          </div>
+          <div class="brainstack-trust-card">
+            <strong>Telegram is optional</strong>
+            <span>Telemux is a control surface, not the product. It should route supported operations to the same canonical <code>brainctl</code> paths.</span>
+          </div>
+        </div>
+
+        <div class="brainstack-note fade-in">
+          <strong>Security docs:</strong>
+          <span><a href="/docs/brainstack/trust/">Read the trust model</a> for tokens, prompt-injection posture, outbox behavior, Telegram risk, backup/restore, and uninstall expectations.</span>
+        </div>
+      </div>
+    </section>
+
     <!-- ===== ARCHITECTURE ===== -->
     <section class="diagram-section">
       <div class="container fade-in">
@@ -298,6 +445,18 @@ export function render() {
             <button class="faq-item__q">Where does the brain live?</button>
             <div class="faq-item__a"><div class="faq-item__a__inner">
               In a separate shared-brain git repo. Brainstack keeps product code and your memory data separate, then builds fast local search over that repo.
+            </div></div>
+          </div>
+          <div class="faq-item">
+            <button class="faq-item__q">Can I try Brainstack without Telegram or a worker?</button>
+            <div class="faq-item__a"><div class="faq-item__a__inner">
+              Yes. The local product smoke creates a disposable shared-brain repo under <code>/tmp</code>, runs doctor, and builds the search index without wiring Telegram, a worker, or Tailscale exposure.
+            </div></div>
+          </div>
+          <div class="faq-item">
+            <button class="faq-item__q">Why not just append every lesson to memory?</button>
+            <div class="faq-item__a"><div class="faq-item__a__inner">
+              Brainstack treats raw logs and remembers as evidence first. The curator promotes only scoped, intelligible proposals, so vague or stale notes do not silently become future prompt context.
             </div></div>
           </div>
           <div class="faq-item">

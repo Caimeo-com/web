@@ -1,0 +1,59 @@
+---
+title: Brainstack Trust Model
+description: Brainstack read boundaries, write boundaries, tokens, Telegram risk, hooks, outbox behavior, and uninstall expectations.
+project: brainstack
+order: 8
+---
+
+## Default posture
+
+Brainstack is designed for trusted private machines, not public SaaS exposure. The normal deployment keeps `braind` private, uses a shared-brain git repo as the source of truth, and lets clients write imports or proposals instead of directly mutating canonical wiki pages.
+
+Do not expose `braind` directly to the public internet. If you need public access, that is a different security posture and needs app-layer auth, rate limits, auditing, and abuse handling.
+
+## Boundary table
+
+| Surface | Reads | Writes | Failure mode |
+| --- | --- | --- | --- |
+| Local harness hooks | Local shared-brain clone, daemon freshness, managed skill packages | Local checkpoint or outbox metadata only | Fail open so the harness can continue |
+| `brainctl context` and `search` | Configured trusted brains and local clones | None | Return a bounded error or stale status |
+| `brainctl remember` | Recent source labels for policy checks | Import/proposal payloads, usually through API or outbox | Queue locally when supported; never edit wiki pages offline |
+| Curator | Raw imports, logs, proposal queue, existing wiki pages | New proposals; wiki mutation only through curation policy | Park ambiguous output as pending or needs human |
+| Mac menu app | `brainctl status --json`, proposal summaries, fleet freshness | Explicit repair/update/proposal actions | Show degraded state; normal harness work should continue |
+| Telegram / telemux | Bound topic state, allowed files, configured Brainstack commands | Same canonical operations as CLI, plus harness dispatch when authorized | Refuse unsupported or unsafe actions and report in the same topic |
+| Capabilities | Capability config and selected machine state | Brainstack-owned install root and generated runtime config | Report failed install/test; do not pretend a capability is active |
+
+## Tokens
+
+- Import tokens let clients submit imports and proposals.
+- Admin tokens belong on the control host or operator machines.
+- Telegram bot tokens belong in the telemux runtime environment.
+- Example docs should name environment variables, not include secret values.
+
+Treat local state and outbox files as private user data. They are not auth secrets, but they can contain note text, transcripts, proposal bodies, and paths.
+
+## Prompt-injection and memory risk
+
+Brainstack does not make arbitrary memories trustworthy just because a harness wrote them. Raw logs and `remember` calls are evidence. The curator should only promote scoped, intelligible proposals with source refs, applicability, non-applicability, and confidence where useful.
+
+This is the main safety distinction from append-only prompt memory.
+
+## Offline behavior
+
+Hooks and convenience surfaces should fail open. Brainstack being offline should not block Codex, Claude, Cursor, terminal work, or normal local development.
+
+Write paths may queue imports/proposals locally when configured. Offline queues must not mutate canonical wiki pages until a connected Brainstack service accepts them.
+
+## Telegram risk
+
+Telegram is optional. It is useful as a phone-friendly control surface, but it can dispatch work to powerful local harnesses when configured that way. Before enabling telemux, decide which users are allowed, which topics are bound, which machines can run work, and whether the selected harness has dangerous bypass permissions.
+
+Voice transcription follows the same rule as typed Telegram input after transcription: once text is produced, it enters the normal authorized topic flow.
+
+## Backup, restore, and uninstall
+
+Brainstack product code and shared-brain data should stay separate. Product upgrades should refresh services and generated runtime files without rewriting the knowledge repo.
+
+Uninstall paths should remove Brainstack-owned services, generated config, hooks, and capability artifacts when requested. They should not delete the shared-brain repo, machine-level packages, or unrelated user files unless an explicit removal flag says so.
+
+For deeper operator details, use the product repo's security and backup docs.

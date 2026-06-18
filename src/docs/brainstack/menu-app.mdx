@@ -2,7 +2,7 @@
 title: Brainstack Menu App
 description: Use the Brainstack macOS menu bar app to watch shared-brain health, proposals, fleet status, and safe repair actions.
 project: brainstack
-order: 5
+order: 6
 ---
 
 ## What it is for
@@ -35,6 +35,7 @@ Yellow should explain the next useful action. For example, an out-of-date worker
 - Repair Hooks: reinstall fail-open harness integration.
 - Refresh Skills: pull shared skills into the local harness skill folder.
 - Update Machine: update a stale control host or worker when Brainstack can safely reach it.
+- Capabilities: show installed or missing bundled capabilities, then route installs to the canonical `brainctl capabilities` lifecycle.
 
 The app is a convenience surface. If it cannot connect, your CLI and harnesses should still fail open: Brainstack being unavailable should not block normal Codex, Claude, Cursor, or terminal work.
 

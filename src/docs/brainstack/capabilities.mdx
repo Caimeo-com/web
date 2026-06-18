@@ -2,7 +2,7 @@
 title: Brainstack Capabilities
 description: Brainstack capabilities install useful local or worker-backed powers such as voice transcription without changing the harness surface.
 project: brainstack
-order: 3
+order: 4
 ---
 
 ## What a capability is
@@ -19,7 +19,14 @@ The important part is the lifecycle:
 
 ## Voice transcription
 
-Voice lets a Telegram voice note become normal text in the same topic. The processing machine can be the control host, the Mac client, or a stronger worker.
+Voice lets a Telegram voice note become normal text in the same topic. The processing machine can be the control host, the Mac client, or a stronger worker. The default backend is local Whisper via Mozilla `whisperfile`, so voice notes do not need to go through OpenAI APIs when that backend is installed.
+
+List available capabilities first:
+
+```bash
+brainctl capabilities list \
+  --config ~/.config/brainstack/brainstack.yaml
+```
 
 Replace `WORKER_NAME` with the Brainstack machine that should run transcription.
 
@@ -34,6 +41,15 @@ brainctl capabilities doctor voice \
 
 brainctl capabilities test voice \
   --target WORKER_NAME \
+  --config ~/.config/brainstack/brainstack.yaml
+```
+
+Reset or retest from scratch:
+
+```bash
+brainctl capabilities uninstall voice \
+  --target WORKER_NAME \
+  --remove-files \
   --config ~/.config/brainstack/brainstack.yaml
 ```
 
@@ -56,6 +72,7 @@ Brainstack should pick the target machine, check prerequisites, install or verif
 - CLI, Mac app, and Telegram surfaces should call the same canonical `brainctl` lifecycle underneath.
 - Uninstall should remove Brainstack-owned artifacts and config, not unrelated system packages.
 - Docs should say whether processing is local, worker-backed, or API-backed.
+- Capability docs should state uninstall behavior, including what Brainstack-owned files are removed and what system packages are left alone.
 
 ## Next candidates
 
