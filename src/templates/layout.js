@@ -10,6 +10,8 @@ if (window.location.hostname === 'caimeo.com' || window.location.hostname.endsWi
 }
 </script>`;
 
+const ASSET_VERSION = '20260618-menu-app-size';
+
 function escapeHtml(value) {
   return String(value)
     .replace(/&/g, '&amp;')
@@ -140,7 +142,7 @@ export function layout({ title, description, path, accent, body, css, schema = [
 
   <script type="application/ld+json">${structuredData}</script>
   ${POSTHOG_SNIPPET}
-  <link rel="stylesheet" href="/styles/main.css">
+  <link rel="stylesheet" href="/styles/main.css?v=${ASSET_VERSION}">
   ${accentVar}
   ${css || ''}
 </head>
@@ -216,7 +218,7 @@ export function layout({ title, description, path, accent, body, css, schema = [
     </div>
   </footer>
 
-  <script src="/scripts/main.js"></script>
+  <script src="/scripts/main.js?v=${ASSET_VERSION}"></script>
 </body>
 </html>`;
 }
