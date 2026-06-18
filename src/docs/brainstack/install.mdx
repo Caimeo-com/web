@@ -88,3 +88,20 @@ Stop and tell me if Git, SSH, Tailscale, or the selected harness is missing.
 ```
 
 The harness should not invent tokens, hostnames, SSH pins, or tailnet state.
+
+## Telegram as a control surface
+
+When telemux is configured, Telegram is not a separate product to learn. It is a phone-friendly way to ask Brainstack for the same lifecycle work you could run from the CLI.
+
+Examples:
+
+```text
+install voice on erbine
+install transcription on valkyrie
+/updates
+/curator_status
+/curator_run
+/proposals pending
+```
+
+Brainstack should translate supported natural requests and slash commands into the canonical `brainctl` operations, run them on the right machine, show progress for slow work, and report the result in the same Telegram topic.

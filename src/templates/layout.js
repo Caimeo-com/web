@@ -20,7 +20,7 @@ function escapeHtml(value) {
 }
 
 // Shared HTML shell for all pages
-export function layout({ title, description, path, accent, body, css, canonicalBase = 'https://caimeo.com' }) {
+export function layout({ title, description, path, accent, body, css, schema = [], canonicalBase = 'https://caimeo.com' }) {
   const normalizedPath = path === '/' ? '/' : path.endsWith('/') ? path : `${path}/`;
   const canonicalUrl = `${canonicalBase}${normalizedPath}`;
   const contactEmail = 'contact@bitfalls.com';
@@ -45,6 +45,7 @@ export function layout({ title, description, path, accent, body, css, canonicalB
   const accentVar = accent ? `<style>:root{--accent:var(--${accent});--accent-glow:var(--${accent}-glow);}</style>` : '';
   const organizationId = `${canonicalBase}/#organization`;
   const websiteId = `${canonicalBase}/#website`;
+  const extraSchema = (Array.isArray(schema) ? schema : [schema]).filter(Boolean);
   const structuredData = JSON.stringify({
     '@context': 'https://schema.org',
     '@graph': [
@@ -66,20 +67,17 @@ export function layout({ title, description, path, accent, body, css, canonicalB
         publisher: { '@id': organizationId },
         image: ogImageUrl,
       },
-      ...(normalizedPath === '/'
-        ? []
-        : [
-            {
-              '@type': 'WebPage',
-              '@id': `${canonicalUrl}#page`,
-              name: title,
-              url: canonicalUrl,
-              description,
-              isPartOf: { '@id': websiteId },
-              about: { '@id': organizationId },
-              primaryImageOfPage: ogImageUrl,
-            },
-          ]),
+      {
+        '@type': normalizedPath === '/docs/' ? 'CollectionPage' : 'WebPage',
+        '@id': `${canonicalUrl}#page`,
+        name: title,
+        url: canonicalUrl,
+        description,
+        isPartOf: { '@id': websiteId },
+        about: { '@id': organizationId },
+        primaryImageOfPage: ogImageUrl,
+      },
+      ...extraSchema,
     ],
   }).replace(/</g, '\\u003c');
   const renderNavLink = (link) => {

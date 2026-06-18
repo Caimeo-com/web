@@ -12,24 +12,28 @@ const PROJECTS = [
     name: 'Brainstack',
     summary: 'Shared memory, local capabilities, skills, and private fleet control for agent harnesses.',
     href: '/docs/brainstack/',
+    schemaType: 'SoftwareApplication',
   },
   {
     key: 'forseti',
     name: 'Forseti',
     summary: 'Typed intents, policy decisions, human approvals, and evidence bundles for agent actions.',
     href: '/docs/forseti/',
+    schemaType: 'Service',
   },
   {
     key: 'tyche',
     name: 'Tyche',
     summary: 'Deterministic scenario packs, replay bundles, and comparison runs for agent behavior.',
     href: '/docs/tyche/',
+    schemaType: 'Service',
   },
   {
     key: 'valhalla',
     name: 'Valhalla',
     summary: 'A governed multi-agent delivery room with roles, audits, and convergence criteria.',
     href: '/docs/valhalla/',
+    schemaType: 'Service',
   },
 ];
 
@@ -221,6 +225,28 @@ function renderDoc(doc, docs) {
   const project = PROJECTS.find(item => item.key === doc.project);
   const docsBody = docsMarked.parse(doc.body);
   const pageTitle = isIndex ? 'Caimeo Docs' : `${doc.title} - Caimeo Docs`;
+  const canonicalUrl = `https://caimeo.com${doc.url}`;
+  const schema = isIndex
+    ? {
+        '@type': 'ItemList',
+        '@id': `${canonicalUrl}#docs-list`,
+        name: 'Caimeo documentation sections',
+        itemListElement: PROJECTS.map((item, index) => ({
+          '@type': 'ListItem',
+          position: index + 1,
+          name: item.name,
+          url: `https://caimeo.com${item.href}`,
+        })),
+      }
+    : {
+        '@type': 'TechArticle',
+        '@id': `${canonicalUrl}#article`,
+        headline: doc.title,
+        description: doc.description || 'Caimeo product documentation.',
+        mainEntityOfPage: { '@id': `${canonicalUrl}#page` },
+        about: project ? { '@type': project.schemaType, name: project.name } : { '@type': 'Organization', name: 'Caimeo' },
+        inLanguage: 'en',
+      };
   const body = `
     <section class="docs-hero">
       <div class="container">
@@ -246,6 +272,7 @@ function renderDoc(doc, docs) {
     description: doc.description || 'Caimeo product documentation.',
     path: doc.url,
     accent: doc.project === 'brainstack' ? 'brainstack' : doc.project === 'tyche' ? 'tyche' : doc.project === 'valhalla' ? 'valhalla' : 'forseti',
+    schema,
     body,
   });
 }

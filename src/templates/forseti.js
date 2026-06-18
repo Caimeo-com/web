@@ -12,7 +12,7 @@ export function render() {
       </p>
       <div class="hero__actions">
         <a href="mailto:contact@bitfalls.com" class="btn btn--forseti">Book a Forseti pilot</a>
-        <a href="#how-it-works" class="btn btn--ghost">See how it works</a>
+        <a href="/docs/forseti/" class="btn btn--ghost">Read the docs</a>
       </div>
     </section>
 
@@ -281,17 +281,67 @@ export function render() {
         <p>The design-partner pilot is 4&ndash;6 weeks: one governed workflow, a Slack approval path, one readiness-oriented control pack, an evidence dashboard, and an exportable audit bundle.</p>
         <div class="hero__actions">
           <a href="mailto:contact@bitfalls.com" class="btn btn--forseti">Scope a Forseti pilot</a>
-          <a href="/#products" class="btn btn--ghost">Compare the suite</a>
+          <a href="/docs/forseti/" class="btn btn--ghost">Review Forseti docs</a>
         </div>
       </div>
     </section>
   `;
 
   return layout({
-    title: 'Caimeo Forseti - Evidence Plane for AI Agent Workflows',
-    description: 'Audit-ready AI action governance with typed intents, deterministic policy, human approval, and exportable evidence for regulated workflows.',
+    title: 'Caimeo Forseti - AI Action Governance and Approval Evidence',
+    description: 'Forseti puts high-stakes AI agent actions behind typed intents, deterministic policy, human approval, execution release, and exportable evidence bundles.',
     path: '/forseti/',
     accent: 'forseti',
+    schema: [
+      {
+        '@type': 'Service',
+        '@id': 'https://caimeo.com/forseti/#service',
+        name: 'Forseti',
+        serviceType: 'AI action governance and approval evidence',
+        url: 'https://caimeo.com/forseti/',
+        description: 'AI action governance service for high-stakes agent workflows using typed intents, deterministic policy, human approvals, execution release, and evidence bundles.',
+        areaServed: 'Worldwide',
+        provider: { '@id': 'https://caimeo.com/#organization' },
+      },
+      {
+        '@type': 'FAQPage',
+        '@id': 'https://caimeo.com/forseti/#faq',
+        mainEntity: [
+          {
+            '@type': 'Question',
+            name: 'Does Forseti replace n8n or other workflow tools?',
+            acceptedAnswer: {
+              '@type': 'Answer',
+              text: 'No. Forseti governs whether an action is allowed to reach those systems and records the decision path around it. Existing workflow tools remain the deterministic action plane.',
+            },
+          },
+          {
+            '@type': 'Question',
+            name: 'Does Forseti require a specific model vendor?',
+            acceptedAnswer: {
+              '@type': 'Answer',
+              text: 'No. Forseti sits above the model layer and focuses on intent validation, policy, approvals, and execution release. It works with any LLM or agent framework.',
+            },
+          },
+          {
+            '@type': 'Question',
+            name: 'Can we start with a single workflow?',
+            acceptedAnswer: {
+              '@type': 'Answer',
+              text: 'Yes. The preferred first engagement is one high-value workflow, narrow scope, and a fast proof of control. Most pilots run 4-6 weeks.',
+            },
+          },
+          {
+            '@type': 'Question',
+            name: 'Does Forseti make us NIS2, DORA, or AI Act compliant?',
+            acceptedAnswer: {
+              '@type': 'Answer',
+              text: 'No. Forseti gives regulated teams execution controls, human-approval trails, model/tool context, and exportable evidence bundles that support readiness work. It does not classify legal obligations or certify compliance.',
+            },
+          },
+        ],
+      },
+    ],
     body,
   });
 }

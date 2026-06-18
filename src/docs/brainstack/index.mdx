@@ -1,5 +1,5 @@
 ---
-title: Brainstack Overview
+title: Brainstack Shared Brain Overview
 description: Brainstack is Caimeo's shared-brain layer for agent memory, skills, local capabilities, and private machine control.
 project: brainstack
 order: 1
@@ -9,7 +9,7 @@ order: 1
 
 Brainstack gives agent harnesses a shared place to read context and write useful evidence without turning every note into trusted memory immediately. The source of truth is a git-backed shared brain. `braind` serves search and proposal APIs, while `brainctl` handles install, enrollment, diagnostics, local capabilities, hooks, skills, and fleet operations.
 
-Brainstack is not another chat harness. Codex, Claude, Cursor, Telegram, scripts, and workers can all use it from their existing surfaces.
+Brainstack is not another chat harness. Codex, Claude, Cursor, Telegram, scripts, and workers can all use it from their existing surfaces. If telemux is configured, Telegram can be an operator surface too: messages like `install voice on worker-a` and commands like `/updates`, `/curator_run`, or `/proposals pending` route to the same Brainstack operations as the CLI.
 
 ## The basic loop
 
@@ -25,6 +25,7 @@ Brainstack is not another chat harness. Codex, Claude, Cursor, Telegram, scripts
 - Existing operator: review [Proposals and curation](/docs/brainstack/proposals/).
 - Local power-up: install [Capabilities](/docs/brainstack/capabilities/).
 - Harness setup: check [Skills and harness context](/docs/brainstack/skills/).
+- Mac operator surface: use the [Brainstack Menu app](/docs/brainstack/menu-app/) to watch health, proposals, Telegram routing, and fleet updates.
 
 ## Trust model in one paragraph
 

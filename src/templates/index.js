@@ -244,14 +244,15 @@ export function render() {
   const body = `
     <!-- ===== HERO ===== -->
     <section class="hero">
-      <span class="hero__label">Control &middot; Confidence &middot; Delivery</span>
+      <span class="hero__label">Memory &middot; Control &middot; Confidence &middot; Delivery</span>
       <h1>Governed agent infrastructure<br>for <span class="gradient">real outcomes</span></h1>
       <p class="hero__sub">
-        Let agents work without giving them blind access to the real world.
-        Caimeo governs execution, rehearses behavior, and is preparing a high-trust delivery room for the next layer up.
+        Let agents remember useful work, rehearse before production, and act only through governed boundaries.
+        Caimeo combines Brainstack shared memory, Forseti approval gates, Tyche replay, and Valhalla delivery rooms.
       </p>
       <div class="hero__actions">
         <a href="mailto:contact@bitfalls.com" class="btn btn--primary">Contact Caimeo</a>
+        <a href="/brainstack/" class="btn btn--ghost">Explore Brainstack</a>
         <a href="#products" class="btn btn--ghost">See the products</a>
       </div>
     </section>
@@ -262,7 +263,7 @@ export function render() {
         <div class="trust-bar fade-in">
           <div class="trust-bar__item">
             <span class="icon" aria-hidden="true">&#9679;</span>
-            Self-hosted by default
+            Shared memory for agents
           </div>
           <div class="trust-bar__item">
             <span class="icon" aria-hidden="true">&#9679;</span>
@@ -270,7 +271,7 @@ export function render() {
           </div>
           <div class="trust-bar__item">
             <span class="icon" aria-hidden="true">&#9679;</span>
-            Enterprise-ready audit trails
+            Auditable action paths
           </div>
         </div>
       </div>
@@ -296,7 +297,8 @@ export function render() {
       <div class="container">
         <div class="section__header fade-in">
           <p class="section-label" style="color:var(--accent);">The Suite</p>
-          <h2>Three products. One governed stack.</h2>
+          <h2>Memory, control, replay, and delivery in one stack.</h2>
+          <p>Start with the layer that matches your current risk: shared context, action governance, simulation evidence, or structured multi-agent delivery.</p>
         </div>
 
         <div class="product-accordion fade-in" data-product-accordion>
@@ -311,22 +313,27 @@ ${PRODUCTS.map(renderPane).join('')}
         <div class="section__header fade-in">
           <p class="section-label" style="color:var(--accent);">Suite Architecture</p>
           <h2>Built to work together</h2>
-          <p>Each layer has a clean job. Forseti controls action, Tyche provides evidence, and Valhalla is the governed delivery layer that ties them together.</p>
+          <p>Each layer has a clean job. Brainstack shares memory, Forseti controls action, Tyche provides evidence, and Valhalla ties complex work into a governed delivery room.</p>
         </div>
 
         <div class="suite-row fade-in">
           <div class="suite-col">
-            <div class="suite-col__num" style="color:var(--forseti);">01</div>
+            <div class="suite-col__num" style="color:var(--brainstack);">01</div>
+            <h3 style="color:var(--brainstack);">Memory</h3>
+            <p>Brainstack gives Codex, Claude, Cursor, scripts, and private machines one shared brain for context, skills, lessons, and proposal evidence.</p>
+          </div>
+          <div class="suite-col">
+            <div class="suite-col__num" style="color:var(--forseti);">02</div>
             <h3 style="color:var(--forseti);">Control</h3>
             <p>Forseti sits at the execution boundary. Agents propose intents; Forseti decides whether they proceed, require approval, or get denied.</p>
           </div>
           <div class="suite-col">
-            <div class="suite-col__num" style="color:var(--tyche);">02</div>
+            <div class="suite-col__num" style="color:var(--tyche);">03</div>
             <h3 style="color:var(--tyche);">Confidence</h3>
             <p>Tyche rehearses before production and replays after incidents, replacing guesswork with deterministic evidence.</p>
           </div>
           <div class="suite-col">
-            <div class="suite-col__num" style="color:var(--valhalla);">03</div>
+            <div class="suite-col__num" style="color:var(--valhalla);">04</div>
             <h3 style="color:var(--valhalla);">Delivery</h3>
             <p>Valhalla is the next layer up: a governed build room for important specs, specialist roles, and high-trust execution.</p>
           </div>
@@ -422,7 +429,7 @@ ${PRODUCTS.map(renderPane).join('')}
     <section class="cta-section">
       <div class="container fade-in">
         <h2>Bring one workflow or one hard problem.</h2>
-        <p>We will tell you whether it belongs in Forseti, Tyche, or the upcoming Valhalla track.</p>
+        <p>We will tell you whether it belongs in Brainstack, Forseti, Tyche, or the upcoming Valhalla track.</p>
         <div class="hero__actions">
           <a href="mailto:contact@bitfalls.com" class="btn btn--primary">contact@bitfalls.com</a>
           <a href="#products" class="btn btn--ghost">Review the suite</a>
@@ -432,9 +439,20 @@ ${PRODUCTS.map(renderPane).join('')}
   `;
 
   return layout({
-    title: 'Caimeo - Governed Agent Infrastructure',
-    description: 'Governed agent infrastructure for teams that want real outcomes, not unchecked autonomy. Control execution with Forseti, rehearse with Tyche, and prepare for Valhalla.',
+    title: 'Caimeo - Governed AI Agent Infrastructure',
+    description: 'Caimeo helps teams deploy AI agents with shared memory, approval gates, deterministic replay, and governed delivery rooms across Brainstack, Forseti, Tyche, and Valhalla.',
     path: '/',
+    schema: {
+      '@type': 'ItemList',
+      '@id': 'https://caimeo.com/#product-list',
+      name: 'Caimeo governed AI agent infrastructure products',
+      itemListElement: [
+        { '@type': 'ListItem', position: 1, name: 'Brainstack', url: 'https://caimeo.com/brainstack/' },
+        { '@type': 'ListItem', position: 2, name: 'Forseti', url: 'https://caimeo.com/forseti/' },
+        { '@type': 'ListItem', position: 3, name: 'Tyche', url: 'https://caimeo.com/tyche/' },
+        { '@type': 'ListItem', position: 4, name: 'Valhalla', url: 'https://caimeo.com/docs/valhalla/' },
+      ],
+    },
     body,
   });
 }

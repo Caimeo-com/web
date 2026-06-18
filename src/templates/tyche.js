@@ -12,7 +12,7 @@ export function render() {
       </p>
       <div class="hero__actions">
         <a href="mailto:contact@bitfalls.com" class="btn btn--tyche">Design a Tyche pilot</a>
-        <a href="#how-it-works" class="btn btn--ghost">See a replay bundle</a>
+        <a href="/docs/tyche/" class="btn btn--ghost">Read the docs</a>
       </div>
     </section>
 
@@ -271,17 +271,67 @@ export function render() {
         <p>A Tyche discovery sprint is 1&ndash;2 weeks. We take one high-value scenario or one real incident, turn it into a seeded, reproducible simulation, and hand back a replay bundle your team can open, rerun, and cite. If the problem actually belongs upstream, we&rsquo;ll say so.</p>
         <div class="hero__actions">
           <a href="mailto:contact@bitfalls.com" class="btn btn--tyche">Scope a Tyche sprint</a>
-          <a href="/#products" class="btn btn--ghost">Compare the suite</a>
+          <a href="/docs/tyche/" class="btn btn--ghost">Review Tyche docs</a>
         </div>
       </div>
     </section>
   `;
 
   return layout({
-    title: 'Caimeo Tyche - Deterministic Simulation & Replay for AI Agents',
-    description: 'Rehearse agent behavior before production. Run deterministic scenario sweeps, compare strategies under fixed conditions, and export replay bundles you can trust.',
+    title: 'Caimeo Tyche - AI Agent Simulation, Replay, and Scorecards',
+    description: 'Tyche rehearses AI agent behavior before production with deterministic scenario packs, comparison runs, scorecards, and replay bundles your team can inspect.',
     path: '/tyche/',
     accent: 'tyche',
+    schema: [
+      {
+        '@type': 'Service',
+        '@id': 'https://caimeo.com/tyche/#service',
+        name: 'Tyche',
+        serviceType: 'AI agent simulation, replay, and scorecards',
+        url: 'https://caimeo.com/tyche/',
+        description: 'AI agent simulation and replay service using deterministic scenario packs, comparison runs, scorecards, and evidence bundles for pre-production rehearsal and incident review.',
+        areaServed: 'Worldwide',
+        provider: { '@id': 'https://caimeo.com/#organization' },
+      },
+      {
+        '@type': 'FAQPage',
+        '@id': 'https://caimeo.com/tyche/#faq',
+        mainEntity: [
+          {
+            '@type': 'Question',
+            name: 'Do we need special hardware to use Tyche?',
+            acceptedAnswer: {
+              '@type': 'Answer',
+              text: 'No. API-backed runners are enough for the first pilots. Local hardware is an optional optimization path, not the product definition.',
+            },
+          },
+          {
+            '@type': 'Question',
+            name: 'Is Tyche for model training?',
+            acceptedAnswer: {
+              '@type': 'Answer',
+              text: 'No. Tyche focuses on rehearsal, replay, comparison, and evidence generation around agent behavior, not training new models.',
+            },
+          },
+          {
+            '@type': 'Question',
+            name: 'Can Tyche work with Forseti?',
+            acceptedAnswer: {
+              '@type': 'Answer',
+              text: 'Yes. Tyche can rehearse before production, Forseti can govern the execution boundary, and Tyche can replay or support postmortem work after incidents.',
+            },
+          },
+          {
+            '@type': 'Question',
+            name: 'What does a pilot look like?',
+            acceptedAnswer: {
+              '@type': 'Answer',
+              text: 'One scenario family, one scoring rubric, one comparison pack, and a replay bundle fit for operator review. Most discovery sprints run 1-2 weeks.',
+            },
+          },
+        ],
+      },
+    ],
     body,
   });
 }

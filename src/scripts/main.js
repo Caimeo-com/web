@@ -245,18 +245,24 @@
   });
 
   // ---- Scroll-triggered fade-in ----
-  const observer = new IntersectionObserver(
-    (entries) => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) {
-          entry.target.classList.add('is-visible');
-          observer.unobserve(entry.target);
-        }
-      });
-    },
-    { threshold: 0.12, rootMargin: '0px 0px -40px 0px' }
-  );
-  document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+  const fadeItems = Array.from(document.querySelectorAll('.fade-in'));
+  if ('IntersectionObserver' in window && fadeItems.length) {
+    document.documentElement.classList.add('supports-fade-in');
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('is-visible');
+            observer.unobserve(entry.target);
+          }
+        });
+      },
+      { threshold: 0.12, rootMargin: '0px 0px -40px 0px' }
+    );
+    fadeItems.forEach(el => observer.observe(el));
+  } else {
+    fadeItems.forEach(el => el.classList.add('is-visible'));
+  }
 
   // ---- Active nav link ----
   const path = window.location.pathname.replace(/\/+$/, '') || '/';

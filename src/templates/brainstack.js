@@ -129,6 +129,36 @@ export function render() {
       </div>
     </section>
 
+    <!-- ===== MAC MENU APP ===== -->
+    <section class="section brainstack-menu-section">
+      <div class="container">
+        <div class="brainstack-menu-showcase fade-in">
+          <div class="brainstack-menu-copy">
+            <p class="section-label" style="color:var(--brainstack);">Mac companion app</p>
+            <h2>Keep the shared brain visible without living in the terminal</h2>
+            <p>The Brainstack Menu app gives macOS operators a lightweight control surface for health, proposals, hooks, Telegram routing, fleet freshness, and safe repair actions.</p>
+            <ul class="brainstack-menu-list" aria-label="Brainstack Menu capabilities">
+              <li>See whether your local client, control host, and workers are current.</li>
+              <li>Open the wiki or proposal review flow from the menu bar.</li>
+              <li>Run common repairs without remembering the exact brainctl command.</li>
+            </ul>
+            <a href="/docs/brainstack/menu-app/" class="btn btn--brainstack">Read the Mac app docs</a>
+          </div>
+          <figure class="product-visual product-visual--menu">
+            <img
+              src="/product/brainstack-menu-app.png"
+              alt="Brainstack macOS menu bar app showing shared-brain health, proposal count, local checks, control status, Telegram routing, and fleet freshness."
+              width="796"
+              height="1434"
+              loading="lazy"
+              decoding="async"
+            >
+            <figcaption>Brainstack Menu turns status, proposal review, fleet freshness, and repair actions into a small macOS control surface.</figcaption>
+          </figure>
+        </div>
+      </div>
+    </section>
+
     <!-- ===== DOCS / INSTALL PATHS ===== -->
     <section class="section" id="install">
       <div class="container">
@@ -150,6 +180,10 @@ export function render() {
           <a href="/docs/brainstack/skills/">
             <strong>Skills and hooks</strong>
             <span>Use public Brainstack skills, import shared skills, and keep harness context fresh in the background.</span>
+          </a>
+          <a href="/docs/brainstack/menu-app/">
+            <strong>Mac menu app</strong>
+            <span>Watch shared-brain health, proposals, Telegram routing, and fleet updates from the macOS menu bar.</span>
           </a>
           <a href="/docs/brainstack/proposals/">
             <strong>Proposals</strong>
@@ -321,10 +355,68 @@ export function render() {
   `;
 
   return layout({
-    title: 'Caimeo Brainstack - Shared Brain and Agent Context Engine',
-    description: 'Brainstack is a private shared-brain service and context engine with local search, brainctl operations, optional Telegram control, file relay, and tailnet workers for Codex, Claude, and Cursor.',
+    title: 'Caimeo Brainstack - Shared Brain for AI Agent Memory',
+    description: 'Brainstack gives Codex, Claude, Cursor, scripts, and private machines one shared brain for searchable memory, skills, proposals, local capabilities, and fleet context.',
     path: '/brainstack/',
     accent: 'brainstack',
+    schema: [
+      {
+        '@type': 'SoftwareApplication',
+        '@id': 'https://caimeo.com/brainstack/#software',
+        name: 'Brainstack',
+        applicationCategory: 'DeveloperApplication',
+        operatingSystem: 'macOS, Linux',
+        url: 'https://caimeo.com/brainstack/',
+        description: 'Private shared-brain software for AI agent memory, skills, proposals, local capabilities, and fleet context across Codex, Claude, Cursor, scripts, Telegram, and private workers.',
+        featureList: [
+          'Shared-brain search',
+          'AI harness skill refresh',
+          'Proposal curation',
+          'Local capability installation',
+          'Tailnet worker context',
+          'macOS menu bar status app',
+          'Optional Telegram control',
+        ],
+      },
+      {
+        '@type': 'FAQPage',
+        '@id': 'https://caimeo.com/brainstack/#faq',
+        mainEntity: [
+          {
+            '@type': 'Question',
+            name: 'Does Brainstack replace Codex or Claude?',
+            acceptedAnswer: {
+              '@type': 'Answer',
+              text: 'No. Brainstack gives those harnesses shared context, a write path, worker routing, and operational checks. The harness still does the reasoning and code work.',
+            },
+          },
+          {
+            '@type': 'Question',
+            name: 'Where does the brain live?',
+            acceptedAnswer: {
+              '@type': 'Answer',
+              text: 'In a separate shared-brain git repo. Brainstack keeps product code and memory data separate, then builds fast local search over that repo.',
+            },
+          },
+          {
+            '@type': 'Question',
+            name: 'Do client machines need Bun?',
+            acceptedAnswer: {
+              '@type': 'Answer',
+              text: 'Ordinary Mac clients can use a compiled brainctl binary with client bootstrap assets and public skills embedded, so they do not need Bun.',
+            },
+          },
+          {
+            '@type': 'Question',
+            name: 'Do we need Telegram?',
+            acceptedAnswer: {
+              '@type': 'Answer',
+              text: 'No. The core shared-brain service and brainctl CLI work without telemux. Telegram is for operators who want phone-friendly control topics and scheduled routines.',
+            },
+          },
+        ],
+      },
+    ],
     body,
   });
 }

@@ -1,5 +1,5 @@
 ---
-title: Capabilities
+title: Brainstack Capabilities
 description: Brainstack capabilities install useful local or worker-backed powers such as voice transcription without changing the harness surface.
 project: brainstack
 order: 3
@@ -37,13 +37,23 @@ brainctl capabilities test voice \
   --config ~/.config/brainstack/brainstack.yaml
 ```
 
-The Telegram control surface can also understand natural requests such as `install voice on WORKER_NAME` when the operator path is configured.
+If you use the Telegram control surface, you can ask for the same thing in normal language from a Brainstack topic:
+
+```text
+install voice on WORKER_NAME
+install transcription on WORKER_NAME
+uninstall voice on WORKER_NAME
+/voice status
+```
+
+Brainstack should pick the target machine, check prerequisites, install or verify the transcription stack, restart the Telegram runtime when needed, and tell you how to test it with a real voice note. Long installs should show progress instead of leaving the chat looking idle.
 
 ## Safety expectations
 
 - A capability should say what it installs and where.
 - A capability should report progress for long downloads or builds.
 - A capability should test itself before claiming success.
+- CLI, Mac app, and Telegram surfaces should call the same canonical `brainctl` lifecycle underneath.
 - Uninstall should remove Brainstack-owned artifacts and config, not unrelated system packages.
 - Docs should say whether processing is local, worker-backed, or API-backed.
 
