@@ -28,6 +28,8 @@ Use it when you want to answer practical questions quickly:
 
 Yellow should explain the next useful action. For example, an out-of-date worker should show that it needs an update, and the app should offer the update action where it is safe to do so.
 
+The app also cross-checks redundant health signals. If one low-level control-host check hiccups but the fleet view already confirms that the control host is reachable and current, Brainstack keeps the main status calm and shows the probe detail only where it helps diagnosis.
+
 ## Common actions
 
 - Open Wiki: jump to the shared-brain wiki.
