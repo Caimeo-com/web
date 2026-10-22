@@ -307,6 +307,13 @@ ${PRODUCTS.map(renderPane).join('')}
       </div>
     </section>
 
+    <section class="section ideas-offer">
+      <div class="container ideas-offer__inner">
+        <div><h2>Idea Explorer</h2><p>Explore video games, movies, and music. Choose a point in the catalog, generate new ideas, and see where they land.</p><a class="btn btn--primary" href="/ideas/">Open Idea Explorer</a></div>
+        <a href="/ideas/" aria-label="Explore the idea map"><img src="/product/idea-explorer-map.svg" alt="Video games plotted by similarity, with a selected target and generated ideas" width="800" height="500" loading="lazy" /></a>
+      </div>
+    </section>
+
     <!-- ===== HOW THE SUITE FITS ===== -->
     <section class="section section--alt">
       <div class="container">

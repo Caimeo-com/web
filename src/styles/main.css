@@ -2232,3 +2232,5 @@ section[id] {
   }
   .product-pane__proof-grid { grid-template-columns: 1fr; }
 }
+
+.ideas-offer__inner{display:grid;grid-template-columns:1fr 1.2fr;align-items:center;gap:64px}.ideas-offer h2{font-size:clamp(2rem,4vw,3.2rem);margin-bottom:20px}.ideas-offer p{max-width:45ch;margin-bottom:28px;color:var(--text-secondary)}.ideas-offer img{width:100%;height:auto;border-radius:12px}@media(max-width:768px){.ideas-offer__inner{grid-template-columns:1fr;gap:32px}}
