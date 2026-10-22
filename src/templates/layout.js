@@ -40,6 +40,7 @@ export function layout({ title, description, path, accent, body, css, schema = [
     { href: '/forseti/', label: 'Forseti' },
     { href: '/tyche/', label: 'Tyche' },
     { href: '/brainstack/', label: 'Brainstack' },
+    { href: '/ideas/', label: 'Ideas' },
     { href: '/docs/', label: 'Docs' },
     { label: 'Valhalla', badge: 'Coming soon', disabled: true },
   ];
