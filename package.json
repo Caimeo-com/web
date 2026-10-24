@@ -4,10 +4,15 @@
   "private": true,
   "scripts": {
     "dev": "bun run src/dev.js",
-    "build": "bun run src/build.js",
-    "zip": "bun run src/zip.js"
+    "build": "node src/build.js",
+    "zip": "bun run src/zip.js",
+    "test": "node --test tests/*.test.mjs"
   },
   "dependencies": {
     "marked": "^18.0.5"
-  }
+  },
+  "devDependencies": {
+    "turndown": "7.2.4"
+  },
+  "type": "module"
 }
