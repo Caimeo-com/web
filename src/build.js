@@ -1,8 +1,10 @@
 import { mkdirSync, cpSync, writeFileSync, existsSync, rmSync, readdirSync, readFileSync, statSync } from 'fs';
-import { join } from 'path';
+import { join, dirname } from 'path';
+import { fileURLToPath } from 'url';
+import { buildDiscovery } from './discovery.js';
 import { buildDocsPages } from './templates/docs.js';
 
-const ROOT = import.meta.dir;
+const ROOT = dirname(fileURLToPath(import.meta.url));
 const WEB  = join(ROOT, '..');
 const DIST = join(WEB, 'dist');
 
@@ -54,7 +56,7 @@ validateGeneratedAssetReferences();
 
 // Generate sitemap.xml
 const baseUrl = 'https://caimeo.com';
-const urls = ['/', '/forseti/', '/tyche/', '/brainstack/', ...docsPages.map(page => page.url)];
+const urls = ['/ideas/', '/ideas/guide', '/ideas/privacy', '/ideas/terms', '/', '/forseti/', '/tyche/', '/brainstack/', ...docsPages.map(page => page.url)];
 const escapeXml = value => String(value)
   .replace(/&/g, '&amp;')
   .replace(/</g, '&lt;')
@@ -69,9 +71,10 @@ writeFileSync(join(DIST, 'sitemap.xml'), sitemap, 'utf-8');
 console.log('  ✓ sitemap.xml');
 
 // Generate robots.txt
-writeFileSync(join(DIST, 'robots.txt'), `User-agent: *\nAllow: /\nSitemap: ${baseUrl}/sitemap.xml\n`, 'utf-8');
+writeFileSync(join(DIST, 'robots.txt'), `User-agent: *\nContent-Signal: search=yes, ai-input=yes\nAllow: /\nDisallow: /ideas/api/\nDisallow: /ideas/auth/\nDisallow: /ideas/anchors/\nDisallow: /ph/\n\nSitemap: ${baseUrl}/sitemap.xml\nSitemap: ${baseUrl}/ideas/sitemap.xml\n`, 'utf-8');
 console.log('  ✓ robots.txt');
 
+buildDiscovery(DIST, [...pages, ...docsPages]);
 console.log('\nBuild complete → dist/');
 
 function validateGeneratedAssetReferences() {

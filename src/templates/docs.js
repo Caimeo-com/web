@@ -3,7 +3,7 @@ import { basename, join, relative } from 'path';
 import { Marked } from 'marked';
 import { layout } from './layout.js';
 
-const ROOT = join(import.meta.dir, '..');
+const ROOT = join(import.meta.dirname, '..');
 const DOCS_ROOT = join(ROOT, 'docs');
 
 const PROJECTS = [
