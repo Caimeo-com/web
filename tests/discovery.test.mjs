@@ -3,8 +3,9 @@ import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
 import { onRequest, prefersMarkdown } from '../functions/_middleware.js';
 function context(path, accept='text/html', method='GET') {
-  return { request:new Request('https://caimeo.com'+path,{method,headers:{Accept:accept}}), next: async req=> {
-    const pathname=new URL((req||context.request).url).pathname;
+  const request = new Request('https://caimeo.com'+path,{method,headers:{Accept:accept}});
+  return { request, next: async req=> {
+    const pathname=new URL((req||request).url).pathname;
     try { return new Response(readFileSync(`dist${pathname.endsWith('/') ? pathname+'index.html' : pathname}`),{headers:{'Content-Type':pathname.endsWith('.md')?'text/plain':'text/html',Vary:'Accept-Encoding'}}); }
     catch { return new Response('Not found',{status:404}); }
   }};

@@ -5,13 +5,15 @@ import TurndownService from 'turndown';
 export function buildDiscovery(dist, pages) {
   const converter = new TurndownService({ headingStyle: 'atx', bulletListMarker: '-' });
   converter.remove(['script', 'style', 'svg']);
-  converter.addRule('absoluteLinks', { filter: 'a', replacement: (text, node) => `[${text}](${new URL(node.getAttribute('href'), 'https://caimeo.com/')})` });
+  let pageURL = 'https://caimeo.com/';
+  converter.addRule('absoluteLinks', { filter: 'a', replacement: (text, node) => `[${text}](${new URL(node.getAttribute('href'), pageURL)})` });
   const entries = [];
   for (const page of pages) {
     const html = readFileSync(join(dist, page.out), 'utf8');
     const main = html.match(/<main\b[^>]*>([\s\S]*?)<\/main>/i)?.[1];
     if (!main) throw new Error(`Missing public content: ${page.out}`);
     const url = '/' + page.out.replace(/index\.html$/, '');
+    pageURL = 'https://caimeo.com' + url;
     const markdown = page.out.replace(/\.html$/, '.md');
     writeFileSync(join(dist, markdown), converter.turndown(main) + '\n');
     const title = html.match(/<title>(.*?)<\/title>/i)?.[1] || url;
