@@ -1,0 +1,14 @@
+{
+  "detector": {
+    "ignoreRules": [],
+    "ignoreFiles": [],
+    "ignoreValues": [
+      {
+        "rule": "design-system-font",
+        "value": "inter",
+        "createdAt": "2026-10-25T13:36:32.282Z",
+        "reason": "Existing non-home product and docs routes are intentionally outside this homepage deployment; preserve their incumbent font while the approved homepage uses self-hosted Schibsted Grotesk."
+      }
+    ]
+  }
+}

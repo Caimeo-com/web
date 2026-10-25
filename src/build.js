@@ -19,7 +19,9 @@ mkdirSync(join(DIST, 'styles'), { recursive: true });
 mkdirSync(join(DIST, 'scripts'), { recursive: true });
 
 cpSync(join(ROOT, 'styles', 'main.css'), join(DIST, 'styles', 'main.css'));
+cpSync(join(ROOT, 'styles', 'home.css'), join(DIST, 'styles', 'home.css'));
 cpSync(join(ROOT, 'scripts', 'main.js'), join(DIST, 'scripts', 'main.js'));
+cpSync(join(ROOT, 'scripts', 'home.js'), join(DIST, 'scripts', 'home.js'));
 
 // Copy public dir if exists
 const publicDir = join(WEB, 'public');

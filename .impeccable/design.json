@@ -1,0 +1,220 @@
+{
+  "schemaVersion": 2,
+  "generatedAt": "2026-10-25T13:17:23Z",
+  "title": "Design System: Caimeo",
+  "extensions": {
+    "colorMeta": {
+      "deep-ground": {
+        "role": "neutral",
+        "displayName": "Deep Ground",
+        "canonical": "#151719",
+        "tonalRamp": ["oklch(15% 0.008 220)", "oklch(28% 0.008 220)", "oklch(40% 0.008 220)", "oklch(52% 0.008 220)", "oklch(64% 0.008 220)", "oklch(76% 0.008 220)", "oklch(88% 0.008 220)", "oklch(95% 0.008 220)"]
+      },
+      "deep-ground-hover": {
+        "role": "neutral",
+        "displayName": "Deep Ground Hover",
+        "canonical": "#2b2e31",
+        "tonalRamp": ["oklch(15% 0.009 235)", "oklch(28% 0.009 235)", "oklch(40% 0.009 235)", "oklch(52% 0.009 235)", "oklch(64% 0.009 235)", "oklch(76% 0.009 235)", "oklch(88% 0.009 235)", "oklch(95% 0.009 235)"]
+      },
+      "warm-ink": {
+        "role": "neutral",
+        "displayName": "Warm Ink",
+        "canonical": "#f3f4f1",
+        "tonalRamp": ["oklch(15% 0.006 120)", "oklch(28% 0.006 120)", "oklch(40% 0.006 120)", "oklch(52% 0.006 120)", "oklch(64% 0.006 120)", "oklch(76% 0.006 120)", "oklch(88% 0.006 120)", "oklch(95% 0.006 120)"]
+      },
+      "muted-ink": {
+        "role": "neutral",
+        "displayName": "Muted Ink",
+        "canonical": "#d4d8d5",
+        "tonalRamp": ["oklch(15% 0.007 160)", "oklch(28% 0.007 160)", "oklch(40% 0.007 160)", "oklch(52% 0.007 160)", "oklch(64% 0.007 160)", "oklch(76% 0.007 160)", "oklch(88% 0.007 160)", "oklch(95% 0.007 160)"]
+      },
+      "field-paper": {
+        "role": "neutral",
+        "displayName": "Field Paper",
+        "canonical": "#eff0eb",
+        "tonalRamp": ["oklch(15% 0.008 110)", "oklch(28% 0.008 110)", "oklch(40% 0.008 110)", "oklch(52% 0.008 110)", "oklch(64% 0.008 110)", "oklch(76% 0.008 110)", "oklch(88% 0.008 110)", "oklch(95% 0.008 110)"]
+      },
+      "field-ink": {
+        "role": "neutral",
+        "displayName": "Field Ink",
+        "canonical": "#17191b",
+        "tonalRamp": ["oklch(15% 0.008 240)", "oklch(28% 0.008 240)", "oklch(40% 0.008 240)", "oklch(52% 0.008 240)", "oklch(64% 0.008 240)", "oklch(76% 0.008 240)", "oklch(88% 0.008 240)", "oklch(95% 0.008 240)"]
+      },
+      "field-muted": {
+        "role": "neutral",
+        "displayName": "Field Muted",
+        "canonical": "#3e4444",
+        "tonalRamp": ["oklch(15% 0.009 195)", "oklch(28% 0.009 195)", "oklch(40% 0.009 195)", "oklch(52% 0.009 195)", "oklch(64% 0.009 195)", "oklch(76% 0.009 195)", "oklch(88% 0.009 195)", "oklch(95% 0.009 195)"]
+      },
+      "field-soft": {
+        "role": "neutral",
+        "displayName": "Soft Field",
+        "canonical": "#e5e9e9",
+        "tonalRamp": ["oklch(15% 0.006 195)", "oklch(28% 0.006 195)", "oklch(40% 0.006 195)", "oklch(52% 0.006 195)", "oklch(64% 0.006 195)", "oklch(76% 0.006 195)", "oklch(88% 0.006 195)", "oklch(95% 0.006 195)"]
+      },
+      "proof-surface": {
+        "role": "neutral",
+        "displayName": "Proof Surface",
+        "canonical": "#f3f5f5",
+        "tonalRamp": ["oklch(15% 0.004 195)", "oklch(28% 0.004 195)", "oklch(40% 0.004 195)", "oklch(52% 0.004 195)", "oklch(64% 0.004 195)", "oklch(76% 0.004 195)", "oklch(88% 0.004 195)", "oklch(95% 0.004 195)"]
+      },
+      "signal-orange": {
+        "role": "primary",
+        "displayName": "Signal Orange",
+        "canonical": "#ff5b31",
+        "tonalRamp": ["oklch(15% 0.16 35)", "oklch(28% 0.16 35)", "oklch(40% 0.16 35)", "oklch(52% 0.16 35)", "oklch(64% 0.16 35)", "oklch(76% 0.16 35)", "oklch(88% 0.16 35)", "oklch(95% 0.16 35)"]
+      },
+      "signal-orange-hover": {
+        "role": "primary",
+        "displayName": "Signal Orange Hover",
+        "canonical": "#ff7654",
+        "tonalRamp": ["oklch(15% 0.14 36)", "oklch(28% 0.14 36)", "oklch(40% 0.14 36)", "oklch(52% 0.14 36)", "oklch(64% 0.14 36)", "oklch(76% 0.14 36)", "oklch(88% 0.14 36)", "oklch(95% 0.14 36)"]
+      },
+      "focus-cyan": {
+        "role": "secondary",
+        "displayName": "Focus Cyan",
+        "canonical": "#67d7ff",
+        "tonalRamp": ["oklch(15% 0.12 220)", "oklch(28% 0.12 220)", "oklch(40% 0.12 220)", "oklch(52% 0.12 220)", "oklch(64% 0.12 220)", "oklch(76% 0.12 220)", "oklch(88% 0.12 220)", "oklch(95% 0.12 220)"]
+      },
+      "approved-green": {
+        "role": "secondary",
+        "displayName": "Approved Green",
+        "canonical": "#1c6d49",
+        "tonalRamp": ["oklch(15% 0.09 155)", "oklch(28% 0.09 155)", "oklch(40% 0.09 155)", "oklch(52% 0.09 155)", "oklch(64% 0.09 155)", "oklch(76% 0.09 155)", "oklch(88% 0.09 155)", "oklch(95% 0.09 155)"]
+      },
+      "rejected-red": {
+        "role": "secondary",
+        "displayName": "Rejected Red",
+        "canonical": "#7f252d",
+        "tonalRamp": ["oklch(15% 0.12 20)", "oklch(28% 0.12 20)", "oklch(40% 0.12 20)", "oklch(52% 0.12 20)", "oklch(64% 0.12 20)", "oklch(76% 0.12 20)", "oklch(88% 0.12 20)", "oklch(95% 0.12 20)"]
+      },
+      "pending-amber": {
+        "role": "secondary",
+        "displayName": "Pending Amber",
+        "canonical": "#72470c",
+        "tonalRamp": ["oklch(15% 0.10 75)", "oklch(28% 0.10 75)", "oklch(40% 0.10 75)", "oklch(52% 0.10 75)", "oklch(64% 0.10 75)", "oklch(76% 0.10 75)", "oklch(88% 0.10 75)", "oklch(95% 0.10 75)"]
+      },
+      "pure-white": {
+        "role": "neutral",
+        "displayName": "Pure White",
+        "canonical": "#ffffff",
+        "tonalRamp": ["oklch(15% 0 0)", "oklch(28% 0 0)", "oklch(40% 0 0)", "oklch(52% 0 0)", "oklch(64% 0 0)", "oklch(76% 0 0)", "oklch(88% 0 0)", "oklch(95% 0 0)"]
+      }
+    },
+    "typographyMeta": {
+      "display": { "displayName": "Display", "purpose": "Hero claims only; keep the measure compact and let scale carry energy." },
+      "headline": { "displayName": "Headline", "purpose": "Major section transitions and the closing statement." },
+      "title": { "displayName": "Title", "purpose": "Mechanism stages and product names." },
+      "body": { "displayName": "Body", "purpose": "Plain explanations and inspectable product proof." },
+      "label": { "displayName": "Label", "purpose": "Sentence-case metadata inside the approval trace." },
+      "control": { "displayName": "Control", "purpose": "Buttons and strong text links." }
+    },
+    "shadows": [],
+    "motion": [
+      { "name": "state-shift", "value": "160ms ease", "purpose": "Short button lifts, color changes, and link-arrow movement." },
+      { "name": "media-inspect", "value": "500ms cubic-bezier(.2,.8,.2,1)", "purpose": "A restrained 1.012 scale when a product capture is inspected." },
+      { "name": "proof-settle", "value": "500-700ms cubic-bezier(.16,1,.3,1)", "purpose": "Staggered entrance for proof fields in reading order." },
+      { "name": "headline-rise", "value": "760ms cubic-bezier(.16,1,.3,1)", "purpose": "One-time hero-line entrance; the second line follows after 90ms." },
+      { "name": "reduced-motion", "value": "0.01ms", "purpose": "Collapse animation and transition durations when reduced motion is requested." }
+    ],
+    "breakpoints": [
+      { "name": "stack", "value": "980px" },
+      { "name": "mobile", "value": "640px" }
+    ]
+  },
+  "components": [
+    {
+      "name": "Primary Action",
+      "kind": "button",
+      "refersTo": "button-primary",
+      "description": "The single forward commercial action on dark or neutral ground.",
+      "html": "<a class=\"ds-button-primary\" href=\"#action\">Scope one workflow</a>",
+      "css": ".ds-button-primary { min-height: 48px; display: inline-flex; align-items: center; justify-content: center; padding: .78rem 1.1rem; border: 0; border-radius: 0; background: var(--accent, #ff5b31); color: var(--bg, #151719); font: 700 1rem/1.2 \"Schibsted Grotesk\", \"Helvetica Neue\", Helvetica, Arial, sans-serif; text-decoration: none; cursor: pointer; transition: transform 160ms ease, background-color 160ms ease; } .ds-button-primary:hover { background: #ff7654; transform: translateY(-2px); } .ds-button-primary:active { transform: translateY(0); } .ds-button-primary:focus-visible { outline: 3px solid var(--focus, #67d7ff); outline-offset: 4px; }"
+    },
+    {
+      "name": "Dark Action",
+      "kind": "button",
+      "refersTo": "button-dark",
+      "description": "The inverse action used on the orange closing field.",
+      "html": "<a class=\"ds-button-dark\" href=\"#action\">Scope one workflow</a>",
+      "css": ".ds-button-dark { min-height: 48px; display: inline-flex; align-items: center; justify-content: center; padding: .78rem 1.1rem; border: 0; border-radius: 0; background: var(--bg, #151719); color: var(--ink, #f3f4f1); font: 700 1rem/1.2 \"Schibsted Grotesk\", \"Helvetica Neue\", Helvetica, Arial, sans-serif; text-decoration: none; cursor: pointer; transition: transform 160ms ease, background-color 160ms ease; } .ds-button-dark:hover { background: #2b2e31; transform: translateY(-2px); } .ds-button-dark:active { transform: translateY(0); } .ds-button-dark:focus-visible { outline: 3px solid var(--focus, #67d7ff); outline-offset: 4px; }"
+    },
+    {
+      "name": "Approved Outcome Button",
+      "kind": "button",
+      "refersTo": "button-approved",
+      "description": "Shows the approved example path without implying a live approval action.",
+      "html": "<button class=\"ds-outcome-approved\" type=\"button\" aria-pressed=\"false\">Show approved</button>",
+      "css": ".ds-outcome-approved { min-height: 46px; display: inline-flex; align-items: center; justify-content: center; padding: .78rem 1.1rem; border: 0; border-radius: 0; background: #1c6d49; color: #fff; font: 700 14px/1.2 \"Schibsted Grotesk\", \"Helvetica Neue\", Helvetica, Arial, sans-serif; cursor: pointer; transition: transform 160ms ease, background-color 160ms ease; } .ds-outcome-approved:hover { background: #16563a; transform: translateY(-2px); } .ds-outcome-approved:active { transform: translateY(0); } .ds-outcome-approved:focus-visible { outline: 3px solid #67d7ff; outline-offset: 4px; } .ds-outcome-approved[aria-pressed=\"true\"] { outline: 3px solid #17191b; outline-offset: 2px; }"
+    },
+    {
+      "name": "Rejected Outcome Button",
+      "kind": "button",
+      "refersTo": "button-rejected",
+      "description": "Shows the rejected example path as a quiet but explicit counterpart.",
+      "html": "<button class=\"ds-outcome-rejected\" type=\"button\" aria-pressed=\"false\">Show rejected</button>",
+      "css": ".ds-outcome-rejected { min-height: 46px; display: inline-flex; align-items: center; justify-content: center; padding: .78rem 1.1rem; border: 1px solid #c9cbca; border-radius: 0; background: #fff; color: #7f252d; font: 700 14px/1.2 \"Schibsted Grotesk\", \"Helvetica Neue\", Helvetica, Arial, sans-serif; cursor: pointer; transition: transform 160ms ease, background-color 160ms ease; } .ds-outcome-rejected:hover { background: #f8e9ea; transform: translateY(-2px); } .ds-outcome-rejected:active { transform: translateY(0); } .ds-outcome-rejected:focus-visible { outline: 3px solid #67d7ff; outline-offset: 4px; } .ds-outcome-rejected[aria-pressed=\"true\"] { outline: 3px solid #17191b; outline-offset: 2px; }"
+    },
+    {
+      "name": "Strong Text Link",
+      "kind": "button",
+      "refersTo": "text-link",
+      "description": "A secondary route that stays visibly subordinate to the filled action.",
+      "html": "<a class=\"ds-text-link\" href=\"#detail\">Explore Brainstack <span aria-hidden=\"true\">→</span></a>",
+      "css": ".ds-text-link { color: inherit; font: 700 1rem/1.2 \"Schibsted Grotesk\", \"Helvetica Neue\", Helvetica, Arial, sans-serif; text-decoration: none; } .ds-text-link span { display: inline-block; transition: transform 160ms ease; } .ds-text-link:hover span { transform: translateX(5px); } .ds-text-link:focus-visible { outline: 3px solid #67d7ff; outline-offset: 4px; }"
+    },
+    {
+      "name": "Primary Navigation",
+      "kind": "nav",
+      "refersTo": "navigation",
+      "description": "Two quiet section links with no surrounding navigation chrome.",
+      "html": "<nav class=\"ds-navigation\" aria-label=\"Primary navigation\"><a href=\"#mechanism\">How it works</a><a href=\"#suite\">The suite</a></nav>",
+      "css": ".ds-navigation { display: flex; align-items: center; gap: 2rem; font-family: \"Schibsted Grotesk\", \"Helvetica Neue\", Helvetica, Arial, sans-serif; } .ds-navigation a { color: #d4d8d5; font-size: .92rem; font-weight: 600; text-decoration: none; } .ds-navigation a:hover { color: #f3f4f1; } .ds-navigation a:focus-visible { outline: 3px solid #67d7ff; outline-offset: 4px; }"
+    },
+    {
+      "name": "Decision Trace",
+      "kind": "custom",
+      "refersTo": "decision-trace",
+      "description": "The signature proof object keeps request, policy, human decision, and release outcome connected.",
+      "html": "<section class=\"ds-decision\" aria-label=\"Governed payment example\"><header class=\"ds-decision__bar\"><div><span class=\"ds-label\">Illustrative payment intent</span><strong>Invoice 4821</strong></div><span class=\"ds-status\">Needs approval</span></header><div class=\"ds-decision__body\"><section><span class=\"ds-label\">Requested action</span><h3>$7,500 to Microsoft</h3><p>Pay invoice 4821 · High risk</p></section><section><span class=\"ds-label\">Policy decision</span><h3>Requires approval</h3><p>Amount exceeds the $1,000 autonomous-payment limit.</p></section><section><span class=\"ds-label\">Example outcomes</span><h3>Inspect either terminal path.</h3><p>CFO + COO approval required</p></section></div><footer class=\"ds-decision__bar\"><div><span class=\"ds-label\">Outcome</span><p>Waiting for a human decision. Nothing has been released.</p></div></footer></section>",
+      "css": ".ds-decision { overflow: hidden; width: 100%; border-radius: 16px; background: #f3f5f5; color: #17191b; font: 400 15px/1.45 \"Schibsted Grotesk\", \"Helvetica Neue\", Helvetica, Arial, sans-serif; } .ds-decision__bar { min-height: 72px; display: flex; align-items: center; justify-content: space-between; gap: 1rem; padding: 1rem 1.25rem; background: #e5e9e9; } .ds-decision__bar p, .ds-decision__bar strong { display: block; margin: 0; } .ds-decision__body { display: grid; grid-template-columns: 1.05fr 1fr .92fr; } .ds-decision__body section { min-width: 0; padding: clamp(1.35rem, 2.4vw, 2.25rem); } .ds-decision__body section + section { border-left: 1px solid #dfe0db; } .ds-decision h3 { margin: .3rem 0 1rem; color: #17191b; font-size: clamp(1.35rem, 2vw, 1.85rem); line-height: 1.1; letter-spacing: -.025em; } .ds-decision p { margin: 0; color: #454a4a; } .ds-label { display: block; color: #606565; font-size: 13px; font-weight: 600; } .ds-status { flex: none; padding: .3rem .58rem; border-radius: 999px; background: #fff2d7; color: #72470c; font-size: 12px; font-weight: 700; } .ds-decision:focus-within { outline: 3px solid #67d7ff; outline-offset: 4px; } @media (max-width: 640px) { .ds-decision { border-radius: 12px; } .ds-decision__body { grid-template-columns: 1fr; } .ds-decision__body section + section { border-left: 0; border-top: 1px solid #dfe0db; } }"
+    }
+  ],
+  "narrative": {
+    "northStar": "The Approval Trace",
+    "overview": "Caimeo's design makes one consequential action legible from request to outcome. The visual system is direct, technical, and calm: near-black fields establish authority, light policy surfaces make the mechanism readable, and signal orange marks the one action that advances the conversation.\n\nThe page moves on one axis. Large claims lead into full-width proof, proof leads into an ordered sequence, and the sequence leads into a narrowly scoped call to action. Product evidence stays at useful scale; decoration never competes with the governed action.",
+    "keyCharacteristics": [
+      "One linear reading path with no competing visual directions.",
+      "High-contrast dark and paper fields instead of decorative cards or glass.",
+      "Oversized, compact headlines paired with plainly written proof.",
+      "Square controls and data fields, with rounding reserved for the signature decision trace.",
+      "Restrained entrance and state motion that never obscures the evidence."
+    ],
+    "rules": [
+      { "name": "The One-Trace Rule", "body": "Lead with one concrete governed action and keep its request, policy, approvers, release state, and evidence visibly connected.", "section": "overview" },
+      { "name": "The Rare Signal Rule", "body": "Orange identifies the primary action or major transition; do not spread it across every heading, link, or product plate.", "section": "colors" },
+      { "name": "The Semantic State Rule", "body": "Green, red, and amber always retain their approval meanings and never become decorative brand colors.", "section": "colors" },
+      { "name": "The One-Family Rule", "body": "Create contrast through size, weight, and density; do not introduce a decorative display face or monospaced body copy.", "section": "typography" },
+      { "name": "The Readable Proof Rule", "body": "Operational evidence must remain body-sized and plainly labeled, even when adjacent marketing headlines are oversized.", "section": "typography" },
+      { "name": "The Single-Axis Rule", "body": "Every breakpoint preserves the same narrative order; responsive layout may stack or reorder paired media, but it must not create a second navigation or comparison mode.", "section": "layout" },
+      { "name": "The Full-Size Proof Rule", "body": "Product captures and the decision trace receive enough width to remain legible; do not shrink evidence into decorative thumbnails.", "section": "layout" },
+      { "name": "The Flat Evidence Rule", "body": "Keep proof on the page plane. Use field color and rules to separate states, not drop shadows, glass, glow, or blur.", "section": "elevation" },
+      { "name": "The Reserved Radius Rule", "body": "Rounding belongs to the proof container and status labels; do not turn every section or product capture into a rounded card.", "section": "shapes" },
+      { "name": "The Honest State Rule", "body": "A control may show an example outcome, but its copy must not imply that one click performed multiple real approvals.", "section": "components" }
+    ],
+    "dos": [
+      "Do lead with one offer, one concrete trace, and one primary action.",
+      "Do keep approval state, policy reason, approvers, release boundary, and evidence readable in the same proof object.",
+      "Do preserve the dark-ground, light-field contrast and use signal orange sparingly.",
+      "Do keep supplied product captures large enough to read and pair each with concise explanatory copy.",
+      "Do preserve visible focus, semantic labels, keyboard operation, reduced-motion behavior, and mobile source order."
+    ],
+    "donts": [
+      "Don't split the page into competing directions, feature-card grids, or chooser interactions before the offer is understood.",
+      "Don't use gradients, floating glass, decorative chrome, shadows, or metaphorical control-room ornament.",
+      "Don't scatter the approval sequence across unrelated panels or hide the release condition behind interaction.",
+      "Don't use semantic green, red, or amber as ambient decoration.",
+      "Don't add motion that delays reading, loops, or makes operational evidence shift while it is being inspected."
+    ]
+  }
+}

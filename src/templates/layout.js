@@ -10,7 +10,7 @@ if (window.location.hostname === 'caimeo.com' || window.location.hostname.endsWi
 }
 </script>`;
 
-const ASSET_VERSION = '20260618-menu-app-size';
+const ASSET_VERSION = '20261025-clarity-home';
 
 function escapeHtml(value) {
   return String(value)
@@ -22,7 +22,21 @@ function escapeHtml(value) {
 }
 
 // Shared HTML shell for all pages
-export function layout({ title, description, path, accent, body, css, schema = [], canonicalBase = 'https://caimeo.com' }) {
+export function layout({
+  title,
+  description,
+  path,
+  accent,
+  body,
+  css,
+  schema = [],
+  canonicalBase = 'https://caimeo.com',
+  chrome = true,
+  bodyClass = '',
+  themeColor = '#0a0b0f',
+  stylesheet = '/styles/main.css',
+  script = '/scripts/main.js',
+}) {
   const normalizedPath = path === '/' ? '/' : path.endsWith('/') ? path : `${path}/`;
   const canonicalUrl = `${canonicalBase}${normalizedPath}`;
   const contactEmail = 'contact@bitfalls.com';
@@ -35,6 +49,10 @@ export function layout({ title, description, path, accent, body, css, schema = [
   const safeCanonicalUrl = escapeHtml(canonicalUrl);
   const safeOgImageUrl = escapeHtml(ogImageUrl);
   const safeSocialImageAlt = escapeHtml(socialImageAlt);
+  const safeBodyClass = escapeHtml(bodyClass);
+  const safeThemeColor = escapeHtml(themeColor);
+  const safeStylesheet = escapeHtml(stylesheet);
+  const safeScript = escapeHtml(script);
   const navLinks = [
     { href: '/', label: 'Home' },
     { href: '/forseti/', label: 'Forseti' },
@@ -99,56 +117,14 @@ export function layout({ title, description, path, accent, body, css, schema = [
     }
     return `<a href="${escapeHtml(link.href)}">${escapeHtml(link.label)}</a>`;
   };
-
-  return `<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>${safeTitle}</title>
-  <meta name="description" content="${safeDescription}">
-  <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1">
-  <meta name="theme-color" content="#0a0b0f">
-  <link rel="canonical" href="${safeCanonicalUrl}">
-  <link rel="icon" href="/favicon.ico" sizes="any">
-  <link rel="icon" href="/favicon-32x32.png" sizes="32x32" type="image/png">
-  <link rel="icon" href="/favicon-16x16.png" sizes="16x16" type="image/png">
-  <link rel="apple-touch-icon" href="/apple-touch-icon.png" sizes="180x180">
-  <link rel="manifest" href="/site.webmanifest">
-
-  <!-- Open Graph -->
-  <meta property="og:site_name" content="Caimeo">
-  <meta property="og:locale" content="en_US">
-  <meta property="og:title" content="${safeTitle}">
-  <meta property="og:description" content="${safeDescription}">
-  <meta property="og:type" content="website">
-  <meta property="og:url" content="${safeCanonicalUrl}">
-  <meta property="og:image" content="${safeOgImageUrl}">
-  <meta property="og:image:secure_url" content="${safeOgImageUrl}">
-  <meta property="og:image:width" content="1200">
-  <meta property="og:image:height" content="630">
-  <meta property="og:image:alt" content="${safeSocialImageAlt}">
-
-  <!-- Twitter -->
-  <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="${safeTitle}">
-  <meta name="twitter:description" content="${safeDescription}">
-  <meta name="twitter:image" content="${safeOgImageUrl}">
-  <meta name="twitter:image:alt" content="${safeSocialImageAlt}">
-
-  <!-- Preload critical font -->
+  const fontHead = chrome ? `
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">` : `
+  <link rel="preload" href="/fonts/schibsted-grotesk-400.ttf" as="font" type="font/ttf" crossorigin>
+  <link rel="preload" href="/fonts/schibsted-grotesk-800.ttf" as="font" type="font/ttf" crossorigin>`;
 
-  <script type="application/ld+json">${structuredData}</script>
-  ${POSTHOG_SNIPPET}
-  <link rel="stylesheet" href="/styles/main.css?v=${ASSET_VERSION}">
-  ${accentVar}
-  ${css || ''}
-</head>
-<body>
-
+  const pageBody = chrome ? `
   <div class="nav-overlay" id="nav-overlay"></div>
 
   <nav class="site-nav" id="mobile-nav" role="navigation" aria-label="Main navigation" aria-hidden="true" inert>
@@ -217,9 +193,56 @@ export function layout({ title, description, path, accent, body, css, schema = [
         <span>Self-hosted &middot; Vendor-agnostic &middot; Enterprise-ready</span>
       </div>
     </div>
-  </footer>
+  </footer>` : body;
 
-  <script src="/scripts/main.js?v=${ASSET_VERSION}"></script>
+  return `<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>${safeTitle}</title>
+  <meta name="description" content="${safeDescription}">
+  <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1">
+  <meta name="theme-color" content="${safeThemeColor}">
+  <link rel="canonical" href="${safeCanonicalUrl}">
+  <link rel="icon" href="/favicon.ico" sizes="any">
+  <link rel="icon" href="/favicon-32x32.png" sizes="32x32" type="image/png">
+  <link rel="icon" href="/favicon-16x16.png" sizes="16x16" type="image/png">
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png" sizes="180x180">
+  <link rel="manifest" href="/site.webmanifest">
+
+  <!-- Open Graph -->
+  <meta property="og:site_name" content="Caimeo">
+  <meta property="og:locale" content="en_US">
+  <meta property="og:title" content="${safeTitle}">
+  <meta property="og:description" content="${safeDescription}">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="${safeCanonicalUrl}">
+  <meta property="og:image" content="${safeOgImageUrl}">
+  <meta property="og:image:secure_url" content="${safeOgImageUrl}">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="${safeSocialImageAlt}">
+
+  <!-- Twitter -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="${safeTitle}">
+  <meta name="twitter:description" content="${safeDescription}">
+  <meta name="twitter:image" content="${safeOgImageUrl}">
+  <meta name="twitter:image:alt" content="${safeSocialImageAlt}">
+
+  <!-- Page font -->${fontHead}
+
+  <script type="application/ld+json">${structuredData}</script>
+  ${POSTHOG_SNIPPET}
+  <link rel="stylesheet" href="${safeStylesheet}?v=${ASSET_VERSION}">
+  ${accentVar}
+  ${css || ''}
+</head>
+<body${safeBodyClass ? ` class="${safeBodyClass}"` : ''}>
+  ${pageBody}
+
+  <script src="${safeScript}?v=${ASSET_VERSION}"></script>
 </body>
 </html>`;
 }
